@@ -4,17 +4,17 @@ namespace Wame\DynamicObject\Forms;
 
 use Nette;
 use Nette\Forms\Container;
+use Nette\Utils\DateTime;
 use Nette\Application\UI;
 
 abstract class BaseFormContainer extends Container 
 {
-    public $container;
-    
     /** @var UI\ITemplateFactory */
     private $templateFactory;
 
     /** @var UI\ITemplate */
     private $template;
+
 
     public function __construct()
     {
@@ -24,9 +24,8 @@ abstract class BaseFormContainer extends Container
     }
 
     
-    public function injectTemplateFactory(Nette\DI\Container $container, UI\ITemplateFactory $templateFactory) 
+    public function injectTemplateFactory(UI\ITemplateFactory $templateFactory) 
     {
-        $this->container = $container;
         $this->templateFactory = $templateFactory;
     }
 
@@ -35,6 +34,9 @@ abstract class BaseFormContainer extends Container
 
     
     abstract public function render();
+    
+    
+//    abstract public function setDefaultValues();
 
     
     protected function attached($object)
@@ -42,7 +44,7 @@ abstract class BaseFormContainer extends Container
         parent::attached($object);
         
         if ($object instanceof Nette\Forms\Form) {
-             $this->currentGroup = $this->getForm()->currentGroup;
+            $this->currentGroup = $this->getForm()->currentGroup;
             $this->configure();
         }
     }
@@ -76,5 +78,24 @@ abstract class BaseFormContainer extends Container
 
         return $templateFactory->createTemplate(null);
     }
+    
+    
+	/**
+	 * Format DateTime to string
+	 * 
+	 * @param \DateTime $date
+	 * @param string $format
+	 * @return string
+	 */
+	public function formatDate($date, $format = 'Y-m-d H:i:s')
+	{
+        if ($date) {
+            $return = $date->format($format);
+        } else {
+            $return = '';
+        }
+         
+        return $return;
+	}
     
 }
