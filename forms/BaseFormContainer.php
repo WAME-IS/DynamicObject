@@ -4,16 +4,21 @@ namespace Wame\DynamicObject\Forms;
 
 use Nette;
 use Nette\Forms\Container;
-use Nette\Utils\DateTime;
 use Nette\Application\UI;
 
 abstract class BaseFormContainer extends Container 
 {
+	const SWITCH_NO = 0;
+	const SWITCH_YES = 1;
+	
     /** @var UI\ITemplateFactory */
     private $templateFactory;
 
     /** @var UI\ITemplate */
     private $template;
+	
+	/** @var array */
+	public $yesOrNo;
 
 
     public function __construct()
@@ -21,6 +26,8 @@ abstract class BaseFormContainer extends Container
         parent::__construct();
         
         $this->monitor('Nette\Forms\Form');
+		
+		$this->yesOrNo = [self::SWITCH_YES => _('Yes'), self::SWITCH_NO => _('No')];
     }
 
     
