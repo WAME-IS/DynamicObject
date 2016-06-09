@@ -104,5 +104,18 @@ abstract class BaseFormContainer extends Container
          
         return $return;
 	}
+	
+	public function getDefault($name)
+	{
+		if (method_exists($this, 'getDefaults')) {
+			if (isset($this->getDefaults()[$name])) {
+				return $this->getDefaults()[$name];
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
+	}
     
 }
