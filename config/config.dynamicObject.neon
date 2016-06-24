@@ -1,3 +1,6 @@
 decorator:
     BaseFormContainer:
         inject: yes
+
+services:
+	- Wame\DynamicObject\Components\IFormControlFactory

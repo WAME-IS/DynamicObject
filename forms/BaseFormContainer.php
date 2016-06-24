@@ -5,6 +5,7 @@ namespace Wame\DynamicObject\Forms;
 use Nette;
 use Nette\Forms\Container;
 use Nette\Application\UI;
+use Wame\Utils\Latte\FindTemplate;
 
 abstract class BaseFormContainer extends Container 
 {
@@ -16,6 +17,9 @@ abstract class BaseFormContainer extends Container
 
     /** @var UI\ITemplate */
     private $template;
+
+    /** @var string */
+    private $templateFile;
 	
 	/** @var array */
 	public $yesOrNo;
@@ -30,20 +34,14 @@ abstract class BaseFormContainer extends Container
 		$this->yesOrNo = [self::SWITCH_YES => _('Yes'), self::SWITCH_NO => _('No')];
     }
 
-    
+	
     public function injectTemplateFactory(UI\ITemplateFactory $templateFactory) 
     {
         $this->templateFactory = $templateFactory;
     }
 
-    
-    abstract protected function configure();
 
-    
-    abstract public function render();
-    
-    
-//    abstract public function setDefaultValues();
+    abstract protected function configure();
 
     
     protected function attached($object)
@@ -56,7 +54,16 @@ abstract class BaseFormContainer extends Container
         }
     }
 
-    
+	
+    public function render() 
+	{
+		$this->template = $this->getTemplate();
+		
+        $this->template->_form = $this->getForm();
+        $this->template->render($this->getTemplateFile());
+    }
+
+        
     /**
      * https://api.nette.org/2.3.7/source-Application.UI.Control.php.html#45
      */
@@ -78,6 +85,11 @@ abstract class BaseFormContainer extends Container
     }
 
     
+	/**
+	 * Create template
+	 * 
+	 * @return UI\ITemplateFactory
+	 */
     protected function createTemplate() 
     {
         /** @var UI\ITemplateFactory $templateFactory */
@@ -85,6 +97,41 @@ abstract class BaseFormContainer extends Container
 
         return $templateFactory->createTemplate(null);
     }
+
+	
+	/**
+	 * Set form container template file
+	 * 
+	 * @param string $template
+	 * @return \Wame\DynamicObject\Forms\BaseFormContainer
+	 */
+	public function setTemplateFile($template)
+	{
+		$this->templateFile = $template;
+
+		return $this;
+	}
+	
+	
+	/**
+	 * Get template file path
+	 * 
+	 * @return string
+	 */
+	public function getTemplateFile()
+	{
+		$filePath = dirname($this->getReflection()->getFileName());
+		$dir = explode(DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'wame' . DIRECTORY_SEPARATOR, $filePath, 2)[1];
+		
+		$findTemplate = new FindTemplate($dir, $this->templateFile);
+		$file = $findTemplate->find();
+		
+		if (!$file) {
+			throw new \Exception(sprintf(_('Template %s %s can not be found in %s.'), $this->templateFile, FindTemplate::DEFAULT_TEMPLATE, $dir));
+		}
+
+		return $file;
+	}
     
     
 	/**
@@ -105,6 +152,13 @@ abstract class BaseFormContainer extends Container
         return $return;
 	}
 	
+	
+	/**
+	 * Get default value
+	 * 
+	 * @param string $name
+	 * @return mixed
+	 */
 	public function getDefault($name)
 	{
 		if (method_exists($this, 'getDefaults')) {

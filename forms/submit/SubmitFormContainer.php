@@ -4,22 +4,27 @@ namespace Wame\DynamicObject\Forms;
 
 use Wame\DynamicObject\Forms\BaseFormContainer;
 
-interface IFormGroupContainerFactory
+
+interface ISubmitFormContainerFactory
 {
-	/** @return FormGroupContainer */
+	/** @return SubmitFormContainer */
 	function create();
 }
 
 
-class FormGroupContainer extends BaseFormContainer
+class SubmitFormContainer extends BaseFormContainer
 {
-	/*@var string */
+	/** @var string */
 	private $title;
 	
 	
 	public function __construct($title = null) 
 	{
 		parent::__construct();
+		
+		if (!$title) {
+			$title = _('Save');
+		}
 		
 		$this->title = $title;
 	}
@@ -29,12 +34,9 @@ class FormGroupContainer extends BaseFormContainer
 	{		
 		$form = $this->getForm();
 
-        $form->addGroup($this->title);
-    }
+        $form->addGroup();
 
-	
-	public function render() {
-		
-	}
+		$form->addSubmit('submit', $this->title);
+    }
 
 }
