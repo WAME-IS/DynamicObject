@@ -6,6 +6,7 @@ use Nette;
 use Nette\Forms\Container;
 use Nette\Application\UI;
 use Wame\Utils\Latte\FindTemplate;
+use Wame\Utils\Strings;
 
 abstract class BaseFormContainer extends Container 
 {
@@ -49,10 +50,39 @@ abstract class BaseFormContainer extends Container
         parent::attached($object);
         
         if ($object instanceof Nette\Forms\Form) {
-            $this->currentGroup = $this->getForm()->currentGroup;
+            $this->currentGroup = $this->getForm()->getCurrentGroup();
+			
+			if (!$this->currentGroup) {
+				$this->getForm()->addGroup();
+			}
+
             $this->configure();
-        }
+			
+ 			$this->appendFormContainerToCurrentGroup();
+       }
     }
+	
+	
+	private function appendFormContainerToCurrentGroup()
+	{
+		$this->currentGroup = $this->getForm()->getCurrentGroup();
+		
+		if ($this->currentGroup) {
+			$formContainerName = Strings::getClassName($this);
+			
+			if ($this->currentGroup->getOption('formContainers')) {
+				$formGroups = $this->currentGroup->getOption('formContainers');
+
+				$formGroups[] = $formContainerName;
+			} else {
+				$formGroups = [$formContainerName];
+			}
+
+			$this->currentGroup->setOption('formContainers', $formGroups);
+		}
+		
+		return $this;
+	}
 
 	
     public function render() 

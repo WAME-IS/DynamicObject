@@ -3,6 +3,7 @@
 namespace Wame\DynamicObject\Components;
 
 use Nette\DI\Container;
+use Nette\Utils\Html;
 use Nette\Utils\Strings;
 use Wame\Utils\HttpRequest;
 use Wame\Core\Components\BaseControl;
@@ -17,14 +18,14 @@ interface IFormControlFactory
 
 class FormControl extends BaseControl
 {
-	/** @var Container */
-	private $container;
+	/** @var mixed */
+	protected $form;
 
 	/** @var string */
 	private $formName;
 
 	/** @var int */
-	private $id;
+	public $id;
 
 
 	public function __construct(
@@ -33,23 +34,21 @@ class FormControl extends BaseControl
 		HttpRequest $httpRequest
 	) {
 		parent::__construct();
-		
+
 		$this->formName = $formName;
-		$this->container = $container;
 		$this->id = $httpRequest->getParameter('id');
+
+		$this->form = $container->getService(Strings::firstUpper($formName));
+		$this->addComponent($this->form->setId($this->id)->build(), $formName);
 	}
 
 
 	public function render()
-	{
-		$formName = $this->formName;
-		
-		$form = $this->container->getService(Strings::firstUpper($formName));
-
-		$this->addComponent($form->setId($this->id)->build(), $formName);
-		
-		$this->template->formName = $formName;
-		$this->template->formContainers = $this->getFormContainers($form->sortFormContainers(), $formName);
+	{		
+		$this->template->formName = $this->formName;
+		$this->template->formGroups = $this->getComponent($this->formName)->getGroups();
+		$this->template->formContainers = $this->getFormContainers($this->form->sortFormContainers(), $this->formName);
+		$this->template->defaultContainer = Html::el('fieldset');
 
         $this->getTemplateFile();
 		$this->template->render();
