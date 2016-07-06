@@ -34,8 +34,6 @@ class SubmitFormContainer extends BaseFormContainer
 	{		
 		$form = $this->getForm();
 
-        $form->addGroup();
-
 		$form->addSubmit('submit', $this->title);
     }
 
