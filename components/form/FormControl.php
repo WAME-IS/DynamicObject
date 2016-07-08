@@ -27,6 +27,9 @@ class FormControl extends BaseControl
 	/** @var int */
 	public $id;
 
+	/** @var string */
+	public $lang;
+
 
 	public function __construct(
 		$formName,
@@ -37,6 +40,7 @@ class FormControl extends BaseControl
 
 		$this->formName = $formName;
 		$this->id = $httpRequest->getParameter('id');
+        $this->lang = $httpRequest->getParameter('lang');
 
 		$this->form = $container->getService(Strings::firstUpper($formName));
 		$this->addComponent($this->form->setId($this->id)->build(), $formName);
