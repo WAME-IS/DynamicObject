@@ -59,8 +59,34 @@ abstract class BaseFormContainer extends Container
             $this->configure();
 			
  			$this->appendFormContainerToCurrentGroup();
-       }
+            
+            if ($object instanceof UI\Form) {
+                $object->onSuccess[] = [$this, 'formContainerSucceeded'];
+            }
+        }
     }
+    
+    
+    /**
+     * Form container processing
+     * 
+     * @param UI\Form $form
+     * @param array $values
+     */
+    public function formContainerSucceeded($form, $values)
+    {
+        $presenter = $form->getPresenter();
+        
+        if ($presenter->id) {
+            $this->edit($form, $values, $presenter);
+        } else {
+            $this->create($form, $values, $presenter);
+        }
+    }
+
+    public function edit($form, $values, $presenter) { }
+    
+    public function create($form, $values, $presenter) { }
 	
 	
 	private function appendFormContainerToCurrentGroup()
