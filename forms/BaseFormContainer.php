@@ -78,14 +78,28 @@ abstract class BaseFormContainer extends Container
         $presenter = $form->getPresenter();
         
         if ($presenter->id) {
-            $this->edit($form, $values, $presenter);
+            $this->update($form, $values, $presenter);
         } else {
             $this->create($form, $values, $presenter);
         }
     }
 
-    public function edit($form, $values, $presenter) { }
+    /**
+     * Update
+     * 
+     * @param \Nette\Application\UI\Form $form
+     * @param array $values
+     * @param \Nette\Application\UI\Presenter $presenter
+     */
+    public function update($form, $values, $presenter) { }
     
+    /**
+     * Create
+     * 
+     * @param \Nette\Application\UI\Form $form
+     * @param array $values
+     * @param \Nette\Application\UI\Presenter $presenter
+     */
     public function create($form, $values, $presenter) { }
 	
 	
