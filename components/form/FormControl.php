@@ -32,11 +32,11 @@ class FormControl extends BaseControl
 
 
 	public function __construct(
-		$formName,
 		Container $container,
-		HttpRequest $httpRequest
+		HttpRequest $httpRequest,
+        $formName
 	) {
-		parent::__construct();
+		parent::__construct($container);
 
 		$this->formName = $formName;
 		$this->id = $httpRequest->getParameter('id');
@@ -53,9 +53,6 @@ class FormControl extends BaseControl
 		$this->template->formGroups = $this->getComponent($this->formName)->getGroups();
 		$this->template->formContainers = $this->getFormContainers($this->form->sortFormContainers(), $this->formName);
 		$this->template->defaultContainer = Html::el('fieldset');
-
-        $this->getTemplateFile();
-		$this->template->render();
 	}
 	
 	
