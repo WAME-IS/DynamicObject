@@ -36,7 +36,7 @@ class FormControl extends BaseControl
 		Container $container,
 		HttpRequest $httpRequest
 	) {
-		parent::__construct();
+		parent::__construct($container);
 
 		$this->formName = $formName;
 		$this->id = $httpRequest->getParameter('id');
