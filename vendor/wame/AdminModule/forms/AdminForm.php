@@ -39,8 +39,6 @@ abstract class AdminForm extends FormFactory
 		try {
             $entity = $this->getEntity();
             
-            dump($entity); exit;
-            
 			if($entity->id) {
 				$entity = $this->update($values);
                 
