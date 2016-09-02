@@ -2,9 +2,13 @@
 
 namespace Wame\DynamicObject\Registers;
 
-use Wame\Core\Registers\BaseRegister;
+use Wame\Core\Registers\PriorityRegister;
+use Wame\DynamicObject\Registers\Types\IBaseFormContainerType;
 
-abstract class BaseFormRegister extends BaseRegister
+class BaseFormRegister extends PriorityRegister
 {
-    
+    public function __construct()
+    {
+        parent::__construct(IBaseFormContainerType::class);
+    }
 }
