@@ -28,7 +28,9 @@ abstract class BaseForm extends PriorityRegister
 	{
 		$form = $this->createForm($domain);
         
-        $form->addSubmit('submit', $this->getSubmitText());
+        if($this->getSubmitText()) {
+            $form->addSubmit('submit', $this->getSubmitText());
+        }
         
         $form->onSuccess[] = [$this, 'formSucceeded'];
         
@@ -124,7 +126,7 @@ abstract class BaseForm extends PriorityRegister
      */
     protected function getSubmitText()
     {
-        return _('Submit');
+//        return _('Submit');
     }
     
 }
