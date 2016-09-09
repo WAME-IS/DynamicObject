@@ -3,4 +3,9 @@ decorator:
         inject: yes
 
 services:
-	- Wame\DynamicObject\Components\IFormControlFactory
+    - Wame\DynamicObject\Components\IFormControlFactory
+
+    # Containers
+    - Wame\DynamicObject\Forms\Containers\IIconFormContainerFactory
+    - Wame\DynamicObject\Forms\Containers\ITitleFormContainerFactory
+    - Wame\DynamicObject\Forms\Containers\IDescriptionFormContainerFactory

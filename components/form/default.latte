@@ -1,25 +1,32 @@
-{form $formName}
-	<div n:if="$form->getErrors()" n:foreach="$form->getErrors() as $error" class="alert alert-danger"> {$error} </div>
-	
-	{foreach $formGroups as $formGroup}
-		{if $formGroup->getOption('formContainers') && count($formGroup->getOption('formContainers')) > 0}
-			{if $formGroup->getOption('container')}
-				{var $container = $formGroup->getOption('container')}
-			{else}
-				{var $container = $defaultContainer}
-			{/if}
-			
-			{$container->startTag()|noescape}
-				<div n:if="$formGroup->getOption('label')" class="lead"> {$formGroup->getOption('label')} </div>
+{snippet form}
+    {form $formName}
+        <div n:if="$form->getErrors()" n:foreach="$form->getErrors() as $error" class="alert alert-danger"> {$error} </div>
 
-				{foreach $formGroup->getOption('formContainers') as $formContainer}
-					{var $formContainerName = $formName . '-' . $formContainer}
-					
-					{if in_array($formContainerName, $formContainers)}
-						{control $formContainerName}
-					{/if}
-				{/foreach}
-			{$container->endTag()|noescape}
-		{/if}
-	{/foreach}
-{/form}
+        {foreach $formGroups as $formGroup}
+            {if $formGroup->getOption('formContainers') && count($formGroup->getOption('formContainers')) > 0}
+                {if $formGroup->getOption('container')}
+                    {var $container = $formGroup->getOption('container')}
+                {else}
+                    {var $container = $defaultContainer}
+                {/if}
+
+                
+                    {$container->startTag()|noescape}
+                        <div n:if="$formGroup->getOption('label')" class="lead"> {$formGroup->getOption('label')} </div>
+
+                        {foreach $formGroup->getOption('formContainers') as $formContainer}
+                            
+                            {var $formContainerName = $formName . '-' . $formContainer}
+                            {snippet $formContainer}
+
+                            {if in_array($formContainerName, $formContainers)}
+                                {control $formContainerName}
+                            {/if}
+                            
+                {/snippet}
+                        {/foreach}
+                    {$container->endTag()|noescape}
+            {/if}
+        {/foreach}
+    {/form}
+{/snippet}

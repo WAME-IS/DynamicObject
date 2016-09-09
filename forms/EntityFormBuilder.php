@@ -71,7 +71,6 @@ abstract class EntityFormBuilder extends BaseFormBuilder
             $form->getPresenter()->flashMessage(_('Successfully updated.'), 'success');
         } else {
             $entity = $this->create($form, $values);
-
             $this->getRepository()->create($entity);
             $this->getRepository()->onCreate($form, $values, $entity);
 

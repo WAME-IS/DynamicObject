@@ -44,6 +44,9 @@ abstract class LangEntityFormBuilder extends EntityFormBuilder
         $langEntity->setLang($lang);
         $entity->addLang($lang, $langEntity);
         
+        
+        \Tracy\Debugger::barDump($entity);
+        
         return $entity;
     }
     

@@ -7,9 +7,6 @@ class LangEntityForm extends EntityForm
     /** @var BaseEntity[] */
     private $langEntities = [];
     
-    /** @var BaseEntity */
-    private $langEntity;
-    
     
     /**
      * Get lang entity
@@ -21,9 +18,9 @@ class LangEntityForm extends EntityForm
         $lang = $lang ?: $this->getRepository()->lang;
         
         if(!isset($this->langEntities[$lang])) {
-            $this->langEntity = $this->repository->getNewLangEntity();
+            $this->langEntities[$lang] = $this->repository->getNewLangEntity();
         }
-        return $this->langEntity;
+        return $this->langEntities[$lang];
     }
     
     /**
@@ -32,9 +29,10 @@ class LangEntityForm extends EntityForm
      * @param BaseEntity $langEntity    entity
      * @return LangEntityForm   this
      */
-    public function setLangEntity(BaseEntity $langEntity)
+    public function setLangEntity(BaseEntity $langEntity, $lang = null)
     {
-        $this->langEntity = $langEntity;
+        $lang = $lang ?: $this->getRepository()->lang;
+        $this->langEntities[$lang] = $langEntity;
         
         return $this;
     }
