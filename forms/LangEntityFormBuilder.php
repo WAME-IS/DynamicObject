@@ -14,6 +14,24 @@ use Wame\DynamicObject\Forms\LangEntityForm;
  */
 abstract class LangEntityFormBuilder extends EntityFormBuilder
 {
+    /** @var BaseEntity */
+    protected $langEntity;
+    
+    
+    /**
+     * Set entity
+     * 
+     * @param BaseEntity $langEntity    entity
+     * @return \Wame\DynamicObject\Forms\EntityFormBuilder
+     */
+    public function setLangEntity($langEntity)
+    {
+        $this->langEntity = $langEntity;
+        
+        return $this;
+    }
+    
+    
     /** {@inheritDoc} */
     protected function create($form, $values)
     {

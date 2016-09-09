@@ -106,8 +106,7 @@ abstract class BaseFormBuilder extends PriorityRegister
      */
     protected function attachFormContainers($form, $domain = null)
     {
-        foreach($this->getByDomain($domain) as $name => $containerFactory)
-        {
+        foreach($this->getByDomain($domain) as $name => $containerFactory) {
             $container = $containerFactory->create();
             
             $form->addComponent($container, $name); // TODO: default nazov

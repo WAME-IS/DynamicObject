@@ -11,11 +11,20 @@ abstract class EntityFormBuilder extends BaseFormBuilder
 	const ACTION_EDIT = 'edit';
 	
     
+    /** @var BaseEntity */
+    protected $entity;
+    
+    
     /** {@inheritDoc} */
 	public function build($domain = null)
 	{
         $form = $this->createForm();
 		
+        if($this->entity) {
+            $form->setEntity($this->entity);
+            unset($this->entity);
+        }
+        
         $entity = $form->getEntity();
         
 		$form->setRenderer($this->getFormRenderer());
@@ -35,6 +44,19 @@ abstract class EntityFormBuilder extends BaseFormBuilder
         
 		return $form;
 	}
+    
+    /**
+     * Set entity
+     * 
+     * @param BaseEntity $entity    entity
+     * @return \Wame\DynamicObject\Forms\EntityFormBuilder
+     */
+    public function setEntity($entity)
+    {
+        $this->entity = $entity;
+        
+        return $this;
+    }
     
 	/** {@inheritDoc} */
     public function submit($form, $values)
