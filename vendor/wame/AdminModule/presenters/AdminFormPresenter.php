@@ -2,9 +2,12 @@
 
 namespace Wame\DynamicObject\Vendor\Wame\AdminModule\Presenters;
 
+use Wame\DynamicObject\Forms\BaseFormBuilder;
+
 class AdminFormPresenter extends \App\AdminModule\Presenters\BasePresenter
 {
-    public $form;
+    /** @var BaseFormBuilder */
+    public $formBuilder;
     
     
     /**
@@ -14,18 +17,7 @@ class AdminFormPresenter extends \App\AdminModule\Presenters\BasePresenter
 	 */
 	protected function createComponentForm() 
 	{
-		return $this->form->build();
+		return $this->formBuilder->build($this->id);
 	}
-    
-//    protected function addContainers($form, $domain = null)
-//    {
-//        $i = 0;
-//        foreach($this->formRegister->getByDomain($domain) as $container)
-//        {
-//            $form->addFormContainer($container->create(), $i++);
-//        }
-//        
-//        $this->form = $form;
-//    }
     
 }
