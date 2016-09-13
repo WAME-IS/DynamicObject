@@ -20,21 +20,23 @@ class TitleContainer extends BaseContainer
     }
 
     /** {@inheritDoc} */
-	public function setDefaultValues($entity, $langEntity)
+	public function setDefaultValues($entity, $langEntity = null)
 	{
-		$this['title']->setDefaultValue($langEntity->getTitle());
+        $this['title']->setDefaultValue($langEntity ? $langEntity->getTitle() : $entity->getTitle());
 	}
 
     /** {@inheritDoc} */
     public function create($form, $values)
     {
-        $form->getLangEntity()->setTitle($values['title']);
+        $entity = method_exists($form, 'getLangEntity') ? $form->getLangEntity(): $form->getEntity();
+        $entity->setTitle($values['title']);
     }
 
     /** {@inheritDoc} */
     public function update($form, $values)
     {
-        $form->getLangEntity()->setTitle($values['title']);
+        $entity = method_exists($form, 'getLangEntity') ? $form->getLangEntity(): $form->getEntity();
+        $entity->setTitle($values['title']);
     }
 
 }

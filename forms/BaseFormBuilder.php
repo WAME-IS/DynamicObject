@@ -5,9 +5,14 @@ namespace Wame\DynamicObject\Forms;
 use Nette\Application\UI\Form;
 use Wame\Core\Registers\PriorityRegister;
 use Wame\DynamicObject\Registers\Types\IBaseContainer;
+use Nette\Forms\IFormRenderer;
 
 abstract class BaseFormBuilder extends PriorityRegister
 {
+    /** @var IFormRenderer */
+    private $formRenderer;
+    
+    
     public function __construct()
     {
         parent::__construct(IBaseContainer::class);
@@ -24,12 +29,12 @@ abstract class BaseFormBuilder extends PriorityRegister
 	{
         $form = $this->createForm();
 		
-//		$form->setRenderer($this->getFormRenderer());
+		$form->setRenderer($this->getFormRenderer());
 		$this->attachFormContainers($form, $domain);
         
-        if($this->getSubmitText()) {
-            $form->addSubmit('submit', $this->getSubmitText());
-        }
+//        if($this->getSubmitText()) {
+//            $form->addSubmit('submit', $this->getSubmitText());
+//        }
         
         $form->onSuccess[] = [$this, 'formSucceeded'];
         
@@ -68,6 +73,19 @@ abstract class BaseFormBuilder extends PriorityRegister
      */
     public function submit($form, $values) {}
     
+    /**
+     * Set renderer
+     * 
+     * @param IFormRenderer $formRenderer   form renderer
+     * @return \Wame\DynamicObject\Forms\BaseFormBuilder
+     */
+    public function setFormRenderer(\Nette\Forms\IFormRenderer $formRenderer)
+    {
+        $this->formRenderer($formRenderer);
+        
+        return $this;
+    }
+    
     
     /**
      * Get submit text
@@ -79,12 +97,15 @@ abstract class BaseFormBuilder extends PriorityRegister
     /**
      * Get form renderer
      * 
-     * @return \Tomaj\Form\Renderer\BootstrapVerticalRenderer
+     * @return IFormRenderer
      */
     protected function getFormRenderer()
     {
-        return new \Tomaj\Form\Renderer\BootstrapVerticalRenderer;
-//        return new \Wame\DynamicObject\Renderers\TemplateFormRenderer;
+        if($this->formRenderer) {
+            return $this->formRenderer;
+        } else {
+            return new \Wame\DynamicObject\Renderers\TemplateFormRenderer;
+        }
     }
     
     /**

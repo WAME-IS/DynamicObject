@@ -30,15 +30,15 @@ abstract class EntityFormBuilder extends BaseFormBuilder
 		$form->setRenderer($this->getFormRenderer());
 		$this->attachFormContainers($form, $domain);
         
-        if($entity->id) {
-            if($this->getUpdateText()) {
-                $form->addSubmit('submit', $this->getUpdateText());
-            }
-        } else {
-            if($this->getCreateText()) {
-                $form->addSubmit('submit', $this->getCreateText());
-            }
-        }
+//        if($entity->id) {
+//            if($this->getUpdateText()) {
+//                $form->addSubmit('submit', $this->getUpdateText());
+//            }
+//        } else {
+//            if($this->getCreateText()) {
+//                $form->addSubmit('submit', $this->getCreateText());
+//            }
+//        }
         
         $form->onSuccess[] = [$this, 'formSucceeded'];
         
