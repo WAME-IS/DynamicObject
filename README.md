@@ -8,21 +8,11 @@ Formulare
 
 ## Table of Contents
 
-- [Security](#security)
-- [Background](#background)
 - [Installation](#installation)
 - [Usage](#usage)
 - [FAQ](#faq)
 - [Contribute](#contribute)
 - [License](#license)
-
-
-## Security
-
-
-## Background
-
-
 
 
 ## Installation
@@ -35,7 +25,9 @@ composer require wame/DynamicObject:0.0.1
 composer.json:
 ```
 {
+    // ...
     "require": {
+        // ...
         "wame/DynamicObject" : "0.0.1"
     }
 }
@@ -44,7 +36,7 @@ composer.json:
 
 ## Usage
 
-*MyFormBuilder*
+*MyFormBuilder.php (FormBuilder)*
 ```
 <?php
 
@@ -70,36 +62,36 @@ class MyFormBuilder extends LangEntityFormBuilder
     /** {@inheritDoc} */
     public function getRepository()
     {
-        return $this->parameterRepository;
+        return $this->myRepository;
     }
 	
 }
 ```
 
-*config.neon*
+*config.neon (Config)*
 ```
 services:
-    ParameterFormBuilder:
+    MyFormBuilder:
         class: Wame\MyModule\Forms\MyFormBuilder
         setup:
-            - add(@Wame\DynamicObject\Forms\Containers\ITitleFormContainerFactory, 'TitleFormContainer', {priority: 90})
+            - add(@Wame\DynamicObject\Forms\Containers\ITitleContainerFactory, 'TitleContainer', {priority: 90})
 ```
 
-*container*
+*ITitleContainerFactory (Container)*
 ```
 <?php
 
 namespace Wame\DynamicObject\Forms\Containers;
 
-use Wame\DynamicObject\Registers\Types\IBaseFormContainerType;
+use Wame\DynamicObject\Registers\Types\IBaseContainer;
 
-interface ITitleFormContainerFactory extends IBaseFormContainerType
+interface ITitleContainerFactory extends IBaseContainer
 {
 	/** @return TitleFormContainer */
 	public function create();
 }
 
-class TitleFormContainer extends BaseFormContainer
+class TitleFormContainer extends BaseContainer
 {
     /** {@inheritDoc} */
     public function configure() 

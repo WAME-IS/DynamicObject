@@ -2,7 +2,7 @@
 
 namespace Wame\DynamicObject\Registers\Types;
 
-interface IBaseFormContainerType
+interface IBaseContainer
 {
     
 }

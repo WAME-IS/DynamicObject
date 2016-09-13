@@ -4,13 +4,13 @@ namespace Wame\DynamicObject\Forms;
 
 use Nette\Application\UI\Form;
 use Wame\Core\Registers\PriorityRegister;
-use Wame\DynamicObject\Registers\Types\IBaseFormContainerType;
+use Wame\DynamicObject\Registers\Types\IBaseContainer;
 
 abstract class BaseFormBuilder extends PriorityRegister
 {
     public function __construct()
     {
-        parent::__construct(IBaseFormContainerType::class);
+        parent::__construct(IBaseContainer::class);
     }
     
     
@@ -24,7 +24,7 @@ abstract class BaseFormBuilder extends PriorityRegister
 	{
         $form = $this->createForm();
 		
-		$form->setRenderer($this->getFormRenderer());
+//		$form->setRenderer($this->getFormRenderer());
 		$this->attachFormContainers($form, $domain);
         
         if($this->getSubmitText()) {
@@ -84,6 +84,7 @@ abstract class BaseFormBuilder extends PriorityRegister
     protected function getFormRenderer()
     {
         return new \Tomaj\Form\Renderer\BootstrapVerticalRenderer;
+//        return new \Wame\DynamicObject\Renderers\TemplateFormRenderer;
     }
     
     /**
@@ -93,7 +94,7 @@ abstract class BaseFormBuilder extends PriorityRegister
 	 */
 	protected function createForm()
 	{
-		$form = new Form;
+		$form = new BaseForm;
 		
 		return $form;
 	}
@@ -106,10 +107,18 @@ abstract class BaseFormBuilder extends PriorityRegister
      */
     protected function attachFormContainers($form, $domain = null)
     {
-        foreach($this->getByDomain($domain) as $name => $containerFactory) {
+//        foreach($this->getByDomain($domain) as $name => $containerFactory) {
+//            $container = $containerFactory->create();
+//            \Tracy\Debugger::barDump($containerFactory);
+//            $form->addComponent($container, $name); // TODO: default nazov
+//            $this->setDefaultValue($form, $container);
+//        }
+        
+        foreach($this->array as $item) {
+            $containerFactory = $item['service'];
+            $containerName = $item['name'];
             $container = $containerFactory->create();
-            
-            $form->addComponent($container, $name); // TODO: default nazov
+            $form->addComponent($container, $containerName);
             $this->setDefaultValue($form, $container);
         }
     }

@@ -6,6 +6,7 @@ services:
     - Wame\DynamicObject\Components\IFormControlFactory
 
     # Containers
-    - Wame\DynamicObject\Forms\Containers\IIconFormContainerFactory
-    - Wame\DynamicObject\Forms\Containers\ITitleFormContainerFactory
-    - Wame\DynamicObject\Forms\Containers\IDescriptionFormContainerFactory
+    - Wame\DynamicObject\Forms\Containers\IIconContainerFactory
+    - Wame\DynamicObject\Forms\Containers\ITitleContainerFactory
+    - Wame\DynamicObject\Forms\Containers\IDescriptionContainerFactory
+    - Wame\DynamicObject\Forms\Containers\ISubmitContainerFactory

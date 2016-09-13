@@ -1,4 +1,5 @@
+{var $description = $_form['DescriptionContainer']['description']}
 <div class="form-group">
-	<label n:name="description">{label description/}</label>
-	<textarea class="form-control" n:name="description"></textarea>
+	{label $description/}
+	<textarea class="form-control" n:name="$description"></textarea>
 </div>

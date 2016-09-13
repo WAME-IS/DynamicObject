@@ -2,11 +2,11 @@
 
 namespace Wame\DynamicObject\Forms;
 
-use Nette\Application\UI\Form;
+use Wame\DynamicObject\Forms\BaseForm;
 use Wame\Core\Entities\BaseEntity;
 use Wame\Core\Repositories\BaseRepository;
 
-class EntityForm extends Form
+class EntityForm extends BaseForm
 {
     /** @var BaseEntity */
     private $entity;

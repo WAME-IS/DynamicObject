@@ -8,7 +8,7 @@ use Nette\Application\UI;
 use Wame\Utils\Latte\FindTemplate;
 use Wame\Utils\Strings;
 
-abstract class BaseFormContainer extends Container 
+abstract class BaseContainer extends Container 
 {
     /** @var UI\ITemplateFactory */
     private $templateFactory;
@@ -59,7 +59,6 @@ abstract class BaseFormContainer extends Container
     public function render() 
 	{
 		$this->template = $this->getTemplate();
-		
         $this->template->_form = $this->getForm();
         $this->template->render($this->getTemplateFile());
     }
@@ -139,7 +138,7 @@ abstract class BaseFormContainer extends Container
      * @param UI\Form $form form
      * @param array $values values
      */
-    abstract public function update($form, $values);
+    public function update($form, $values) {}
     
     /**
      * Create
@@ -147,7 +146,7 @@ abstract class BaseFormContainer extends Container
      * @param UI\Form $form form
      * @param array $values values
      */
-    abstract public function create($form, $values);
+    public function create($form, $values) {}
     
     
     /**
@@ -201,7 +200,7 @@ abstract class BaseFormContainer extends Container
     /**
      * Append form container to current group
      * 
-     * @return \Wame\DynamicObject\Forms\Containers\BaseFormContainer
+     * @return \Wame\DynamicObject\Forms\Containers\BaseContainer
      */
     private function appendFormContainerToCurrentGroup()
 	{

@@ -1,4 +1,5 @@
+{var $icon = $_form['IconContainer']['icon']}
 <div class="form-group">
-	<label n:name="description">{label description/}</label>
-	<textarea class="form-control" n:name="description"></textarea>
+	{label $icon/}
+    <input class="form-control" n:name="$icon">
 </div>

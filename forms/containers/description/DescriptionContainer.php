@@ -2,15 +2,15 @@
 
 namespace Wame\DynamicObject\Forms\Containers;
 
-use Wame\DynamicObject\Registers\Types\IBaseFormContainerType;
+use Wame\DynamicObject\Registers\Types\IBaseContainer;
 
-interface IDescriptionFormContainerFactory extends IBaseFormContainerType
+interface IDescriptionContainerFactory extends IBaseContainer
 {
-	/** @return DescriptionFormContainer */
+	/** @return DescriptionContainer */
 	public function create();
 }
 
-class DescriptionFormContainer extends BaseFormContainer
+class DescriptionContainer extends BaseContainer
 {
     /** {@inheritDoc} */
     public function configure() 
