@@ -46,6 +46,12 @@ class FormControl extends BaseControl
 		$this->addComponent($this->form->setId($this->id)->build(), $formName);
 	}
 
+    
+    public function handleRedraw()
+    {
+        \Tracy\Debugger::fireLog("redraw zo snippety");
+        $this->redrawControl('form');
+    }
 
 	public function render()
 	{		

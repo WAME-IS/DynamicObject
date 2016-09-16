@@ -63,15 +63,6 @@ abstract class BaseContainer extends Container
         $this->template->render($this->getTemplateFile());
     }
     
-    public function renderToString()
-    {
-        $latte = new \Latte\Engine;
-        
-        Nette\Bridges\ApplicationLatte\UIMacros::install($latte->getCompiler());
-        
-        return $latte->renderToString($this->getTemplateFile());
-    }
-    
     /**
      * https://api.nette.org/2.3.7/source-Application.UI.Control.php.html#45
      */
