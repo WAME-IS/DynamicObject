@@ -9,15 +9,18 @@ class AdminFormPresenter extends \App\AdminModule\Presenters\BasePresenter
     /** @var BaseFormBuilder */
     public $formBuilder;
     
+    /** @var BaseEntity */
+    protected $entity;
+    
     
     /**
-	 * Create parameter
+	 * Create component form
 	 * 
-	 * @return ParameterForm	form
+	 * @return BaseForm	form
 	 */
 	protected function createComponentForm() 
 	{
-		return $this->formBuilder->build($this->id);
+		return $this->formBuilder->setEntity($this->entity)->build($this->id);
 	}
     
 }

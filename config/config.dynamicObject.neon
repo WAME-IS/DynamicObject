@@ -8,5 +8,9 @@ services:
     # Containers
     - Wame\DynamicObject\Forms\Containers\IIconContainerFactory
     - Wame\DynamicObject\Forms\Containers\ITitleContainerFactory
+    - Wame\DynamicObject\Forms\Containers\INameContainerFactory
     - Wame\DynamicObject\Forms\Containers\IDescriptionContainerFactory
+    - Wame\DynamicObject\Forms\Containers\IMainContainerFactory
+    - Wame\DynamicObject\Forms\Containers\ISlugContainerFactory
+    - Wame\DynamicObject\Forms\Containers\IPublishDateContainerFactory
     - Wame\DynamicObject\Forms\Containers\ISubmitContainerFactory
