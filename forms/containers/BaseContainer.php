@@ -94,7 +94,7 @@ abstract class BaseContainer extends Container
      */
     public function setDir($dir)
     {
-        $this->dir = $dir;
+        $this->dir = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $dir);
         
         return $this;
     }
