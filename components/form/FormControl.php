@@ -49,7 +49,6 @@ class FormControl extends BaseControl
     
     public function handleRedraw()
     {
-        \Tracy\Debugger::fireLog("redraw zo snippety");
         $this->redrawControl('form');
     }
 

@@ -1,3 +1,4 @@
+<ul class="errors" n:if="$_form->hasErrors()"> <li n:foreach="$_form->errors as $error">{$error}</li> </ul>
 {var $title = $_form['TitleContainer']['title']}
 <div class="form-group">
     {label $title/}

@@ -14,3 +14,6 @@ services:
     - Wame\DynamicObject\Forms\Containers\ISlugContainerFactory
     - Wame\DynamicObject\Forms\Containers\IPublishDateContainerFactory
     - Wame\DynamicObject\Forms\Containers\ISubmitContainerFactory
+
+    # Groups
+    - Wame\DynamicObject\Forms\Groups\IBasicGroupFactory

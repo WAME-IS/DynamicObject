@@ -5,6 +5,7 @@ namespace Wame\DynamicObject\Renderers;
 use Nette;
 use Nette\Forms\Rendering\DefaultFormRenderer;
 use Wame\DynamicObject\Forms\Containers\BaseContainer;
+use Nette\Utils\Html;
 
 class TemplateFormRenderer extends DefaultFormRenderer
 {
@@ -35,10 +36,14 @@ class TemplateFormRenderer extends DefaultFormRenderer
     /** {@inheritDoc} */
     public function renderBody()
     {
-        foreach($this->form->components as $component) {
-            if($component instanceof BaseContainer) {
-                $component->render();
+        foreach ($this->form->getGroups() as $group) {
+            echo ($group instanceof BaseGroup) ? $group->getGroupTag()->startTag() : Html::el('fieldset')->startTag();
+            foreach($this->form->components as $component) {
+                if($component instanceof BaseContainer && $component->currentGroup == $group) {
+                    $component->render();
+                }
             }
+            echo ($group instanceof BaseGroup) ? $group->getGroupTag()->endTag() : Html::el('fieldset')->endTag();
         }
     }
     

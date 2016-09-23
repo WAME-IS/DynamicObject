@@ -132,6 +132,7 @@ abstract class BaseFormBuilder extends PriorityRegister
             $containerFactory = $item['service'];
             $containerName = $item['name'];
             $container = $containerFactory->create();
+            
             $form->addComponent($container, $containerName);
             $this->setDefaultValue($form, $container);
         }

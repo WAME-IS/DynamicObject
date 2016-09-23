@@ -18,6 +18,9 @@ abstract class BaseContainer extends Container
 
     /** @var string */
     private $templateFile;
+    
+    /** @var string */
+    private $dir;
 
 
     public function __construct()
@@ -84,6 +87,19 @@ abstract class BaseContainer extends Container
     }
     
     /**
+     * Set directory
+     * 
+     * @param string $dir
+     * @return \Wame\DynamicObject\Forms\Containers\BaseContainer   this
+     */
+    public function setDir($dir)
+    {
+        $this->dir = $dir;
+        
+        return $this;
+    }
+    
+    /**
 	 * Set form container template file
 	 * 
 	 * @param string $template
@@ -104,8 +120,8 @@ abstract class BaseContainer extends Container
 	public function getTemplateFile()
 	{
 		$filePath = dirname($this->getReflection()->getFileName());
-		$dir = explode(DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'wame' . DIRECTORY_SEPARATOR, $filePath, 2)[1];
-		
+		$dir = $this->dir ?: explode(DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'wame' . DIRECTORY_SEPARATOR, $filePath, 2)[1];
+        
 		$findTemplate = new FindTemplate($dir, $this->templateFile);
 		$file = $findTemplate->find();
 		
@@ -163,7 +179,7 @@ abstract class BaseContainer extends Container
 			
             // TODO: co s tymto
 			if (!$this->currentGroup) {
-				$this->getForm()->addGroup();
+				$object->addGroup();
 			}
 
             $this->configure();
