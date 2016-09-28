@@ -22,7 +22,7 @@ class TitleContainer extends BaseContainer
     /** {@inheritDoc} */
 	public function setDefaultValues($entity, $langEntity = null)
 	{
-        $this['title']->setDefaultValue($langEntity ? $langEntity->getTitle() : $entity->getTitle());
+        $this['title']->setDefaultValue($entity->getTitle());
 	}
 
     /** {@inheritDoc} */

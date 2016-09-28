@@ -23,8 +23,7 @@ class DescriptionContainer extends BaseContainer
     /** {@inheritDoc} */
 	public function setDefaultValues($entity, $langEntity = null)
 	{
-        $description = $langEntity ? $langEntity->getDescription() : $entity->getDescription();
-		$this['description']->setDefaultValue($description);
+		$this['description']->setDefaultValue($entity->getDescription());
 	}
     
     /** {@inheritDoc} */

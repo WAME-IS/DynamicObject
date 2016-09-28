@@ -49,10 +49,12 @@ abstract class BaseContainer extends Container
      */
     public function formContainerSucceeded($form, $values)
     {
-        if ($form->getEntity()->getId()) {
-            $this->update($form, $values);
-        } else {
-            $this->create($form, $values);
+        if($form instanceof \Wame\DynamicObject\Forms\EntityForm) {
+            if ($form->getEntity()->getId()) {
+                $this->update($form, $values);
+            } else {
+                $this->create($form, $values);
+            }
         }
     }
     
