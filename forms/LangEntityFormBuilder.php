@@ -19,7 +19,7 @@ abstract class LangEntityFormBuilder extends EntityFormBuilder
     
     
     /**
-     * Set entity
+     * Set lang entity
      * 
      * @param BaseEntity $langEntity    entity
      * @return \Wame\DynamicObject\Forms\EntityFormBuilder
