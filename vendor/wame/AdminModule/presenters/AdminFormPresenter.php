@@ -20,7 +20,10 @@ class AdminFormPresenter extends \App\AdminModule\Presenters\BasePresenter
 	 */
 	protected function createComponentForm() 
 	{
-		return $this->formBuilder->setEntity($this->entity)->build($this->id);
+		return $this->formBuilder
+//                ->setFormRenderer(new \Wame\Core\Models\MaterialDesignRenderer)
+                ->setEntity($this->entity)
+                ->build($this->id);
 	}
     
 }
