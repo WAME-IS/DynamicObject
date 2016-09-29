@@ -50,6 +50,7 @@ abstract class BaseFormBuilder extends PriorityRegister
      */
 	public function formSucceeded(Form $form, $values)
 	{
+        \Tracy\Debugger::barDump($form);
 		$presenter = $form->getPresenter();
 
 		try {
@@ -129,12 +130,14 @@ abstract class BaseFormBuilder extends PriorityRegister
     protected function attachFormContainers($form, $domain = null)
     {
         foreach($this->array as $item) {
-            $containerFactory = $item['service'];
-            $containerName = $item['name'];
-            $container = $containerFactory->create();
-            
-            $form->addComponent($container, $containerName);
-            $this->setDefaultValue($form, $container);
+            if($item['parameters']['domain'] == null || $item['parameters']['domain'] == $domain) {
+                $containerFactory = $item['service'];
+                $containerName = $item['name'];
+                $container = $containerFactory->create();
+
+                $form->addComponent($container, $containerName);
+                $this->setDefaultValue($form, $container);
+            }
         }
     }
     

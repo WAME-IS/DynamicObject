@@ -14,7 +14,7 @@ abstract class BaseContainer extends Container
     private $templateFactory;
 
     /** @var UI\ITemplate */
-    private $template;
+    protected $template;
 
     /** @var string */
     private $templateFile;
@@ -56,6 +56,11 @@ abstract class BaseContainer extends Container
                 $this->create($form, $values);
             }
         }
+    }
+    
+    public function attatch()
+    {
+        \Tracy\Debugger::barDump("attach");
     }
     
     /**

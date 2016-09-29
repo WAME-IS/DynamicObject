@@ -24,6 +24,9 @@ abstract class BaseFormContainer extends Container
 	
 	/** @var array */
 	public $yesOrNo;
+    
+    /** @var string */
+    private $dir;
 
 
     public function __construct()
@@ -168,6 +171,19 @@ abstract class BaseFormContainer extends Container
         return $templateFactory->createTemplate(null);
     }
 
+    
+    /**
+     * Set directory
+     * 
+     * @param string $dir
+     * @return \Wame\DynamicObject\Forms\Containers\BaseContainer   this
+     */
+    public function setDir($dir)
+    {
+        $this->dir = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $dir);
+        
+        return $this;
+    }
 	
 	/**
 	 * Set form container template file
@@ -191,8 +207,9 @@ abstract class BaseFormContainer extends Container
 	public function getTemplateFile()
 	{
 		$filePath = dirname($this->getReflection()->getFileName());
-		$dir = explode(DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'wame' . DIRECTORY_SEPARATOR, $filePath, 2)[1];
-		
+//		$dir = explode(DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'wame' . DIRECTORY_SEPARATOR, $filePath, 2)[1];
+		$dir = $this->dir ?: explode(DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'wame' . DIRECTORY_SEPARATOR, $filePath, 2)[1];
+        
 		$findTemplate = new FindTemplate($dir, $this->templateFile);
 		$file = $findTemplate->find();
 		

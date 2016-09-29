@@ -35,6 +35,7 @@ abstract class LangEntityFormBuilder extends EntityFormBuilder
     /** {@inheritDoc} */
     protected function create($form, $values)
     {
+        // TODO: zapracovat iterovanie vsetkymi jazykmi
         $lang = $this->getRepository()->lang;
         
         $entity = $form->getEntity();

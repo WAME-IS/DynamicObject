@@ -41,10 +41,18 @@ abstract class EntityFormBuilder extends BaseFormBuilder
 //        }
         
         $form->onSuccess[] = [$this, 'formSucceeded'];
+        $form->onError[] = [$this, 'formError'];
         
 		return $form;
 	}
     
+    public function formError($form)
+    {
+        \Tracy\Debugger::barDump($form);
+        \Tracy\Debugger::barDump($form->getErrors());
+    }
+
+
     /**
      * Set entity
      * 
