@@ -2,6 +2,7 @@
 
 namespace Wame\DynamicObject\Forms\Containers;
 
+use Nette\Utils\Strings;
 use Wame\DynamicObject\Registers\Types\IBaseContainer;
 
 interface ISlugContainerFactory extends IBaseContainer
@@ -28,14 +29,14 @@ class SlugContainer extends BaseContainer
     public function create($form, $values)
     {
         $entity = method_exists($form, 'getLangEntity') ? $form->getLangEntity(): $form->getEntity();
-        $entity->setSlug($values['slug']?:(Strings::webalize($values['title'])));
+        $entity->setSlug($values['slug']?:(Strings::webalize($form->values['TitleContainer']['title'])));
     }
 
     /** {@inheritDoc} */
     public function update($form, $values)
     {
         $entity = method_exists($form, 'getLangEntity') ? $form->getLangEntity(): $form->getEntity();
-        $entity->setSlug($values['slug']?:(Strings::webalize($values['title'])));
+        $entity->setSlug($values['slug']?:(Strings::webalize($form->values['TitleContainer']['title'])));
     }
 
 }
