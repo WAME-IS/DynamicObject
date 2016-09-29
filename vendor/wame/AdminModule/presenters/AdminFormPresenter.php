@@ -2,9 +2,10 @@
 
 namespace Wame\DynamicObject\Vendor\Wame\AdminModule\Presenters;
 
+use App\AdminModule\Presenters\BasePresenter;
 use Wame\DynamicObject\Forms\BaseFormBuilder;
 
-class AdminFormPresenter extends \App\AdminModule\Presenters\BasePresenter
+class AdminFormPresenter extends BasePresenter
 {
     /** @var BaseFormBuilder */
     public $formBuilder;
