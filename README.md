@@ -21,7 +21,7 @@ $ composer require wame/DynamicObject:0.0.1
 or
 
 *composer.json:*
-```
+```NEON
 {
     // ...
     "require": {
@@ -43,7 +43,7 @@ To obtaining form component, module provide builders. Each builder provide funct
 Builder which doesn't save anything to database, there is nothing like `create`/`update` ... just `submit`.
 
 *Builder:*
-```
+```PHP
 class FilterFormBuilder extends BaseFormBuilder
 {
     /** {@inheritDoc} */
@@ -56,7 +56,7 @@ class FilterFormBuilder extends BaseFormBuilder
 ```
 
 *Component:*
-```
+```PHP
 protected function createComponentSortForm()
 {
     $form = $this->articleFormBuilder->build();
@@ -80,7 +80,7 @@ Builder working with translatable data.
 In order to handle default values, you need call `setEntity` and `setLangEntity`.
 
 *MyFormBuilder.php (FormBuilder)*
-```
+```PHP
 <?php
 
 namespace Wame\MyModule\Forms;
@@ -116,7 +116,7 @@ class MyFormBuilder extends LangEntityFormBuilder
 Every form container shoud be in this structure: `forms\conintainers\<containerName>\<ContainerName>Container` (e.g.: `forms\containers\title\TitleContainer`), to achieve consistence .
 
 *ITitleContainerFactory (Container)*
-```
+```PHP
 <?php
 
 namespace Wame\DynamicObject\Forms\Containers;
@@ -168,7 +168,7 @@ class TitleContainer extends BaseContainer
 * domain - value that must be equals with value provided in `build` method
 
 *config.neon (Config)*
-```
+```NEON
 services:
     MyFormBuilder:
         class: Wame\MyModule\Forms\MyFormBuilder
@@ -187,7 +187,7 @@ Forms can be rendered automatically or by `TemplateFormRender`, which render con
 Templates are located in same folder as container. Default name is `default.latte`.
 
 *example:*
-```
+```HTML
 {var $title = $_form['TitleContainer']['title']}
 <div class="form-group">
     {label $title/}
@@ -199,7 +199,7 @@ Templates are located in same folder as container. Default name is `default.latt
 
 It's possible create form group in container's method `configure`:
 
-```
+```PHP
 /** {@inheritDoc} */
 public function configure() 
 {
