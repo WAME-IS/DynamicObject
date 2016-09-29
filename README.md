@@ -8,29 +8,19 @@ Module which handle forms.
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Usage](#usage)
-    - [Forms](#forms)
-        - [BaseFormBuilder](#baseFormBuilder)
-        - [EntityFormBuilder](#entityFormBuilder)
-        - [LangEntityFormBuilder](#langEntityFormBuilder)
-    - [Containers](#containers)
-        - [Name](#name)
-        - [Templates](#templates)
-        - [Groups](#groups)
-- [FAQ](#faq)
-- [Contribute](#contribute)
-- [License](#license)
+[TOC]
 
 
 ## Installation
 
-Add the bundle to your dependecies:
+*command:*
 ```
-composer require wame/DynamicObject:0.0.1
+$ composer require wame/DynamicObject:0.0.1
 ```
 
-composer.json:
+or
+
+*composer.json:*
 ```
 {
     // ...
@@ -149,21 +139,23 @@ class TitleContainer extends BaseContainer
     }
 
     /** {@inheritDoc} */
-	public function setDefaultValues($entity, $langEntity)
+	public function setDefaultValues($entity, $langEntity = null)
 	{
-		$this['title']->setDefaultValue($langEntity->getTitle());
+        $this['title']->setDefaultValue($entity->getTitle());
 	}
 
     /** {@inheritDoc} */
     public function create($form, $values)
     {
-        $form->getLangEntity()->setTitle($values['title']);
+        $entity = method_exists($form, 'getLangEntity') ? $form->getLangEntity(): $form->getEntity();
+        $entity->setTitle($values['title']);
     }
 
     /** {@inheritDoc} */
     public function update($form, $values)
     {
-        $form->getLangEntity()->setTitle($values['title']);
+        $entity = method_exists($form, 'getLangEntity') ? $form->getLangEntity(): $form->getEntity();
+        $entity->setTitle($values['title']);
     }
 
 }
@@ -171,9 +163,9 @@ class TitleContainer extends BaseContainer
 
 #### Config
 
-parameters:
-- priority - containers with higher priority are top
-- domain - value that must be equals with value provided in `build` method
+**parameters:**
+* priority - containers with higher priority are top
+* domain - value that must be equals with value provided in `build` method
 
 *config.neon (Config)*
 ```
