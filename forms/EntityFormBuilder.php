@@ -3,10 +3,13 @@
 namespace Wame\DynamicObject\Forms;
 
 use Nette\Application\UI\Form;
-use Tracy\Debugger;
 use Wame\Core\Entities\BaseEntity;
-use Wame\DynamicObject\Forms\BaseFormBuilder;
 
+/**
+ * Class EntityFormBuilder
+ *
+ * @package Wame\DynamicObject\Forms
+ */
 abstract class EntityFormBuilder extends BaseFormBuilder
 {
     const ACTION_CREATE = 'create';
@@ -52,8 +55,6 @@ abstract class EntityFormBuilder extends BaseFormBuilder
 	/** {@inheritDoc} */
     public function submit(BaseForm $form, array $values)
     {
-        Debugger::barDump("submit");
-
         $entity = $form->getEntity();
         
         if($entity->id) {
@@ -73,8 +74,6 @@ abstract class EntityFormBuilder extends BaseFormBuilder
 
     public function postSubmit(BaseForm $form, array $values)
     {
-        Debugger::barDump("postSubmit");
-
         $entity = $form->getEntity();
 
         if($entity->id) {
@@ -134,7 +133,7 @@ abstract class EntityFormBuilder extends BaseFormBuilder
      * 
      * @return  BaseRepository  repository
      */
-    abstract function getRepository();
+    protected abstract function getRepository();
     
     /** {@inheritDoc} */
     protected function setDefaultValue($form, $container)

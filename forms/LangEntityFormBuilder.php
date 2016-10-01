@@ -2,15 +2,10 @@
 
 namespace Wame\DynamicObject\Forms;
 
-use Wame\DynamicObject\Forms\LangEntityForm;
-
 /**
- * Lang entity form builder
- * 
- * @package DynamicOBject
- * @author  WAME s.r.o. <info@wame.sk>
- * @version 0.0.1
- * @access  public
+ * Class LangEntityFormBuilder
+ *
+ * @package Wame\DynamicObject\Forms
  */
 abstract class LangEntityFormBuilder extends EntityFormBuilder
 {

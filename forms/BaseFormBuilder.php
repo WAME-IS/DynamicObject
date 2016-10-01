@@ -9,12 +9,20 @@ use Wame\DynamicObject\Registers\Types\IBaseContainer;
 use Nette\Forms\IFormRenderer;
 use Wame\DynamicObject\Renderers\TemplateFormRenderer;
 
+/**
+ * Class BaseFormBuilder
+ *
+ * @package Wame\DynamicObject\Forms
+ */
 abstract class BaseFormBuilder extends PriorityRegister
 {
     /** @var IFormRenderer */
     private $formRenderer;
-    
-    
+
+
+    /**
+     * BaseFormBuilder constructor.
+     */
     public function __construct()
     {
         parent::__construct(IBaseContainer::class);
@@ -33,10 +41,6 @@ abstract class BaseFormBuilder extends PriorityRegister
 		
 		$form->setRenderer($this->getFormRenderer());
 		$this->attachFormContainers($form, $domain);
-        
-//        if($this->getSubmitText()) {
-//            $form->addSubmit('submit', $this->getSubmitText());
-//        }
         
         $form->onSuccess[] = [$this, 'formSucceeded'];
         $form->onPostSuccess[] = [$this, 'formPostSucceeded'];
@@ -69,8 +73,8 @@ abstract class BaseFormBuilder extends PriorityRegister
     /**
      * Form post succeeded
      *
-     * @param BaseForm $form form
-     * @param array $values values
+     * @param BaseForm $form    form
+     * @param array $values     values
      * @throws \Nette\Application\AbortException
      */
 	public function formPostSucceeded(BaseForm $form, array $values)
