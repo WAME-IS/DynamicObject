@@ -38,6 +38,33 @@ or
 
 To obtaining form component, module provide builders. Each builder provide functionality to handle different tasks.
 
+#### Create
+
+*config:*
+```NEON
+Admin.MyFormBuilder:
+    class: Wame\DynamicObject\Forms\EntityFormBuilder
+    setup:
+        - setRepository(@EventRepository)
+        - add(@Wame\DynamicObject\Forms\Groups\IBasicGroupFactory, 'BasicGroup', {priority: 200})
+        - add(@Wame\DynamicObject\Forms\Containers\ITitleContainerFactory, 'TitleContainer', {priority: 190})
+```
+
+*php:*
+```PHP
+/**
+ * Create component form
+ * 
+ * @return EntityForm   form
+ */
+protected function createComponentForm() 
+{
+    return $this->context->getService("Admin.MyFormBuilder")
+            ->setEntity($this->entity)
+            ->build($this->domain);
+}
+```
+
 #### Methods
 
 **add(containerFactory, containerName, containerParameters)**
