@@ -15,6 +15,8 @@ class TitleContainer extends BaseContainer
     /** {@inheritDoc} */
     public function configure() 
 	{
+//	    $this->getForm()->addGroup(_("Basic info"));
+
 		$this->addText('title', _('Title'))
 				->setRequired(_('Please enter title'));
     }

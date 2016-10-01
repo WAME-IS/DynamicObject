@@ -4,8 +4,8 @@ namespace Wame\DynamicObject\Renderers;
 
 use Nette;
 use Nette\Forms\Rendering\DefaultFormRenderer;
-use Wame\DynamicObject\Forms\Containers\BaseContainer;
 use Nette\Utils\Html;
+use Wame\DynamicObject\Forms\Containers\BaseContainer;
 
 class TemplateFormRenderer extends DefaultFormRenderer
 {
@@ -36,14 +36,45 @@ class TemplateFormRenderer extends DefaultFormRenderer
     /** {@inheritDoc} */
     public function renderBody()
     {
+        $defaultContainer = $this->getWrapper('group container');
+        $translator = $this->form->getTranslator();
+
         foreach ($this->form->getGroups() as $group) {
-            echo ($group instanceof BaseGroup) ? $group->getGroupTag()->startTag() : Html::el('fieldset')->startTag();
+//            if (!$group->getControls() || !$group->getOption('visual')) {
+//                continue;
+//            }
+
+            echo ($group instanceof BaseGroup) ? $group->getGroupTag()->startTag() : $defaultContainer->startTag();
+
+            $text = $group->getOption('label');
+            if ($text instanceof Html) {
+                echo $this->getWrapper('group label')->addHtml($text);
+
+            } elseif (is_string($text)) {
+                if ($translator !== NULL) {
+                    $text = $translator->translate($text);
+                }
+                echo "\n" . $this->getWrapper('group label')->setText($text) . "\n";
+            }
+
+            $text = $group->getOption('description');
+            if ($text instanceof Html) {
+                echo $text;
+
+            } elseif (is_string($text)) {
+                if ($translator !== NULL) {
+                    $text = $translator->translate($text);
+                }
+                echo $this->getWrapper('group description')->setText($text) . "\n";
+            }
+
             foreach($this->form->components as $component) {
                 if($component instanceof BaseContainer && $component->currentGroup == $group) {
                     $component->render();
                 }
             }
-            echo ($group instanceof BaseGroup) ? $group->getGroupTag()->endTag() : Html::el('fieldset')->endTag();
+
+            echo ($group instanceof BaseGroup) ? $group->getGroupTag()->endTag() : $defaultContainer->endTag();
         }
     }
     
