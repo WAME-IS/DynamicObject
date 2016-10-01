@@ -3,17 +3,25 @@
 namespace Wame\DynamicObject\Vendor\Wame\AdminModule\Presenters;
 
 use App\AdminModule\Presenters\BasePresenter;
-use Wame\DynamicObject\Forms\BaseFormBuilder;
+use Wame\DynamicObject\Forms\EntityFormBuilder;
 
-class AdminFormPresenter extends BasePresenter
+abstract class AdminFormPresenter extends BasePresenter
 {
-    /** @var BaseFormBuilder */
+    /** @var EntityFormBuilder */
     public $formBuilder;
     
     /** @var BaseEntity */
     protected $entity;
-    
-    
+
+
+    public function startup()
+    {
+        parent::startup();
+
+        $this->formBuilder = $this->context->getService($this->getFormBuilderServiceAlias());
+    }
+
+
     /**
 	 * Create component form
 	 * 
@@ -26,5 +34,12 @@ class AdminFormPresenter extends BasePresenter
                 ->setEntity($this->entity)
                 ->build($this->id);
 	}
+
+    /**
+     * Get form builder service alias
+     *
+     * @return string
+     */
+	abstract protected function getFormBuilderServiceAlias();
     
 }

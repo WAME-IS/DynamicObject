@@ -4,13 +4,14 @@ namespace Wame\DynamicObject\Forms;
 
 use Nette\Application\UI\Form;
 use Wame\Core\Entities\BaseEntity;
+use Wame\Core\Repositories\BaseRepository;
 
 /**
  * Class EntityFormBuilder
  *
  * @package Wame\DynamicObject\Forms
  */
-abstract class EntityFormBuilder extends BaseFormBuilder
+class EntityFormBuilder extends BaseFormBuilder
 {
     const ACTION_CREATE = 'create';
 	const ACTION_EDIT = 'edit';
@@ -18,6 +19,9 @@ abstract class EntityFormBuilder extends BaseFormBuilder
     
     /** @var BaseEntity */
     protected $entity;
+
+    /** @var BaseRepository */
+    protected $repository;
     
     
     /** {@inheritDoc} */
@@ -45,11 +49,21 @@ abstract class EntityFormBuilder extends BaseFormBuilder
      * @param BaseEntity $entity    entity
      * @return $this
      */
-    public function setEntity(BaseEntity $entity)
+    public function setEntity(BaseEntity $entity = null)
     {
         $this->entity = $entity;
         
         return $this;
+    }
+
+    /**
+     * Set repository
+     *
+     * @param BaseRepository $repository    repository
+     */
+    public function setRepository(BaseRepository $repository)
+    {
+        $this->repository = $repository;
     }
     
 	/** {@inheritDoc} */
@@ -72,6 +86,7 @@ abstract class EntityFormBuilder extends BaseFormBuilder
         }
     }
 
+    /** {@inheritDoc} */
     public function postSubmit(BaseForm $form, array $values)
     {
         $entity = $form->getEntity();
@@ -118,11 +133,25 @@ abstract class EntityFormBuilder extends BaseFormBuilder
         return $form->getEntity();
     }
 
+    /**
+     * Post create
+     *
+     * @param BaseForm $form    form
+     * @param array $values     values
+     * @return BaseEntity
+     */
     protected function postCreate(BaseForm $form, array $values)
     {
         return $form->getEntity();
     }
 
+    /**
+     * Post update
+     *
+     * @param BaseForm $form    form
+     * @param array $values     values
+     * @return BaseEntity
+     */
     protected function postUpdate(BaseForm $form, array $values)
     {
         return $form->getEntity();
@@ -133,7 +162,10 @@ abstract class EntityFormBuilder extends BaseFormBuilder
      * 
      * @return  BaseRepository  repository
      */
-    protected abstract function getRepository();
+    protected function getRepository()
+    {
+        return $this->repository;
+    }
     
     /** {@inheritDoc} */
     protected function setDefaultValue($form, $container)
@@ -143,5 +175,5 @@ abstract class EntityFormBuilder extends BaseFormBuilder
             $container->setDefaultValues($entity);
         }
     }
-    
+
 }

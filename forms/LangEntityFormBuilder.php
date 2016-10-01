@@ -7,7 +7,7 @@ namespace Wame\DynamicObject\Forms;
  *
  * @package Wame\DynamicObject\Forms
  */
-abstract class LangEntityFormBuilder extends EntityFormBuilder
+class LangEntityFormBuilder extends EntityFormBuilder
 {
     /** @var BaseEntity */
     protected $langEntity;
