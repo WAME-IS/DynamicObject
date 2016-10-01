@@ -3,9 +3,11 @@
 namespace Wame\DynamicObject\Forms;
 
 use Nette\Application\UI\Form;
+use Tracy\Debugger;
 use Wame\Core\Registers\PriorityRegister;
 use Wame\DynamicObject\Registers\Types\IBaseContainer;
 use Nette\Forms\IFormRenderer;
+use Wame\DynamicObject\Renderers\TemplateFormRenderer;
 
 abstract class BaseFormBuilder extends PriorityRegister
 {
@@ -37,7 +39,8 @@ abstract class BaseFormBuilder extends PriorityRegister
 //        }
         
         $form->onSuccess[] = [$this, 'formSucceeded'];
-        
+        $form->onPostSuccess[] = [$this, 'formPostSucceeded'];
+
 		return $form;
 	}
 	
@@ -48,15 +51,12 @@ abstract class BaseFormBuilder extends PriorityRegister
      * @param array $values values
      * @throws \Exception
      */
-	public function formSucceeded(Form $form, $values)
+	public function formSucceeded(Form $form, array $values)
 	{
-        \Tracy\Debugger::barDump($form);
-		$presenter = $form->getPresenter();
-
 		try {
 			$this->submit($form, $values);
             
-			$presenter->redirect('this');
+//			$form->getPresenter()->redirect('this');
 		} catch (\Exception $e) {
 			if ($e instanceof \Nette\Application\AbortException) {
 				throw $e;
@@ -65,22 +65,52 @@ abstract class BaseFormBuilder extends PriorityRegister
 			$form->addError($e->getMessage());
 		}
 	}
-	
+
+    /**
+     * Form post succeeded
+     *
+     * @param BaseForm $form form
+     * @param array $values values
+     * @throws \Nette\Application\AbortException
+     */
+	public function formPostSucceeded(BaseForm $form, array $values)
+    {
+        try {
+            $this->postSubmit($form, $values);
+
+//			$form->getPresenter()->redirect('this');
+        } catch (\Exception $e) {
+            if ($e instanceof \Nette\Application\AbortException) {
+                throw $e;
+            }
+
+            $form->addError($e->getMessage());
+        }
+    }
+
     /**
      * Submit
-     * 
-     * @param Form $form        form
+     *
+     * @param BaseForm $form    form
      * @param array $values     values
      */
-    public function submit($form, $values) {}
+    public function submit(BaseForm $form, array $values) {}
+
+    /**
+     * Post submit
+     *
+     * @param BaseForm $form    form
+     * @param array $values     values
+     */
+    public function postSubmit(BaseForm $form, array $values) {}
     
     /**
      * Set renderer
      * 
      * @param IFormRenderer $formRenderer   form renderer
-     * @return \Wame\DynamicObject\Forms\BaseFormBuilder
+     * @return $this
      */
-    public function setFormRenderer(\Nette\Forms\IFormRenderer $formRenderer)
+    public function setFormRenderer(IFormRenderer $formRenderer)
     {
         $this->formRenderer($formRenderer);
         
@@ -105,7 +135,7 @@ abstract class BaseFormBuilder extends PriorityRegister
         if($this->formRenderer) {
             return $this->formRenderer;
         } else {
-            return new \Wame\DynamicObject\Renderers\TemplateFormRenderer;
+            return new TemplateFormRenderer;
         }
     }
     

@@ -3,6 +3,8 @@
 namespace Wame\DynamicObject\Forms;
 
 use Nette\Application\UI\Form;
+use Tracy\Debugger;
+use Wame\Core\Entities\BaseEntity;
 use Wame\DynamicObject\Forms\BaseFormBuilder;
 
 abstract class EntityFormBuilder extends BaseFormBuilder
@@ -24,42 +26,23 @@ abstract class EntityFormBuilder extends BaseFormBuilder
             $form->setEntity($this->entity);
             unset($this->entity);
         }
-        
-        $entity = $form->getEntity();
-        
+
 		$form->setRenderer($this->getFormRenderer());
 		$this->attachFormContainers($form, $domain);
-        
-//        if($entity->id) {
-//            if($this->getUpdateText()) {
-//                $form->addSubmit('submit', $this->getUpdateText());
-//            }
-//        } else {
-//            if($this->getCreateText()) {
-//                $form->addSubmit('submit', $this->getCreateText());
-//            }
-//        }
-        
+
         $form->onSuccess[] = [$this, 'formSucceeded'];
-        $form->onError[] = [$this, 'formError'];
+        $form->onPostSuccess[] = [$this, 'formPostSucceeded'];
         
 		return $form;
 	}
-    
-    public function formError($form)
-    {
-        \Tracy\Debugger::barDump($form);
-        \Tracy\Debugger::barDump($form->getErrors());
-    }
-
 
     /**
      * Set entity
-     * 
+     *
      * @param BaseEntity $entity    entity
-     * @return \Wame\DynamicObject\Forms\EntityFormBuilder
+     * @return $this
      */
-    public function setEntity($entity)
+    public function setEntity(BaseEntity $entity)
     {
         $this->entity = $entity;
         
@@ -67,8 +50,10 @@ abstract class EntityFormBuilder extends BaseFormBuilder
     }
     
 	/** {@inheritDoc} */
-    public function submit($form, $values)
+    public function submit(BaseForm $form, array $values)
     {
+        Debugger::barDump("submit");
+
         $entity = $form->getEntity();
         
         if($entity->id) {
@@ -85,8 +70,21 @@ abstract class EntityFormBuilder extends BaseFormBuilder
             $form->getPresenter()->flashMessage(_('Successfully created.'), 'success');
         }
     }
-    
-    
+
+    public function postSubmit(BaseForm $form, array $values)
+    {
+        Debugger::barDump("postSubmit");
+
+        $entity = $form->getEntity();
+
+        if($entity->id) {
+            $entity = $this->postUpdate($form, $values);
+        } else {
+            $entity = $this->postCreate($form, $values);
+        }
+    }
+
+
     /** {@inheritDoc} */
 	protected function createForm()
 	{
@@ -120,6 +118,16 @@ abstract class EntityFormBuilder extends BaseFormBuilder
     {
         return $form->getEntity();
     }
+
+    protected function postCreate(BaseForm $form, array $values)
+    {
+        return $form->getEntity();
+    }
+
+    protected function postUpdate(BaseForm $form, array $values)
+    {
+        return $form->getEntity();
+    }
     
     /**
      * Get repository
@@ -127,26 +135,6 @@ abstract class EntityFormBuilder extends BaseFormBuilder
      * @return  BaseRepository  repository
      */
     abstract function getRepository();
-    
-    /**
-     * Get update text
-     * 
-     * @return string
-     */
-    protected function getUpdateText()
-    {
-        return _('Update');
-    }
-    
-    /**
-     * Get create text
-     * 
-     * @return string
-     */
-    protected function getCreateText()
-    {
-        return _('Create');
-    }
     
     /** {@inheritDoc} */
     protected function setDefaultValue($form, $container)

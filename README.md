@@ -38,6 +38,38 @@ or
 
 To obtaining form component, module provide builders. Each builder provide functionality to handle different tasks.
 
+#### Methods
+
+**add(containerFactory, containerName, containerParameters)**
+
+*example:*
+```
+- add(@Wame\DynamicObject\Forms\Containers\ITitleContainerFactory, 'TitleContainer', {priority: 90})
+```
+
+*Parameters:*
+* priority - containers with higher priority are top
+* domain - value that must be equals with value provided in `build` method
+
+**remove(containerName)**
+
+*example:*
+```
+- remove('TitleContainer')
+```
+
+#### Config
+
+*example:*
+```NEON
+services:
+    MyFormBuilder:
+        class: Wame\MyModule\Forms\MyFormBuilder
+        setup:
+            - add(@Wame\DynamicObject\Forms\Containers\ITitleContainerFactory, 'TitleContainer', {priority: 90})
+```
+
+
 #### BaseFormBuilder
 
 Builder which doesn't save anything to database, there is nothing like `create`/`update` ... just `submit`.
@@ -111,6 +143,10 @@ class MyFormBuilder extends LangEntityFormBuilder
 }
 ```
 
+### Form event callbacks flow
+
+![From event callbacks flow](docs/event_callbacks_flow.svg)
+
 ### Containers
 
 Every form container shoud be in this structure: `forms\conintainers\<containerName>\<ContainerName>Container` (e.g.: `forms\containers\title\TitleContainer`), to achieve consistence .
@@ -161,20 +197,45 @@ class TitleContainer extends BaseContainer
 }
 ```
 
-#### Config
+#### Methods
 
-**parameters:**
-* priority - containers with higher priority are top
-* domain - value that must be equals with value provided in `build` method
+##### configure
 
-*config.neon (Config)*
-```NEON
-services:
-    MyFormBuilder:
-        class: Wame\MyModule\Forms\MyFormBuilder
-        setup:
-            - add(@Wame\DynamicObject\Forms\Containers\ITitleContainerFactory, 'TitleContainer', {priority: 90})
+Configure container
+
+*example:*
+```PHP
+/** {@inheritDoc} */
+public function configure() 
+{
+    $this->addText('title', _('Title'))
+            ->setRequired(_('Please enter title'));
+}
 ```
+
+##### compose($template)
+Bind data to the template
+
+*example:*
+```PHP
+/** {@inheritDoc} */
+public function compose($template) 
+{
+    $template->count = $this->count;
+}
+```
+
+##### create($form, $values)
+Create event callback
+
+##### update($form, $values)
+Update event callback
+
+##### postCreate($form, $values)
+Post create event callback
+
+##### postUpdate($form, $values)
+Post update event callback
 
 #### Name
 
