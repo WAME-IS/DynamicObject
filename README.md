@@ -45,7 +45,7 @@ To obtaining form component, module provide builders. Each builder provide funct
 Admin.MyFormBuilder:
     class: Wame\DynamicObject\Forms\EntityFormBuilder
     setup:
-        - setRepository(@EventRepository)
+        - setRepository(@MyRepository)
         - add(@Wame\DynamicObject\Forms\Groups\IBasicGroupFactory, 'BasicGroup', {priority: 200})
         - add(@Wame\DynamicObject\Forms\Containers\ITitleContainerFactory, 'TitleContainer', {priority: 190})
 ```
