@@ -22,8 +22,8 @@ class PublishDateContainer extends BaseContainer
     /** {@inheritDoc} */
 	public function setDefaultValues($entity, $langEntity = null)
 	{
-        $this['publishStartDate']->setDefaultValue($langEntity ? $langEntity->getPublishStartDate() : $entity->getPublishStartDate());
-        $this['publishEndDate']->setDefaultValue($langEntity ? $langEntity->getPublishEndDate() : $entity->getPublishEndDate());
+        $this['publishStartDate']->setDefaultValue($entity->getPublishStartDate());
+        $this['publishEndDate']->setDefaultValue($entity->getPublishEndDate());
 	}
 
     /** {@inheritDoc} */

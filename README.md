@@ -70,7 +70,7 @@ protected function createComponentForm()
 **add(containerFactory, containerName, containerParameters)**
 
 *example:*
-```
+```NEON
 - add(@Wame\DynamicObject\Forms\Containers\ITitleContainerFactory, 'TitleContainer', {priority: 90})
 ```
 
@@ -81,8 +81,22 @@ protected function createComponentForm()
 **remove(containerName)**
 
 *example:*
-```
+```NEON
 - remove('TitleContainer')
+```
+
+**setRepository(repository)
+
+*example:*
+```NEON
+- setRepository(@MyRepository)
+```
+
+**redirectTo(route|link)**
+
+*example:*
+```NEON
+- redirectTo(:Admin:Dashboard:)
 ```
 
 #### Config
@@ -299,6 +313,15 @@ public function configure()
 
 ## FAQ
 
+### Update form doesn't set default values
+* Check if you pass entity to builder via `setEntity` method.
+
+### Container doesn't show
+* Check if you add container in config
+* Check if container's template has right name
+
+### Form doesn't create/update entry
+* Check if you implemented proper method in container (`create`, `update`, `postCreate`, `postUpdate`)
 
 ## Contribute
 

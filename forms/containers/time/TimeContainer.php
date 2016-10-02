@@ -22,8 +22,8 @@ class TimeContainer extends BaseContainer
     /** {@inheritDoc} */
 	public function setDefaultValues($entity, $langEntity = null)
 	{
-        $this['startTime']->setDefaultValue($langEntity ? $langEntity->getStartTime() : $entity->getStartTime());
-        $this['endTime']->setDefaultValue($langEntity ? $langEntity->getEndTime() : $entity->getEndTime());
+        $this['startTime']->setDefaultValue($entity->getStartTime());
+        $this['endTime']->setDefaultValue($entity->getEndTime());
 	}
 
     /** {@inheritDoc} */
