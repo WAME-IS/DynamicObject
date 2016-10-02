@@ -2,6 +2,7 @@
 
 namespace Wame\DynamicObject\Forms\Containers;
 
+use Wame\Core\Repositories\BaseRepository;
 use Wame\DynamicObject\Registers\Types\IBaseContainer;
 
 interface IPublishContainerFactory extends IBaseContainer
@@ -21,13 +22,9 @@ class PublishContainer extends BaseContainer
     /** {@inheritdoc} */
     public function create($form, $values)
     {
-        $form->getEntity()->setStatus(1);
-    }
-
-    /** {@inheritdoc} */
-    public function update($form, $values)
-    {
-        $form->getEntity()->setStatus(1);
+        if($this['publish']->isSubmittedBy()) {
+            $form->getEntity()->setStatus(BaseRepository::STATUS_ENABLED);
+        }
     }
 
 }

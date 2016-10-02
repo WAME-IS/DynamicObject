@@ -3,10 +3,10 @@
 namespace Wame\DynamicObject\Forms\Containers;
 
 use Nette;
-use Nette\Forms\Container;
 use Nette\Application\UI;
-use Tracy\Debugger;
+use Nette\Forms\Container;
 use Wame\DynamicObject\Forms\EntityForm;
+use Wame\DynamicObject\Forms\Groups\BaseGroup;
 use Wame\Utils\Latte\FindTemplate;
 use Wame\Utils\Strings;
 
@@ -177,16 +177,19 @@ abstract class BaseContainer extends Container
         parent::attached($object);
 
         if ($object instanceof Nette\Forms\Form) {
-            $this->currentGroup = $this->getForm()->getCurrentGroup();
+            if($this instanceof BaseGroup) {
+                $this->configure();
+            } else {
+                $this->currentGroup = $this->getForm()->getCurrentGroup();
 
-            // TODO: co s tymto
-            if (!$this->currentGroup) {
-                $object->addGroup();
+                if (!$this->currentGroup) {
+                    $object->addGroup();
+                }
+
+                $this->configure();
+
+                $this->appendFormContainerToCurrentGroup();
             }
-
-            $this->configure();
-
-            $this->appendFormContainerToCurrentGroup();
 
             if ($object instanceof UI\Form) {
                 // success
