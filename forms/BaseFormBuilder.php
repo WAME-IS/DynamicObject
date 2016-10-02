@@ -3,10 +3,9 @@
 namespace Wame\DynamicObject\Forms;
 
 use Nette\Application\UI\Form;
-use Tracy\Debugger;
+use Nette\Forms\IFormRenderer;
 use Wame\Core\Registers\PriorityRegister;
 use Wame\DynamicObject\Registers\Types\IBaseContainer;
-use Nette\Forms\IFormRenderer;
 use Wame\DynamicObject\Renderers\TemplateFormRenderer;
 
 /**
@@ -18,6 +17,9 @@ abstract class BaseFormBuilder extends PriorityRegister
 {
     /** @var IFormRenderer */
     private $formRenderer;
+
+    /** @var string */
+    private $redirect = 'this';
 
 
     /**
@@ -82,7 +84,7 @@ abstract class BaseFormBuilder extends PriorityRegister
         try {
             $this->postSubmit($form, $values);
 
-//			$form->getPresenter()->redirect('this');
+			$form->getPresenter()->redirect($this->redirect);
         } catch (\Exception $e) {
             if ($e instanceof \Nette\Application\AbortException) {
                 throw $e;
@@ -90,6 +92,16 @@ abstract class BaseFormBuilder extends PriorityRegister
 
             $form->addError($e->getMessage());
         }
+    }
+
+    /**
+     * Redirect to
+     *
+     * @param $to
+     */
+    public function redirectTo($to)
+    {
+        $this->redirect = $to;
     }
 
     /**
@@ -120,14 +132,7 @@ abstract class BaseFormBuilder extends PriorityRegister
         
         return $this;
     }
-    
-    
-    /**
-     * Get submit text
-     * 
-     * @return string
-     */
-    protected function getSubmitText() {}
+
     
     /**
      * Get form renderer

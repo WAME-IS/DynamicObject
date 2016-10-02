@@ -2,7 +2,6 @@
 
 namespace Wame\DynamicObject\Forms;
 
-use Wame\DynamicObject\Forms\BaseForm;
 use Wame\Core\Entities\BaseEntity;
 use Wame\Core\Repositories\BaseRepository;
 
