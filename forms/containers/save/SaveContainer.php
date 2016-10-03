@@ -16,7 +16,8 @@ class SaveContainer extends BaseContainer
     /** {@inheritDoc} */
     public function configure() 
 	{
-		$this->addSubmit('save', _('Save'));
+		$this->addSubmit('save', _('Save'))
+            ->setAttribute('data-submit', 'form');
     }
 
     /** {@inheritdoc} */

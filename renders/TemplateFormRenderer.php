@@ -6,6 +6,7 @@ use Nette;
 use Nette\Forms\Rendering\DefaultFormRenderer;
 use Nette\Utils\Html;
 use Wame\DynamicObject\Forms\Containers\BaseContainer;
+use Wame\DynamicObject\Forms\Groups\BaseGroup;
 
 class TemplateFormRenderer extends DefaultFormRenderer
 {
@@ -15,6 +16,8 @@ class TemplateFormRenderer extends DefaultFormRenderer
         if ($this->form !== $form) {
 			$this->form = $form;
 		}
+        
+        $this->form->getElementPrototype()->addAttributes(['class' => 'ajax']);
         
         if (!$mode || $mode === 'begin') {
 			echo $this->renderBegin();
@@ -44,6 +47,12 @@ class TemplateFormRenderer extends DefaultFormRenderer
 //                continue;
 //            }
 
+            \Tracy\Debugger::barDump($group);
+            
+            if($group instanceof BaseGroup) {
+                \Tracy\Debugger::barDump($group->getGroupTag());
+            }
+            
             echo ($group instanceof BaseGroup) ? $group->getGroupTag()->startTag() : $defaultContainer->startTag();
 
             $text = $group->getOption('label');
@@ -54,7 +63,7 @@ class TemplateFormRenderer extends DefaultFormRenderer
                 if ($translator !== NULL) {
                     $text = $translator->translate($text);
                 }
-                echo "\n" . $this->getWrapper('group label')->setText($text) . "\n";
+                echo "\n" . $this->getWrapper('group label')->setHtml($text) . "\n";
             }
 
             $text = $group->getOption('description');

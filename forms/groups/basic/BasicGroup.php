@@ -8,11 +8,11 @@ use Nette\Utils\Html;
 
 interface IBasicGroupFactory extends IBaseContainer
 {
-	/** @return BasicContainer */
+	/** @return BasicGroup */
 	function create();
 }
 
-class BasicContainer extends BaseGroup
+class BasicGroup extends BaseGroup
 {
     /** @var Html */
     private $tag;

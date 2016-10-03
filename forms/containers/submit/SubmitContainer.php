@@ -15,7 +15,8 @@ class SubmitContainer extends BaseContainer
     /** {@inheritDoc} */
     public function configure() 
 	{
-		$this->addSubmit('submit', _('Submit'));
+		$this->addSubmit('submit', _('Submit'))
+            ->setAttribute('data-submit', 'form');
     }
 
 }

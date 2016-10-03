@@ -36,6 +36,7 @@ class DescriptionContainer extends BaseContainer
     /** {@inheritDoc} */
     public function update($form, $values)
     {
+        \Tracy\Debugger::barDump("ukladam popis");
         $entity = method_exists($form, 'getLangEntity') ? $form->getLangEntity(): $form->getEntity();
         $entity->setDescription($values['description']);
     }
