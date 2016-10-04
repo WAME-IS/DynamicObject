@@ -10,6 +10,8 @@ use Wame\DynamicObject\Forms\Groups\BaseGroup;
 
 class TemplateFormRenderer extends DefaultFormRenderer
 {
+    use \Wame\DynamicObject\Traits\TLink;
+    
     /** {@inheritDoc} */
     public function render(Nette\Forms\Form $form, $mode = NULL)
     {
@@ -41,29 +43,30 @@ class TemplateFormRenderer extends DefaultFormRenderer
     {
         $defaultContainer = $this->getWrapper('group container');
         $translator = $this->form->getTranslator();
-
-        foreach ($this->form->getGroups() as $group) {
-//            if (!$group->getControls() || !$group->getOption('visual')) {
-//                continue;
-//            }
-
-            \Tracy\Debugger::barDump($group);
+        
+        foreach ($this->form->getBaseGroups() as $group) {
+            echo $group->getTag()->startTag();
             
-            if($group instanceof BaseGroup) {
-                \Tracy\Debugger::barDump($group->getGroupTag());
-            }
-            
-            echo ($group instanceof BaseGroup) ? $group->getGroupTag()->startTag() : $defaultContainer->startTag();
-
-            $text = $group->getOption('label');
+            $text = $group->getText();
             if ($text instanceof Html) {
-                echo $this->getWrapper('group label')->addHtml($text);
-
+                $label = $this->getWrapper('group label')->addHtml($text);
+                
+                foreach($group->getButtons() as $button) {
+                    $label->addHtml($this->renderButton($button, $group));
+                }
+                
+                echo $label;
             } elseif (is_string($text)) {
                 if ($translator !== NULL) {
                     $text = $translator->translate($text);
                 }
-                echo "\n" . $this->getWrapper('group label')->setHtml($text) . "\n";
+                $label = $this->getWrapper('group label')->setHtml($text);
+                
+                foreach($group->getButtons() as $button) {
+                    $label->addHtml($this->renderButton($button, $group));
+                }
+                
+                echo $label;
             }
 
             $text = $group->getOption('description');
@@ -82,9 +85,37 @@ class TemplateFormRenderer extends DefaultFormRenderer
                     $component->render();
                 }
             }
-
-            echo ($group instanceof BaseGroup) ? $group->getGroupTag()->endTag() : $defaultContainer->endTag();
+            
+            echo $group->getTag()->endTag();
         }
+    }
+    
+    
+    /**
+     * Render button
+     * 
+     * @param array $button     button
+     * @param BaseGroup $group  group
+     * @return Html
+     */
+    private function renderButton($button, $group)
+    {
+        $el = Html::el("a");
+        
+        $el->addAttributes([
+            'href' => $this->createLink($group, $button['href'], $button['params']),
+            'class' => 'btn btn-link pull-right ajax-modal ajax-modal-fixed'
+        ]);
+        
+        if($button['icon']) {
+            $el->add(Html::el("i")
+                ->addClass('material-icons')
+                ->addText($button['icon']));
+        }
+        
+        $el->add($button['text']);
+        
+        return $el;
     }
     
 }

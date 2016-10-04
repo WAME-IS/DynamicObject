@@ -305,10 +305,29 @@ It's possible create form group in container's method `configure`:
 /** {@inheritDoc} */
 public function configure() 
 {
-    $this->getForm()->addGroup(_('Short description'));
+    $group = new BasicGroup;
+    $this->getForm()->addBaseGroup($group);
     // ...
 }
 ```
+
+or in config:
+
+```NEON
+- add(@Wame\DynamicObject\Forms\Groups\IBasicGroupFactory, "BasicGroup", {priority: 60, tag: div, attributes: {class: group, data-group: basic}})
+```
+
+**parameters:**
+* priority - groups with higher priority are top
+* domain -
+* tag - html element name
+* attributes - html element attributes
+
+##### Methods
+
+* setTag($tag) - set html element name
+* setAttributes($attributes) - set html element attributes
+* setAttribute($name, $value) - set html element attribute
 
 
 ## FAQ

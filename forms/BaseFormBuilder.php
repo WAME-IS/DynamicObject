@@ -42,6 +42,7 @@ abstract class BaseFormBuilder extends PriorityRegister
         $form = $this->createForm();
 		
 		$form->setRenderer($this->getFormRenderer());
+//        $form->addContainers($this->array, $domain);
 		$this->attachFormContainers($form, $domain);
         
         $form->onSuccess[] = [$this, 'formSucceeded'];
@@ -176,8 +177,18 @@ abstract class BaseFormBuilder extends PriorityRegister
                 $containerName = $item['name'];
                 $container = $containerFactory->create();
 
-                $form->addComponent($container, $containerName);
-                $this->setDefaultValue($form, $container);
+                if($container instanceof Containers\BaseContainer) {
+                    $form->addComponent($container, $containerName);
+                    $this->setDefaultValue($form, $container);
+                } else if($container instanceof Groups\BaseGroup) {
+                    if(isset($item['parameters']['tag'])) {
+                        $container->setTag($item['parameters']['tag']);
+                    }
+                    if(isset($item['parameters']['attributes'])) {
+                        $container->setAttributes($item['parameters']['attributes']);
+                    }
+                    $form->addBaseGroup($container);
+                }
             }
         }
     }

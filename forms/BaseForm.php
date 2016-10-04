@@ -5,11 +5,15 @@ namespace Wame\DynamicObject\Forms;
 use Nette;
 use Nette\Application\UI\Form;
 use Tracy\Debugger;
+use Wame\DynamicObject\Forms\Groups\BaseGroup;
 
 class BaseForm extends Form
 {
     /** @var callable[]  function (Form $sender); Occurs when the form is submitted and successfully validated */
     public $onPostSuccess;
+    
+    /** @var BaseGroup */
+    private $baseGroups = [];
 
 
     /** {@inheritdoc} */
@@ -32,29 +36,51 @@ class BaseForm extends Form
             }
         }
     }
-
-//    /** @var bool */
-//    private $useRenderer = false;
-//    
-//    
-//    /** {@inheritDoc} */
-//    protected function attached($presenter)
-//    {
-//        parent::attached($presenter);
-//        
-//        foreach($this->components as $component) {
-//            if($component instanceof Containers\BaseContainer) {
-//                $component->render();
-//            }
-//        }
-//    }
-//    
-//    /** {@inheritDoc} */
-//    public function render()
-//    {
-//        if($this->useRenderer) {
-//            parent::render();
-//        }
-//    }
+    
+    public function addContainers($containers, $domain = null)
+    {
+        $this->containers = $containers;
+        $this->domain = $domain;
+    }
+    
+    /**
+	 * Add base group to form
+     * 
+	 * @param BaseGroup $group  group
+	 * @param string $name      name
+	 * @return BaseGroup
+	 */
+    public function addBaseGroup($group, $name = null)
+    {
+        $group->setParent($this);
+        $this->setCurrentGroup($group);
+        
+        if(isset($name)) {
+            return $this->baseGroups[$name] = $group;
+        } else {
+            return $this->baseGroups[] = $group;
+        }
+    }
+    
+    /**
+	 * Returns all defined base groups
+     * 
+	 * @return BaseGroup[]
+	 */
+	public function getBaseGroups()
+	{
+		return $this->baseGroups;
+	}
+    
+    /**
+	 * Returns the specified base group
+     * 
+	 * @param  string  name
+	 * @return BaseGroup
+	 */
+	public function getBaseGroup($name)
+	{
+		return isset($this->baseGroups[$name]) ? $this->baseGroups[$name] : NULL;
+	}
 
 }

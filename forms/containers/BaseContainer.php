@@ -9,6 +9,7 @@ use Wame\DynamicObject\Forms\EntityForm;
 use Wame\DynamicObject\Forms\Groups\BaseGroup;
 use Wame\Utils\Latte\FindTemplate;
 use Wame\Utils\Strings;
+use Wame\DynamicObject\Forms\Groups\BasicGroup;
 
 /**
  * Class BaseContainer
@@ -183,7 +184,7 @@ abstract class BaseContainer extends Container
                 $this->currentGroup = $this->getForm()->getCurrentGroup();
 
                 if (!$this->currentGroup) {
-                    $object->addGroup();
+                    $object->addBaseGroup(new BasicGroup);
                 }
 
                 $this->configure();
