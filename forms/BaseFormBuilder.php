@@ -5,7 +5,7 @@ namespace Wame\DynamicObject\Forms;
 use Nette\Application\UI\Form;
 use Nette\Forms\IFormRenderer;
 use Wame\Core\Registers\PriorityRegister;
-use Wame\DynamicObject\Registers\Types\IBaseContainer;
+use Wame\DynamicObject\Registers\Types\IFormItem;
 use Wame\DynamicObject\Renderers\TemplateFormRenderer;
 
 /**
@@ -27,7 +27,7 @@ abstract class BaseFormBuilder extends PriorityRegister
      */
     public function __construct()
     {
-        parent::__construct(IBaseContainer::class);
+        parent::__construct(IFormItem::class);
     }
     
     
