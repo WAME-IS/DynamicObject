@@ -44,6 +44,8 @@ class TemplateFormRenderer extends DefaultFormRenderer
         $defaultContainer = $this->getWrapper('group container');
         $translator = $this->form->getTranslator();
         
+        echo '<div class="row">';
+        
         foreach ($this->form->getBaseGroups() as $group) {
             echo $group->getTag()->startTag();
             
@@ -86,8 +88,12 @@ class TemplateFormRenderer extends DefaultFormRenderer
                 }
             }
             
+            
+            
             echo $group->getTag()->endTag();
         }
+        echo '</div>';
+        
     }
     
     

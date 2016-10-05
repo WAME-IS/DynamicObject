@@ -22,6 +22,13 @@ abstract class BaseGroup extends ControlGroup
     private $attributes = [];
     
     
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setAttribute('class', 'group col-sm-12');
+    }
+    
+    
     /**
      * Set tag
      * 

@@ -12,5 +12,17 @@ interface IPublishGroupFactory extends IBaseContainer
 
 class PublishGroup extends BaseGroup
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setAttribute('class', 'group col-sm-6');
+    }
+    
+    
+    /** {@inheritDoc} */
+    public function getText()
+    {
+        return _('Publish');
+    }
     
 }

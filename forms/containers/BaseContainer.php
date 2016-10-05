@@ -30,6 +30,9 @@ abstract class BaseContainer extends Container
     /** @var string */
     private $dir;
 
+    
+    use \Wame\Core\Traits\TRegister;
+    
 
     /**
      * BaseContainer constructor.

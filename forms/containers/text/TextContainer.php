@@ -3,42 +3,42 @@
 namespace Wame\DynamicObject\Forms\Containers;
 
 use Wame\DynamicObject\Registers\Types\IBaseContainer;
-use Wame\DynamicObject\Forms\Groups\DescriptionGroup;
+use Wame\DynamicObject\Forms\Groups\TextGroup;
 
-interface IDescriptionContainerFactory extends IBaseContainer
+interface ITextContainerFactory extends IBaseContainer
 {
-	/** @return DescriptionContainer */
+	/** @return TextContainer */
 	public function create();
 }
 
-class DescriptionContainer extends BaseContainer
+class TextContainer extends BaseContainer
 {
     /** {@inheritDoc} */
     public function configure() 
 	{
-        $this->getForm()->addBaseGroup(new DescriptionGroup, 'DescriptionGroup');
+        $this->getForm()->addBaseGroup(new TextGroup, 'TextGroup');
         
-		$this->addTextArea('description', _('Description'));
+		$this->addTextArea('text', _('Text'));
     }
 
     /** {@inheritDoc} */
 	public function setDefaultValues($entity, $langEntity = null)
 	{
-		$this['description']->setDefaultValue($entity->getDescription());
+		$this['text']->setDefaultValue($entity->getText());
 	}
     
     /** {@inheritDoc} */
     public function create($form, $values)
     {
         $entity = method_exists($form, 'getLangEntity') ? $form->getLangEntity(): $form->getEntity();
-        $entity->setDescription($values['description']);
+        $entity->setText($values['text']);
     }
     
     /** {@inheritDoc} */
     public function update($form, $values)
     {
         $entity = method_exists($form, 'getLangEntity') ? $form->getLangEntity(): $form->getEntity();
-        $entity->setDescription($values['description']);
+        $entity->setText($values['text']);
     }
 
 }
