@@ -13,6 +13,13 @@ class LangEntityFormBuilder extends EntityFormBuilder
     protected $langEntity;
     
     
+    public function getLangEntity()
+    {
+        $langEntity = $this->getEntity()->getCurrentLangEntity();
+        
+        return $langEntity;
+    }
+    
     /**
      * Set lang entity
      * 
@@ -42,6 +49,17 @@ class LangEntityFormBuilder extends EntityFormBuilder
         
         return $entity;
     }
+    
+//    /** {@inheritDoc} */
+//    protected function update($form, $values)
+//    {
+//        // TODO: zapracovat iterovanie vsetkymi jazykmi
+//        $lang = $this->getRepository()->lang;
+//        
+//        $entity = $form->getEntity();
+//        
+//        return $entity->getCurrentLangEntity();
+//    }
     
     /** {@inheritDoc} */
 	protected function createForm()

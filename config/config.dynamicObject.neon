@@ -5,7 +5,7 @@ decorator:
 services:
     - Wame\DynamicObject\Components\IFormControlFactory
 
-    # Containers
+    # Form containers
     - Wame\DynamicObject\Forms\Containers\IIconContainerFactory
     - Wame\DynamicObject\Forms\Containers\ITitleContainerFactory
     - Wame\DynamicObject\Forms\Containers\INameContainerFactory
@@ -21,13 +21,20 @@ services:
     - Wame\DynamicObject\Forms\Containers\ISaveContainerFactory
     - Wame\DynamicObject\Forms\Containers\IPublishContainerFactory
 
-    # Groups
+
+    # Form groups
     - Wame\DynamicObject\Forms\Groups\IBasicGroupFactory
     - Wame\DynamicObject\Forms\Groups\IAdvancedGroupFactory
     - Wame\DynamicObject\Forms\Groups\ITransparentGroupFactory
     - Wame\DynamicObject\Forms\Groups\IPublishGroupFactory
     - Wame\DynamicObject\Forms\Groups\ITextGroupFactory
     - Wame\DynamicObject\Forms\Groups\IDescriptionGroupFactory
+
+
+    # Form tabs
+    - Wame\DynamicObject\Forms\Tabs\IGeneralTabFactory
+    - Wame\DynamicObject\Forms\Tabs\IAdvancedTabFactory
+
 
 webloader:
     js:

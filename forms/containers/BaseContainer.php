@@ -7,9 +7,9 @@ use Nette\Application\UI;
 use Nette\Forms\Container;
 use Wame\DynamicObject\Forms\EntityForm;
 use Wame\DynamicObject\Forms\Groups\BaseGroup;
+use Wame\DynamicObject\Forms\Tabs\GeneralTab;
 use Wame\Utils\Latte\FindTemplate;
 use Wame\Utils\Strings;
-use Wame\DynamicObject\Forms\Groups\BasicGroup;
 
 /**
  * Class BaseContainer
@@ -32,6 +32,7 @@ abstract class BaseContainer extends Container
 
     
     use \Wame\Core\Traits\TRegister;
+    use \Wame\DynamicObject\Traits\TCurrentTab;
     
 
     /**
@@ -183,12 +184,17 @@ abstract class BaseContainer extends Container
         if ($object instanceof Nette\Forms\Form) {
             if($this instanceof BaseGroup) {
                 $this->configure();
+            } else if($this instanceof \Wame\DynamicObject\Forms\Tabs\BaseTab) {
+                // tab
             } else {
                 $this->currentGroup = $this->getForm()->getCurrentGroup();
 
                 if (!$this->currentGroup) {
                     $object->addBaseGroup(new BasicGroup);
                 }
+                
+//                $this->currentGroup = $this->getForm()->getCurrentGroup() ?: $object->addBaseGroup(new BasicGroup);
+                $this->currentTab = $this->getForm()->getCurrentTab() ?: $object->addBaseTab(new GeneralTab);
 
                 $this->configure();
 

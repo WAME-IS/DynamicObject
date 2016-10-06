@@ -1,12 +1,11 @@
 <?php
 
-namespace Wame\DynamicObject\Forms\Groups;
+namespace Wame\DynamicObject\Forms\Tabs;
 
 use Nette\Forms\ControlGroup;
 use Nette\Utils\Html;
-use Wame\DynamicObject\Forms\Groups\BaseGroup;
 
-abstract class BaseGroup extends ControlGroup
+abstract class BaseTab extends ControlGroup
 {
     /** @var array */
     private $buttons = [];
@@ -15,7 +14,7 @@ abstract class BaseGroup extends ControlGroup
     protected $parent;
     
     /** @var string */
-    private $tag = 'fieldset';
+    private $tag = 'div';
     
     /** @var array */
     private $attributes = [];
@@ -27,7 +26,7 @@ abstract class BaseGroup extends ControlGroup
     public function __construct()
     {
         parent::__construct();
-        $this->setAttribute('class', 'group col-sm-12');
+        $this->setAttribute('class', 'tab-pane col-sm-12');
     }
     
     

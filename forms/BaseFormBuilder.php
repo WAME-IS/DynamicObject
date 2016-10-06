@@ -188,6 +188,14 @@ abstract class BaseFormBuilder extends PriorityRegister
                         $container->setAttributes($item['parameters']['attributes']);
                     }
                     $form->addBaseGroup($container);
+                } else if($container instanceof Tabs\BaseTab) {
+                    if(isset($item['parameters']['tag'])) {
+                        $container->setTag($item['parameters']['tag']);
+                    }
+                    if(isset($item['parameters']['attributes'])) {
+                        $container->setAttributes($item['parameters']['attributes']);
+                    }
+                    $form->addBaseTab($container);
                 }
             }
         }
