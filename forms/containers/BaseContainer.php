@@ -195,7 +195,7 @@ abstract class BaseContainer extends Container
                 }
                 
 //                $this->currentGroup = $this->getForm()->getCurrentGroup() ?: $object->addBaseGroup(new BasicGroup);
-                $this->currentTab = $this->getForm()->getCurrentTab() ?: $object->addBaseTab(new GeneralTab);
+                $this->currentTab = $this->getForm()->getCurrentTab();// ?: $object->addBaseTab(new GeneralTab);
 
                 $this->configure();
 

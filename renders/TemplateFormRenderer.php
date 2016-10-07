@@ -45,47 +45,66 @@ class TemplateFormRenderer extends DefaultFormRenderer
     /** {@inheritDoc} */
     public function renderBody()
     {
-        $defaultContainer = $this->getWrapper('group container');
         $this->translator = $this->form->getTranslator();
         
         $this->renderTabs();
     }
     
-    
+    /**
+     * Render tabs
+     */
     private function renderTabs()
     {
-        echo '<div class="form-tabs">';
-            echo '<ul class="tabs">';
-                foreach ($this->form->getBaseTabs() as $t) {
-                    echo '<li class="tab"><a href="#'.$t->getText().'">' . $t->getText() . '</a></li>';
-                }
-            echo '</ul>';
-        echo '</div>';
+        $tabs = $this->form->getBaseTabs();
         
-        foreach ($this->form->getBaseTabs() as $tab) {
-            echo $tab->setAttribute('id', $tab->getText())->getTag()->startTag();
-                echo '<div class="row">';
+        if($tabs) {
+            $this->renderNavTabs();
+            
+            foreach ($tabs as $tab) {
+                echo $tab->setAttribute('id', $tab->getText())->getTag()->startTag();
                     $this->renderGroups($tab);
-                echo '</div>';
-            echo $tab->getTag()->endTag();
+                echo $tab->getTag()->endTag();
+            }
+        } else {
+            $this->renderGroups();
         }
     }
     
+    /**
+     * Render nav tabs
+     */
+    private function renderNavTabs()
+    {
+        echo '<div class="form-tabs">';
+            echo '<ul class="tabs">';
+                foreach ($this->form->getBaseTabs() as $tab) {
+                    echo '<li class="tab"><a href="#'.$tab->getText().'">' . $tab->getText() . '</a></li>';
+                }
+            echo '</ul>';
+        echo '</div>';
+    }
+    
+    /**
+     * Render groups
+     * @param type $tab
+     */
     private function renderGroups($tab = null)
     {
+        echo '<div class="row">';
         foreach ($this->form->getBaseGroups() as $group) {
-                $components = [];
-                
-                foreach($this->form->components as $component) {
-                    if($component instanceof BaseContainer && $component->currentGroup == $group && $component->currentTab == $tab) {
-                        $components[] = $component;
-                    }
-                }
-                
-                if(count($components) > 0) {
-                    $this->renderGroup($group, $components);
+            $components = [];
+
+            foreach($this->form->components as $component) {
+                if($component instanceof BaseContainer && $component->currentGroup == $group && (!$tab || $component->currentTab == $tab)) {
+                    $components[] = $component;
                 }
             }
+
+            if(count($components) > 0) {
+                $this->renderGroup($group, $components);
+            }
+        }
+        echo '</div>';
     }
     
     private function renderGroup($group, $components)
