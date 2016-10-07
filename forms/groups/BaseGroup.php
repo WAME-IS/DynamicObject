@@ -17,8 +17,11 @@ abstract class BaseGroup extends ControlGroup
     /** @var string */
     private $tag = 'fieldset';
     
+    /** @var string */
+    private $width = 'col-xs-12';
+    
     /** @var array */
-    private $attributes = [];
+    private $attributes = ['class' => []];
     
     
     use \Wame\DynamicObject\Traits\TCurrentTab;
@@ -27,7 +30,6 @@ abstract class BaseGroup extends ControlGroup
     public function __construct()
     {
         parent::__construct();
-        $this->setAttribute('class', 'group col-sm-12');
     }
     
     
@@ -93,13 +95,49 @@ abstract class BaseGroup extends ControlGroup
     }
     
     /**
+     * Add class
+     * 
+     * @param string $class
+     * @return BaseGroup
+     */
+    public function addClass($class)
+    {
+        $this->attributes['class'][] = $class;
+        
+        return $this;
+    }
+    
+    /**
+     * Set group width (col-xs-12, col-sm-6, col-lg-4...)
+     * 
+     * @param string $width
+     * @return BaseGroup
+     */
+    public function setWidth($width)
+    {
+        $this->width = $width;
+        
+        return $this;
+    }
+    
+    /**
+     * Get group width
+     * 
+     * @return string
+     */
+    public function getWidth()
+    {
+        return $this->width;
+    }
+    
+    /**
      * Get tag
      * 
      * @return Html
      */
     public function getTag()
     {
-        return Html::el($this->tag)->addAttributes($this->getAttributes());
+        return Html::el($this->tag);
     }
     
     /**

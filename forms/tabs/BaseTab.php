@@ -26,7 +26,7 @@ abstract class BaseTab extends ControlGroup
     public function __construct()
     {
         parent::__construct();
-        $this->setAttribute('class', 'tab-pane col-sm-12');
+        $this->setAttribute('class', 'tab-pane');
     }
     
     
