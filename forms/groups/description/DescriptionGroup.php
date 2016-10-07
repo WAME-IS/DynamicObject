@@ -12,6 +12,13 @@ interface IDescriptionGroupFactory extends IBaseContainer
 
 class DescriptionGroup extends BaseGroup
 {
+    public function __construct()
+    {
+        parent::__construct();
+        
+        $this->addClass('form-group-transparent');
+    }
+
     /** {@inheritDoc} */
     public function getText()
     {
