@@ -54,11 +54,13 @@ class TemplateFormRenderer extends DefaultFormRenderer
     
     private function renderTabs()
     {
-        echo '<ul class="tabs">';
-        foreach ($this->form->getBaseTabs() as $t) {
-            echo '<li class="tab"><a href="#'.$t->getText().'">' . $t->getText() . '</a></li>';
-        }
-        echo '</ul>';
+        echo '<div class="form-tabs">';
+            echo '<ul class="tabs">';
+                foreach ($this->form->getBaseTabs() as $t) {
+                    echo '<li class="tab"><a href="#'.$t->getText().'">' . $t->getText() . '</a></li>';
+                }
+            echo '</ul>';
+        echo '</div>';
         
         foreach ($this->form->getBaseTabs() as $tab) {
             echo $tab->setAttribute('id', $tab->getText())->getTag()->startTag();
@@ -88,6 +90,9 @@ class TemplateFormRenderer extends DefaultFormRenderer
     
     private function renderGroup($group, $components)
     {
+        $container = Html::el('div')->addAttributes($group->getAttributes());
+        
+        echo $container->addClass('group')->addClass($group->getWidth())->startTag();
         echo $group->getTag()->startTag();
 
         $text = $group->getText();
@@ -126,6 +131,7 @@ class TemplateFormRenderer extends DefaultFormRenderer
         $this->renderComponents($components);
         
         echo $group->getTag()->endTag();
+        echo $container->endTag();
     }
     
     private function renderComponents($components)
