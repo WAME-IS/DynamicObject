@@ -15,7 +15,8 @@ class TransparentGroup extends BaseGroup
     public function __construct()
     {
         parent::__construct();
-        $this->setAttribute('class', 'group form-group-transparent col-sm-12');
+        
+        $this->addClass('form-group-transparent');
     }
     
 }
