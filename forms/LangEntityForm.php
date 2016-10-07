@@ -15,14 +15,21 @@ class LangEntityForm extends EntityForm
      */
     public function getLangEntity($lang = null)
     {
-//        $lang = $lang ?: $this->getRepository()->lang;
-//        
-//        if(!isset($this->langEntities[$lang])) {
-//            $this->langEntities[$lang] = $this->repository->getNewLangEntity();
-//        }
-//        return $this->langEntities[$lang];
+        $lang = $lang ?: $this->getRepository()->lang;
         
-        return $this->getEntity()->getCurrentLangEntity();
+        $entity = $this->getEntity();
+        
+        if(!$entity->getCurrentLang()) {
+            $entity->setCurrentLang($lang);
+            
+            $langEntity = $this->getRepository()->getNewLangEntity();
+            $langEntity->setLang($lang);
+            
+            $entity->addLang($lang, $langEntity);
+        }
+        
+        
+        return $entity->getCurrentLangEntity();
     }
     
     /**

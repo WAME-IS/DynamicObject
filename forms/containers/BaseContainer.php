@@ -10,6 +10,7 @@ use Wame\DynamicObject\Forms\Groups\BaseGroup;
 use Wame\DynamicObject\Forms\Tabs\GeneralTab;
 use Wame\Utils\Latte\FindTemplate;
 use Wame\Utils\Strings;
+use Wame\DynamicObject\Forms\Groups\BasicGroup;
 
 /**
  * Class BaseContainer
@@ -314,6 +315,11 @@ abstract class BaseContainer extends Container
     public function create($form, $values)
     {
 
+    }
+    
+    public function getPresenter()
+    {
+        $this->lookup(UI\Presenter::class);
     }
 
 }
