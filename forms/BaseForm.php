@@ -58,6 +58,7 @@ class BaseForm extends Form
     public function addBaseGroup($group, $name = null)
     {
         $group->setParent($this);
+        $group->configure();
         $this->setCurrentGroup($group);
         
         if(isset($name)) {

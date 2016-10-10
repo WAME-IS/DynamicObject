@@ -2,7 +2,6 @@
 
 namespace Wame\DynamicObject\Forms\Groups;
 
-use Nette\Utils\Html;
 use Wame\DynamicObject\Registers\Types\IBaseContainer;
 
 interface IAdvancedGroupFactory extends IBaseContainer
@@ -13,7 +12,7 @@ interface IAdvancedGroupFactory extends IBaseContainer
 
 class AdvancedGroup extends BaseGroup
 {
-    
+    /** {@inheritDoc} */
     public function getText()
     {
         return _('Advanced');

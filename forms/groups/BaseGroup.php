@@ -24,6 +24,8 @@ abstract class BaseGroup extends ControlGroup
     private $attributes = ['class' => []];
     
     
+    use \Wame\Core\Traits\TRegister;
+    
     use \Wame\DynamicObject\Traits\TCurrentTab;
     
     
@@ -199,5 +201,10 @@ abstract class BaseGroup extends ControlGroup
     {
         return $this->parent;
     }
+    
+    /**
+     * Configure
+     */
+    public function configure() {}
     
 }

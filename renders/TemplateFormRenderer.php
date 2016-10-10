@@ -91,19 +91,19 @@ class TemplateFormRenderer extends DefaultFormRenderer
     private function renderGroups($tab = null)
     {
         echo '<div class="row">';
-        foreach ($this->form->getBaseGroups() as $group) {
-            $components = [];
+            foreach ($this->form->getBaseGroups() as $group) {
+                $components = [];
 
-            foreach($this->form->components as $component) {
-                if($component instanceof BaseContainer && $component->currentGroup == $group && (!$tab || $component->currentTab == $tab)) {
-                    $components[] = $component;
+                foreach($this->form->components as $component) {
+                    if($component instanceof BaseContainer && $component->currentGroup == $group && (!$tab || $component->currentTab == $tab)) {
+                        $components[] = $component;
+                    }
+                }
+
+                if(count($components) > 0) {
+                    $this->renderGroup($group, $components);
                 }
             }
-
-            if(count($components) > 0) {
-                $this->renderGroup($group, $components);
-            }
-        }
         echo '</div>';
     }
     
@@ -115,6 +115,7 @@ class TemplateFormRenderer extends DefaultFormRenderer
         echo $group->getTag()->startTag();
 
         $text = $group->getText();
+        
         if ($text instanceof Html) {
             $label = $this->getWrapper('group label')->addHtml($text);
 
