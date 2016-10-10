@@ -14,11 +14,16 @@ trait TLink
      * 
 	 * @return string
 	 */
-	protected function createLink(BaseGroup $group, $href, $params)
+	protected function createLink(BaseGroup $group, $href, $params = [])
 	{
         // TODO: pridat try/catch pre overenie ci je pripojeny k presentru
         $presenter = $group->getParent()->getParent();
-        return $presenter->link($href, $params);
+        
+        if($presenter instanceof \App\Core\Presenters\BasePresenter) {
+            return $presenter->link($href, $params);
+        } else {
+            throw new \Exception('[$presenter] shoud be instance of ' . \App\Core\Presenters\BasePresenter::class . ". " . get_class($presenter) . ' given.');
+        }
 	}
     
 }
