@@ -12,6 +12,17 @@ abstract class AdminFormPresenter extends BasePresenter
     /** @var BaseEntity */
     protected $entity;
 
+    
+    /** actions ***************************************************************/
+    
+    /**
+     * Action edit
+     */
+    public function actionEdit()
+	{
+        $this->entity = $this->repository->get(['id' => $this->id]);
+	}
+    
 
     /**
 	 * Create component form

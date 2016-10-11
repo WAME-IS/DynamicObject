@@ -78,7 +78,9 @@ class TemplateFormRenderer extends DefaultFormRenderer
         echo '<div class="form-tabs">';
             echo '<ul class="tabs">';
                 foreach ($this->form->getBaseTabs() as $tab) {
-                    echo '<li class="tab"><a href="#'.$tab->getText().'">' . $tab->getText() . '</a></li>';
+                    if(!$tab instanceof \Wame\DynamicObject\Forms\Tabs\NoTab) {
+                        echo '<li class="tab"><a href="#'.$tab->getText().'">' . $tab->getText() . '</a></li>';
+                    }
                 }
             echo '</ul>';
         echo '</div>';

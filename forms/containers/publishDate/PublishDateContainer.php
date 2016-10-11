@@ -15,8 +15,11 @@ class PublishDateContainer extends BaseContainer
     /** {@inheritDoc} */
     public function configure() 
 	{
-		$this->addDateTimePicker('publishStartDate', _('Publish start date'));
-		$this->addDateTimePicker('publishEndDate', _('Publish end date'));
+        $this->addText('publishStartDate', _('Publish start date'))
+                ->setType('date');
+        
+        $this->addText('publishEndDate', _('Publish end date'))
+                ->setType('date');
     }
 
     /** {@inheritDoc} */

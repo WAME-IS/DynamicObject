@@ -34,6 +34,7 @@ services:
     # Form tabs
     - Wame\DynamicObject\Forms\Tabs\IGeneralTabFactory
     - Wame\DynamicObject\Forms\Tabs\IAdvancedTabFactory
+    - Wame\DynamicObject\Forms\Tabs\INoTabFactory
 
 
 webloader:
@@ -43,4 +44,7 @@ webloader:
 #                - %appDir%/../vendor/wame/DynamicObject/assets/groups.js
         admin:
             files:
+                - %appDir%/../vendor/nextras/forms/js/nextras.netteForms.js
+#                - %appDir%/../vendor/nextras/forms/js/nextras.typehead.init.js
+                - %appDir%/../vendor/nextras/forms/js/nextras.datetimepicker.init.js
                 - %appDir%/../vendor/wame/DynamicObject/assets/groups.js

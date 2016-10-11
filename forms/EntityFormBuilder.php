@@ -73,7 +73,7 @@ class EntityFormBuilder extends BaseFormBuilder
         
         if($entity->id) {
             $entity = $this->update($form, $values);
-
+            $this->getRepository()->update($entity);
             $this->getRepository()->onUpdate($form, $values, $entity);
 
             $form->getPresenter()->flashMessage(_('Successfully updated.'), 'success');
@@ -84,13 +84,16 @@ class EntityFormBuilder extends BaseFormBuilder
 
             $form->getPresenter()->flashMessage(_('Successfully created.'), 'success');
         }
+        
+        // TODO: zistit ci sa neda presunut do postSubmit a flushovat len ked je to nutne
+        $form->getRepository()->entityManager->flush();
     }
 
     /** {@inheritDoc} */
     public function postSubmit(BaseForm $form, array $values)
     {
         $entity = $form->getEntity();
-
+        
         if($entity->id) {
             $entity = $this->postUpdate($form, $values);
         } else {

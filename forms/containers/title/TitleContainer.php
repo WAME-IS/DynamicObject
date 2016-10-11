@@ -28,14 +28,14 @@ class TitleContainer extends BaseContainer
     /** {@inheritDoc} */
     public function create($form, $values)
     {
-        $entity = method_exists($form, 'getLangEntity') ? $form->getLangEntity(): $form->getEntity();
+        $entity = method_exists($form, 'getLangEntity') && property_exists($form->getLangEntity(), 'title') ? $form->getLangEntity() : $form->getEntity();
         $entity->setTitle($values['title']);
     }
 
     /** {@inheritDoc} */
     public function update($form, $values)
     {
-        $entity = method_exists($form, 'getLangEntity') ? $form->getLangEntity(): $form->getEntity();
+        $entity = method_exists($form, 'getLangEntity') && property_exists($form->getLangEntity(), 'title') ? $form->getLangEntity() : $form->getEntity();
         $entity->setTitle($values['title']);
     }
 
