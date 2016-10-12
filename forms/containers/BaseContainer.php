@@ -17,7 +17,7 @@ use Wame\DynamicObject\Forms\Groups\BasicGroup;
  *
  * @package Wame\DynamicObject\Forms\Containers
  */
-abstract class BaseContainer extends Container
+class BaseContainer extends Container
 {
     /** @var UI\ITemplate */
     protected $template;
@@ -30,6 +30,9 @@ abstract class BaseContainer extends Container
 
     /** @var string */
     private $dir;
+    
+    /** @var LinkGenerator */
+    protected $linkGenerator;
 
     
     use \Wame\Core\Traits\TRegister;
@@ -44,6 +47,15 @@ abstract class BaseContainer extends Container
         parent::__construct();
 
         $this->monitor('Nette\Forms\Form');
+    }
+    
+    /**
+     * 
+     * @param \Nette\Application\LinkGenerator $linkGenerator
+     */
+    public function injectLinkGenerator(\Nette\Application\LinkGenerator $linkGenerator)
+    {
+        $this->linkGenerator = $linkGenerator;
     }
 
 
@@ -63,6 +75,8 @@ abstract class BaseContainer extends Container
     public function render()
     {
         $this->template = $this->getTemplate();
+        \Tracy\Debugger::barDump($this->linkGenerator);
+        $this->template->_control = $this->linkGenerator;
         $this->template->_form = $this->getForm();
         $this->compose($this->template);
         $this->template->render($this->getTemplateFile());
@@ -98,6 +112,7 @@ abstract class BaseContainer extends Container
             }
 
             $this->template = $value;
+            $this->template->_presenter = $this->getPresenter();
         }
 
         return $this->template;
@@ -232,7 +247,7 @@ abstract class BaseContainer extends Container
     /**
      * Configure
      */
-    abstract protected function configure();
+    protected function configure() {}
 
 
     /**
@@ -319,7 +334,7 @@ abstract class BaseContainer extends Container
     
     public function getPresenter()
     {
-        $this->lookup(UI\Presenter::class);
+        return $this->lookup(UI\Presenter::class);
     }
 
 }
