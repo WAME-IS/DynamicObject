@@ -2,15 +2,15 @@ decorator:
     BaseFormContainer:
         inject: yes
 
-    BaseContainer:
-        inject: yes
+#    BaseContainer:
+#        inject: yes
 
 
 services:
     - Wame\DynamicObject\Components\IFormControlFactory
 
     # Form containers
-    - Wame\DynamicObject\Forms\Containers\BaseContainer
+#    - Wame\DynamicObject\Forms\Containers\BaseContainer
     - Wame\DynamicObject\Forms\Containers\IIconContainerFactory
     - Wame\DynamicObject\Forms\Containers\ITitleContainerFactory
     - Wame\DynamicObject\Forms\Containers\INameContainerFactory

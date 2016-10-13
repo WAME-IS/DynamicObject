@@ -7,17 +7,16 @@ use Nette\Application\UI;
 use Nette\Forms\Container;
 use Wame\DynamicObject\Forms\EntityForm;
 use Wame\DynamicObject\Forms\Groups\BaseGroup;
-use Wame\DynamicObject\Forms\Tabs\GeneralTab;
+use Wame\DynamicObject\Forms\Groups\BasicGroup;
 use Wame\Utils\Latte\FindTemplate;
 use Wame\Utils\Strings;
-use Wame\DynamicObject\Forms\Groups\BasicGroup;
 
 /**
  * Class BaseContainer
  *
  * @package Wame\DynamicObject\Forms\Containers
  */
-class BaseContainer extends Container
+abstract class BaseContainer extends Container
 {
     /** @var UI\ITemplate */
     protected $template;
@@ -31,8 +30,8 @@ class BaseContainer extends Container
     /** @var string */
     private $dir;
     
-    /** @var LinkGenerator */
-    protected $linkGenerator;
+//    /** @var LinkGenerator */
+//    protected $linkGenerator;
 
     
     use \Wame\Core\Traits\TRegister;
@@ -49,14 +48,14 @@ class BaseContainer extends Container
         $this->monitor('Nette\Forms\Form');
     }
     
-    /**
-     * 
-     * @param \Nette\Application\LinkGenerator $linkGenerator
-     */
-    public function injectLinkGenerator(\Nette\Application\LinkGenerator $linkGenerator)
-    {
-        $this->linkGenerator = $linkGenerator;
-    }
+//    /**
+//     *
+//     * @param \Nette\Application\LinkGenerator $linkGenerator
+//     */
+//    public function injectLinkGenerator(\Nette\Application\LinkGenerator $linkGenerator)
+//    {
+//        $this->linkGenerator = $linkGenerator;
+//    }
 
 
 //    /**
@@ -75,8 +74,7 @@ class BaseContainer extends Container
     public function render()
     {
         $this->template = $this->getTemplate();
-        \Tracy\Debugger::barDump($this->linkGenerator);
-        $this->template->_control = $this->linkGenerator;
+//        $this->template->_control = $this->linkGenerator;
         $this->template->_form = $this->getForm();
         $this->compose($this->template);
         $this->template->render($this->getTemplateFile());

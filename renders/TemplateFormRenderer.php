@@ -92,32 +92,41 @@ class TemplateFormRenderer extends DefaultFormRenderer
      */
     private function renderGroups($tab = null)
     {
+        $groups = $this->form->getBaseGroups();
+
         echo '<div class="row">';
-            foreach ($this->form->getBaseGroups() as $group) {
-                $components = [];
+        foreach ($groups as $group) {
+            $components = $this->getComponents($tab, $group);
 
-                foreach($this->form->components as $component) {
-                    if($component instanceof BaseContainer && $component->currentGroup == $group && (!$tab || $component->currentTab == $tab)) {
-                        $components[] = $component;
-                    }
-                }
-
-                if(count($components) > 0) {
-                    $this->renderGroup($group, $components);
-                }
+            if (count($components) > 0) {
+                $this->renderGroup($group, $components);
             }
+        }
         echo '</div>';
+    }
+
+    private function getComponents($tab = null, $group = null)
+    {
+        $components = [];
+
+        foreach ($this->form->components as $component) {
+            if ($component instanceof BaseContainer && $component->currentGroup == $group && (!$tab || $component->currentTab == $tab)) {
+                $components[] = $component;
+            }
+        }
+
+        return $components;
     }
     
     private function renderGroup($group, $components)
     {
         $container = Html::el('div')->addAttributes($group->getAttributes());
-        
+
         echo $container->addClass('group')->addClass($group->getWidth())->startTag();
         echo $group->getTag()->startTag();
 
         $text = $group->getText();
-        
+
         if ($text instanceof Html) {
             $label = $this->getWrapper('group label')->addHtml($text);
 
@@ -151,7 +160,7 @@ class TemplateFormRenderer extends DefaultFormRenderer
         }
 
         $this->renderComponents($components);
-        
+
         echo $group->getTag()->endTag();
         echo $container->endTag();
     }

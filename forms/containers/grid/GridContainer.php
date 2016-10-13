@@ -2,7 +2,9 @@
 
 namespace Wame\DynamicObject\Forms\Containers;
 
-use Wame\DynamicObject\Forms\Containers\BaseContainer;
+use App\Core\Presenters\BasePresenter;
+use Doctrine\ORM\QueryBuilder;
+use Wame\DataGridControl\DataGridControl;
 use Wame\DynamicObject\Registers\Types\IBaseContainer;
 
 interface IGridContainerFactory extends IBaseContainer
@@ -17,7 +19,7 @@ abstract class GridContainer extends BaseContainer
     {
         parent::__construct();
         
-        $this->monitor(\Nette\Application\UI\Presenter::class);
+        $this->monitor(BasePresenter::class);
     }
     
     
@@ -33,7 +35,7 @@ abstract class GridContainer extends BaseContainer
     {
         parent::attached($object);
         
-        if($object instanceof \Nette\Application\UI\Presenter) {
+        if($object instanceof BasePresenter) {
             $this->addGrid($object);
         }
     }
@@ -49,21 +51,22 @@ abstract class GridContainer extends BaseContainer
     /**
      * Get data source
      * 
-     * @param type $presenter
+     * @param BasePresenter $presenter  presenter
      * @return QueryBuilder
      */
-    abstract protected function getDataSource($presenter);
+    abstract protected function getDataSource(BasePresenter $presenter);
     
     
     /**
      * Add grid
      * 
-     * @param Presenter $presenter
+     * @param BasePresenter $presenter  presenter
      */
-    private function addGrid($presenter)
+    private function addGrid(BasePresenter $presenter)
     {
         $gridName = $this->getGridName();
-        
+
+        /** @var DataGridControl $grid */
         $grid = $presenter->context->getService($gridName);
         $grid->setDataSource($this->getDataSource($presenter));
         $grid->setTemplateFile(TEMPLATES_PATH . '/materialDesign/ublaboo/datagrid/src/templates/datagrid_nofilter.latte');
