@@ -21,8 +21,8 @@ class SubmitContainer extends BaseContainer
         
         $this->getForm()->addBaseGroup($group);
         
-		$this->addSubmit('submit', _('Submit'));
-//            ->setAttribute('data-submit', 'form');
+		$this->addSubmit('submit', _('Submit'))
+            ->setAttribute('data-submit', 'form');
     }
 
 }
