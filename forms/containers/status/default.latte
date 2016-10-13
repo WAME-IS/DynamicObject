@@ -3,7 +3,7 @@
     <p>{$status->caption}</p>
     {foreach $status->items as $key => $label}
         <div class="checkbox">
-            <label n:name="$status:$key"><input n:name="$status:$key"> {$label}</label>
+            <label n:name="$status:$key"><input class="with-gap" n:name="$status:$key"> {$label}</label>
         </div>
     {/foreach}
 </div>
