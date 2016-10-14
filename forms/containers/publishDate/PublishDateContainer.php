@@ -3,6 +3,7 @@
 namespace Wame\DynamicObject\Forms\Containers;
 
 use Wame\DynamicObject\Registers\Types\IBaseContainer;
+use Wame\Utils\Date;
 
 interface IPublishDateContainerFactory extends IBaseContainer
 {
@@ -25,8 +26,8 @@ class PublishDateContainer extends BaseContainer
     /** {@inheritDoc} */
 	public function setDefaultValues($entity, $langEntity = null)
 	{
-        $this['publishStartDate']->setDefaultValue($entity->getPublishStartDate());
-        $this['publishEndDate']->setDefaultValue($entity->getPublishEndDate());
+        $this['publishStartDate']->setDefaultValue(Date::toString($entity->getPublishStartDate()));
+        $this['publishEndDate']->setDefaultValue(Date::toString($entity->getPublishEndDate()));
 	}
 
     /** {@inheritDoc} */
@@ -41,8 +42,8 @@ class PublishDateContainer extends BaseContainer
     public function update($form, $values)
     {
         $entity = $form->getEntity();
-        $entity->setPublishStartDate($values['publishStartDate']);
-        $entity->setPublishEndDate($values['publishEndDate']);
+        $entity->setPublishStartDate(Date::toDateTime($values['publishStartDate']));
+        $entity->setPublishEndDate(Date::toDateTime($values['publishEndDate']));
     }
 
 }
