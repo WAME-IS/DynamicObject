@@ -1,6 +1,8 @@
 {var $status = $_form['StatusContainer']['status']}
+
 <div class="form-group">
-    <p>{$status->caption}</p>
+    <span>{$status->caption}</span>
+    
     {foreach $status->items as $key => $label}
         <div class="checkbox">
             <label n:name="$status:$key"><input class="with-gap" n:name="$status:$key"> {$label}</label>
