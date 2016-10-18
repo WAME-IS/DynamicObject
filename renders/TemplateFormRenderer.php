@@ -23,7 +23,7 @@ class TemplateFormRenderer extends DefaultFormRenderer
 			$this->form = $form;
 		}
         
-        $this->form->getElementPrototype()->addAttributes(['class' => 'ajax']);
+//        $this->form->getElementPrototype()->addAttributes(['class' => 'ajax']);
         
         if (!$mode || $mode === 'begin') {
 			echo $this->renderBegin();

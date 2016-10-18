@@ -14,34 +14,38 @@ use Wame\Core\Repositories\BaseRepository;
 class EntityFormBuilder extends BaseFormBuilder
 {
     const ACTION_CREATE = 'create';
-	const ACTION_EDIT = 'edit';
-	
-    
+    const ACTION_EDIT = 'edit';
+
+
     /** @var BaseEntity */
     protected $entity;
 
     /** @var BaseRepository */
     protected $repository;
-    
-    
+
+
     /** {@inheritDoc} */
-	public function build($domain = null)
-	{
+    public function build($domain = null)
+    {
         $form = $this->createForm();
-		
+
         if($this->entity) {
             $form->setEntity($this->entity);
             unset($this->entity);
         }
 
-		$form->setRenderer($this->getFormRenderer());
-		$this->attachFormContainers($form, $domain);
+        $form->setRenderer($this->getFormRenderer());
+        $this->attachFormContainers($form, $domain);
+
+        if($this->ajax) {
+            $form->getElementPrototype()->addAttributes(['class' => 'ajax']);
+        }
 
         $form->onSuccess[] = [$this, 'formSucceeded'];
         $form->onPostSuccess[] = [$this, 'formPostSucceeded'];
-        
-		return $form;
-	}
+
+        return $form;
+    }
 
     /**
      * Set entity
@@ -52,7 +56,7 @@ class EntityFormBuilder extends BaseFormBuilder
     public function setEntity(BaseEntity $entity = null)
     {
         $this->entity = $entity;
-        
+
         return $this;
     }
 
@@ -65,12 +69,12 @@ class EntityFormBuilder extends BaseFormBuilder
     {
         $this->repository = $repository;
     }
-    
-	/** {@inheritDoc} */
+
+    /** {@inheritDoc} */
     public function submit(BaseForm $form, array $values)
     {
         $entity = $form->getEntity();
-        
+
         if($entity->id) {
             $entity = $this->update($form, $values);
             $this->getRepository()->update($entity);
@@ -84,7 +88,7 @@ class EntityFormBuilder extends BaseFormBuilder
 
             $form->getPresenter()->flashMessage(_('Successfully created.'), 'success');
         }
-        
+
         // TODO: zistit ci sa neda presunut do postSubmit a flushovat len ked je to nutne
         $form->getRepository()->entityManager->flush();
     }
@@ -93,7 +97,7 @@ class EntityFormBuilder extends BaseFormBuilder
     public function postSubmit(BaseForm $form, array $values)
     {
         $entity = $form->getEntity();
-        
+
         if($entity->id) {
             $entity = $this->postUpdate($form, $values);
         } else {
@@ -103,34 +107,34 @@ class EntityFormBuilder extends BaseFormBuilder
 
 
     /** {@inheritDoc} */
-	protected function createForm()
-	{
-		$form = new EntityForm;
+    protected function createForm()
+    {
+        $form = new EntityForm;
         $form->setRepository($this->getRepository());
-		
-		return $form;
-	}
-    
-    
-	/**
-	 * Create
-	 * 
-	 * @param Form $form		form
-	 * @param array $values		values
-	 * @return BaseEntity       entity
-	 */
+
+        return $form;
+    }
+
+
+    /**
+     * Create
+     * 
+     * @param Form $form		form
+     * @param array $values		values
+     * @return BaseEntity       entity
+     */
     protected function create($form, $values)
     {
         return $form->getEntity();
     }
-    
-	/**
-	 * Update
-	 * 
-	 * @param Form $form		form
-	 * @param array $values     values
-	 * @return BaseEntity       entity
-	 */
+
+    /**
+     * Update
+     * 
+     * @param Form $form		form
+     * @param array $values     values
+     * @return BaseEntity       entity
+     */
     protected function update($form, $values)
     {
         return $form->getEntity();
@@ -159,7 +163,7 @@ class EntityFormBuilder extends BaseFormBuilder
     {
         return $form->getEntity();
     }
-    
+
     /**
      * Get repository
      * 
@@ -169,7 +173,7 @@ class EntityFormBuilder extends BaseFormBuilder
     {
         return $this->repository;
     }
-    
+
     /** {@inheritDoc} */
     protected function setDefaultValue($form, $container)
     {

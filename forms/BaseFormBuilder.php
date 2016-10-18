@@ -21,6 +21,9 @@ abstract class BaseFormBuilder extends PriorityRegister
     /** @var string */
     private $redirect = 'this';
 
+    /** @var bool */
+    protected $ajax = false;
+
 
     /**
      * BaseFormBuilder constructor.
@@ -29,28 +32,32 @@ abstract class BaseFormBuilder extends PriorityRegister
     {
         parent::__construct(IFormItem::class);
     }
-    
-    
+
+
     /**
      * Build
      * 
      * @param string $domain    domain
      * @return Form
      */
-	public function build($domain = null)
-	{
+    public function build($domain = null)
+    {
         $form = $this->createForm();
-		
-		$form->setRenderer($this->getFormRenderer());
+
+        $form->setRenderer($this->getFormRenderer());
 //        $form->addContainers($this->array, $domain);
-		$this->attachFormContainers($form, $domain);
-        
+        $this->attachFormContainers($form, $domain);
+
+        if($this->ajax) {
+            $form->getElementPrototype()->addAttributes(['class' => 'ajax']);
+        }
+
         $form->onSuccess[] = [$this, 'formSucceeded'];
         $form->onPostSuccess[] = [$this, 'formPostSucceeded'];
 
-		return $form;
-	}
-	
+        return $form;
+    }
+
     /**
      * Form succeeded
      * 
@@ -58,20 +65,20 @@ abstract class BaseFormBuilder extends PriorityRegister
      * @param array $values values
      * @throws \Exception
      */
-	public function formSucceeded(Form $form, array $values)
-	{
-		try {
-			$this->submit($form, $values);
-            
+    public function formSucceeded(Form $form, array $values)
+    {
+        try {
+            $this->submit($form, $values);
+
 //			$form->getPresenter()->redirect('this');
-		} catch (\Exception $e) {
-			if ($e instanceof \Nette\Application\AbortException) {
-				throw $e;
-			}
-			
-			$form->addError($e->getMessage());
-		}
-	}
+        } catch (\Exception $e) {
+            if ($e instanceof \Nette\Application\AbortException) {
+                throw $e;
+            }
+
+            $form->addError($e->getMessage());
+        }
+    }
 
     /**
      * Form post succeeded
@@ -80,7 +87,7 @@ abstract class BaseFormBuilder extends PriorityRegister
      * @param array $values     values
      * @throws \Nette\Application\AbortException
      */
-	public function formPostSucceeded(BaseForm $form, array $values)
+    public function formPostSucceeded(BaseForm $form, array $values)
     {
         try {
             $this->postSubmit($form, $values);
@@ -108,6 +115,22 @@ abstract class BaseFormBuilder extends PriorityRegister
     }
 
     /**
+     * Set ajax
+     * 
+     * @param bool $enabled     enabled
+     */
+    public function setAjax($enabled)
+    {
+        if(!is_bool($enabled)) {
+            throw new \InvalidArgumentException("setAjax function only accepts boolean. Input was: " . $enabled);
+        }
+
+        $this->ajax = $enabled;
+
+        return $this;
+    }
+
+    /**
      * Submit
      *
      * @param BaseForm $form    form
@@ -122,7 +145,7 @@ abstract class BaseFormBuilder extends PriorityRegister
      * @param array $values     values
      */
     public function postSubmit(BaseForm $form, array $values) {}
-    
+
     /**
      * Set renderer
      * 
@@ -132,11 +155,11 @@ abstract class BaseFormBuilder extends PriorityRegister
     public function setFormRenderer(IFormRenderer $formRenderer)
     {
         $this->formRenderer($formRenderer);
-        
+
         return $this;
     }
 
-    
+
     /**
      * Get form renderer
      * 
@@ -150,19 +173,19 @@ abstract class BaseFormBuilder extends PriorityRegister
             return new TemplateFormRenderer;
         }
     }
-    
+
     /**
-	 * Create Form
-	 * 
-	 * @return Form
-	 */
-	protected function createForm()
-	{
-		$form = new BaseForm;
-		
-		return $form;
-	}
-    
+     * Create Form
+     * 
+     * @return Form
+     */
+    protected function createForm()
+    {
+        $form = new BaseForm;
+
+        return $form;
+    }
+
     /**
      * Attach form containers
      * 
@@ -200,7 +223,7 @@ abstract class BaseFormBuilder extends PriorityRegister
             }
         }
     }
-    
+
     /**
      * Set default value
      * 
@@ -209,7 +232,7 @@ abstract class BaseFormBuilder extends PriorityRegister
      */
     protected function setDefaultValue($form, $container)
     {
-        
+
     }
-    
+
 }
