@@ -15,6 +15,7 @@ services:
     - Wame\DynamicObject\Forms\Containers\ITitleContainerFactory
     - Wame\DynamicObject\Forms\Containers\INameContainerFactory
     - Wame\DynamicObject\Forms\Containers\IDescriptionContainerFactory
+    - Wame\DynamicObject\Forms\Containers\IDescriptionEditorContainerFactory
     - Wame\DynamicObject\Forms\Containers\ITextContainerFactory
     - Wame\DynamicObject\Forms\Containers\IMainContainerFactory
     - Wame\DynamicObject\Forms\Containers\ISlugContainerFactory
