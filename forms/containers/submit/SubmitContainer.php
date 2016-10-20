@@ -19,7 +19,7 @@ class SubmitContainer extends BaseContainer
     public function configure()
     {
         $group = new TransparentGroup;
-        $group->setTag('div');
+        $group->setTag('div')->addClass('submit-group');
 
         $this->getForm()->addBaseGroup($group);
 
