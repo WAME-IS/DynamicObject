@@ -96,7 +96,7 @@ abstract class BaseFormBuilder extends PriorityRegister
             $this->postSubmit($form, $values);
 
             if(!$form->getPresenter()->isAjax()) {
-                $form->getPresenter()->redirect($this->redirect, $this->redirectParameters);
+                $form->getPresenter()->redirect($this->getRedirectTo(), $this->getRedirectParameters());
             }
         } catch (\Exception $e) {
             if ($e instanceof \Nette\Application\AbortException) {
@@ -117,6 +117,26 @@ abstract class BaseFormBuilder extends PriorityRegister
     {
         $this->redirect = $to;
         $this->redirectParameters = $parameters;
+    }
+
+    /**
+     * Return redirect to
+     *
+     * @return string
+     */
+    public function getRedirectTo()
+    {
+        return $this->redirect;
+    }
+
+    /**
+     * Return redirect parameters
+     *
+     * @return array
+     */
+    public function getRedirectParameters()
+    {
+        return $this->redirectParameters;
     }
 
     /**
