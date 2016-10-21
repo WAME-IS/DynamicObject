@@ -44,7 +44,9 @@ abstract class AdminFormPresenter extends BasePresenter
      */
     protected function createComponentGrid()
     {
-        if(!$this->repository && $this->getGridServiceAlias()) return;
+        if(!$this->repository && $this->getGridServiceAlias()) {
+            throw new \Exception("Repository or grid service alias not initialized in presenter");
+        }
         
         $grid = $this->context->getService($this->getGridServiceAlias());
         
