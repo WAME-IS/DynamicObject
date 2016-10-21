@@ -31,6 +31,7 @@ services:
 
 
     # Form groups
+    - Wame\DynamicObject\Forms\Groups\IEmptyGroupFactory
     - Wame\DynamicObject\Forms\Groups\IBasicGroupFactory
     - Wame\DynamicObject\Forms\Groups\IAdvancedGroupFactory
     - Wame\DynamicObject\Forms\Groups\ITransparentGroupFactory
