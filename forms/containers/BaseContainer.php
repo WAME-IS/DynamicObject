@@ -7,7 +7,7 @@ use Nette\Application\UI;
 use Nette\Forms\Container;
 use Wame\DynamicObject\Forms\EntityForm;
 use Wame\DynamicObject\Forms\Groups\BaseGroup;
-use Wame\DynamicObject\Forms\Groups\BasicGroup;
+use Wame\DynamicObject\Forms\Groups\EmptyGroup;
 use Wame\Utils\Latte\FindTemplate;
 use Wame\Utils\Strings;
 
@@ -29,14 +29,14 @@ abstract class BaseContainer extends Container
 
     /** @var string */
     private $dir;
-    
+
 //    /** @var LinkGenerator */
 //    protected $linkGenerator;
 
-    
+
     use \Wame\Core\Traits\TRegister;
     use \Wame\DynamicObject\Traits\TCurrentTab;
-    
+
 
     /**
      * BaseContainer constructor.
@@ -47,7 +47,7 @@ abstract class BaseContainer extends Container
 
         $this->monitor('Nette\Forms\Form');
     }
-    
+
 //    /**
 //     *
 //     * @param \Nette\Application\LinkGenerator $linkGenerator
@@ -204,9 +204,9 @@ abstract class BaseContainer extends Container
                 $this->currentGroup = $this->getForm()->getCurrentGroup();
 
                 if (!$this->currentGroup) {
-                    $object->addBaseGroup(new BasicGroup);
+                    $object->addBaseGroup(new EmptyGroup);
                 }
-                
+
 //                $this->currentGroup = $this->getForm()->getCurrentGroup() ?: $object->addBaseGroup(new BasicGroup);
                 $this->currentTab = $this->getForm()->getCurrentTab();// ?: $object->addBaseTab(new GeneralTab);
 
@@ -329,7 +329,7 @@ abstract class BaseContainer extends Container
     {
 
     }
-    
+
     public function getPresenter()
     {
         return $this->lookup(UI\Presenter::class);

@@ -21,6 +21,9 @@ abstract class BaseFormBuilder extends PriorityRegister
     /** @var string */
     private $redirect = 'this';
 
+    /** @var array */
+    private $redirectParameters = [];
+
     /** @var bool */
     protected $ajax = false;
 
@@ -36,7 +39,7 @@ abstract class BaseFormBuilder extends PriorityRegister
 
     /**
      * Build
-     * 
+     *
      * @param string $domain    domain
      * @return Form
      */
@@ -60,7 +63,7 @@ abstract class BaseFormBuilder extends PriorityRegister
 
     /**
      * Form succeeded
-     * 
+     *
      * @param Form $form    form
      * @param array $values values
      * @throws \Exception
@@ -93,7 +96,7 @@ abstract class BaseFormBuilder extends PriorityRegister
             $this->postSubmit($form, $values);
 
             if(!$form->getPresenter()->isAjax()) {
-                $form->getPresenter()->redirect($this->redirect);
+                $form->getPresenter()->redirect($this->redirect, $this->redirectParameters);
             }
         } catch (\Exception $e) {
             if ($e instanceof \Nette\Application\AbortException) {
@@ -107,16 +110,18 @@ abstract class BaseFormBuilder extends PriorityRegister
     /**
      * Redirect to
      *
-     * @param $to
+     * @param string $to
+     * @param array $parameters
      */
-    public function redirectTo($to)
+    public function redirectTo($to, $parameters = [])
     {
         $this->redirect = $to;
+        $this->redirectParameters = $parameters;
     }
 
     /**
      * Set ajax
-     * 
+     *
      * @param bool $enabled     enabled
      */
     public function setAjax($enabled)
@@ -148,7 +153,7 @@ abstract class BaseFormBuilder extends PriorityRegister
 
     /**
      * Set renderer
-     * 
+     *
      * @param IFormRenderer $formRenderer   form renderer
      * @return $this
      */
@@ -162,7 +167,7 @@ abstract class BaseFormBuilder extends PriorityRegister
 
     /**
      * Get form renderer
-     * 
+     *
      * @return IFormRenderer
      */
     protected function getFormRenderer()
@@ -176,7 +181,7 @@ abstract class BaseFormBuilder extends PriorityRegister
 
     /**
      * Create Form
-     * 
+     *
      * @return Form
      */
     protected function createForm()
@@ -188,7 +193,7 @@ abstract class BaseFormBuilder extends PriorityRegister
 
     /**
      * Attach form containers
-     * 
+     *
      * @param Form $form        form
      * @param string $domain    domain
      */
@@ -226,7 +231,7 @@ abstract class BaseFormBuilder extends PriorityRegister
 
     /**
      * Set default value
-     * 
+     *
      * @param Form $form            form
      * @param Container $container  container
      */

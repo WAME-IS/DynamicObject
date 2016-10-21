@@ -28,9 +28,11 @@ services:
     - Wame\DynamicObject\Forms\Containers\ISubmitContainerFactory
     - Wame\DynamicObject\Forms\Containers\ISaveContainerFactory
     - Wame\DynamicObject\Forms\Containers\IPublishContainerFactory
+    - Wame\DynamicObject\Forms\Containers\ITitleAndHiddenSlugContainerFactory
 
 
     # Form groups
+    - Wame\DynamicObject\Forms\Groups\IEmptyGroupFactory
     - Wame\DynamicObject\Forms\Groups\IBasicGroupFactory
     - Wame\DynamicObject\Forms\Groups\IAdvancedGroupFactory
     - Wame\DynamicObject\Forms\Groups\ITransparentGroupFactory

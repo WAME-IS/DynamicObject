@@ -4,17 +4,18 @@ namespace Wame\DynamicObject\Vendor\Wame\AdminModule\Presenters;
 
 use App\AdminModule\Presenters\BasePresenter;
 
+
 abstract class AdminFormPresenter extends BasePresenter
 {
     /** @var BaseRepository */
     public $repository;
-    
+
     /** @var BaseEntity */
     protected $entity;
 
-    
+
     /** actions ***************************************************************/
-    
+
     /**
      * Action edit
      */
@@ -22,24 +23,25 @@ abstract class AdminFormPresenter extends BasePresenter
 	{
         $this->entity = $this->repository->get(['id' => $this->id]);
 	}
-    
+
 
     /**
 	 * Create component form
-	 * 
+	 *
 	 * @return BaseForm	form
 	 */
-	protected function createComponentForm() 
+	protected function createComponentForm()
 	{
-		return $this->context->getService($this->getFormBuilderServiceAlias())
-//                ->setFormRenderer(new \Wame\Core\Models\MaterialDesignRenderer)
-                ->setEntity($this->entity)
-                ->build($this->id);
+		return $this->context
+                    ->getService($this->getFormBuilderServiceAlias())
+                    ->setEntity($this->entity)
+                    ->build($this->id);
 	}
-    
+
+
     /**
      * Create component grid
-     * 
+     *
      * @return DataGridControl
      */
     protected function createComponentGrid()
@@ -49,12 +51,13 @@ abstract class AdminFormPresenter extends BasePresenter
         }
         
         $grid = $this->context->getService($this->getGridServiceAlias());
-        
+
         $qb = $this->repository->createQueryBuilder();
 		$grid->setDataSource($qb);
-        
+
         return $grid;
     }
+
 
     /**
      * Get form builder service alias
@@ -62,5 +65,5 @@ abstract class AdminFormPresenter extends BasePresenter
      * @return string
      */
 	abstract protected function getFormBuilderServiceAlias();
-    
+
 }
