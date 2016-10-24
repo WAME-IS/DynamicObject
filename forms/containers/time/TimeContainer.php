@@ -3,6 +3,7 @@
 namespace Wame\DynamicObject\Forms\Containers;
 
 use Wame\DynamicObject\Registers\Types\IBaseContainer;
+use Wame\Utils\Date;
 
 interface ITimeContainerFactory extends IBaseContainer
 {
@@ -22,24 +23,24 @@ class TimeContainer extends BaseContainer
     /** {@inheritDoc} */
 	public function setDefaultValues($entity, $langEntity = null)
 	{
-        $this['startTime']->setDefaultValue($entity->getStartTime());
-        $this['endTime']->setDefaultValue($entity->getEndTime());
+        $this['startTime']->setDefaultValue(Date::toString($entity->getStartTime()));
+        $this['endTime']->setDefaultValue(Date::toString($entity->getEndTime()));
 	}
 
     /** {@inheritDoc} */
     public function create($form, $values)
     {
         $entity = $form->getEntity();
-        $entity->setStartTime($values['startTime']);
-        $entity->setEndTime($values['endTime']);
+        $entity->setStartTime(Date::toDateTime($values['startTime']));
+        $entity->setEndTime(Date::toDateTime($values['endTime']));
     }
 
     /** {@inheritDoc} */
     public function update($form, $values)
     {
         $entity = $form->getEntity();
-        $entity->setStartTime($values['startTime']);
-        $entity->setEndTime($values['endTime']);
+        $entity->setStartTime(Date::toDateTime($values['startTime']));
+        $entity->setEndTime(Date::toDateTime($values['endTime']));
     }
 
 }
