@@ -12,9 +12,22 @@ abstract class AdminFormPresenter extends BasePresenter
 
     /** @var BaseEntity */
     protected $entity;
+    
+    /** @var int */
+    protected $count;
 
 
-    /** actions ***************************************************************/
+    /** actions ************************************************************** */
+    
+    public function actionDefault()
+    {
+        $this->count = $this->repository->countBy();
+    }
+    
+    public function actionShow()
+    {
+        $this->entity = $this->repository->get(['id' => $this->id]);
+    }
 
     /**
      * Action edit
