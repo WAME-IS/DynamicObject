@@ -125,7 +125,7 @@ abstract class BaseContainer extends Container
     public function getTemplateFile()
     {
         $filePath = dirname($this->getReflection()->getFileName());
-        $dir = $this->dir ?: explode(DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'wame' . DIRECTORY_SEPARATOR, $filePath, 2)[1];
+        $dir = explode(DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'wame' . DIRECTORY_SEPARATOR, $filePath, 2)[1];
 
         $findTemplate = new FindTemplate($dir, $this->templateFile);
         $file = $findTemplate->find();
