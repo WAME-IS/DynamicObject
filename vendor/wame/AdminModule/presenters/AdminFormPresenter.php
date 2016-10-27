@@ -12,22 +12,30 @@ abstract class AdminFormPresenter extends BasePresenter
 
     /** @var BaseEntity */
     protected $entity;
-    
+
     /** @var int */
     protected $count;
 
 
-    /** actions ************************************************************** */
-    
+    /** actions ***************************************************************/
+
+    /**
+     * Action default
+     */
     public function actionDefault()
     {
         $this->count = $this->repository->countBy();
     }
-    
+
+
+    /**
+     * Action show
+     */
     public function actionShow()
     {
         $this->entity = $this->repository->get(['id' => $this->id]);
     }
+
 
     /**
      * Action edit
@@ -37,6 +45,8 @@ abstract class AdminFormPresenter extends BasePresenter
         $this->entity = $this->repository->get(['id' => $this->id]);
 	}
 
+
+    /** components ************************************************************/
 
     /**
 	 * Create component form
@@ -59,10 +69,10 @@ abstract class AdminFormPresenter extends BasePresenter
      */
     protected function createComponentGrid()
     {
-        if(!$this->repository && $this->getGridServiceAlias()) {
+        if (!$this->repository && $this->getGridServiceAlias()) {
             throw new \Exception("Repository or grid service alias not initialized in presenter");
         }
-        
+
         $grid = $this->context->getService($this->getGridServiceAlias());
 
         $qb = $this->repository->createQueryBuilder();
@@ -71,6 +81,8 @@ abstract class AdminFormPresenter extends BasePresenter
         return $grid;
     }
 
+
+    /** abstract methods ******************************************************/
 
     /**
      * Get form builder service alias
