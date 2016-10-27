@@ -31,6 +31,7 @@ services:
     - Wame\DynamicObject\Forms\Containers\ITitleAndHiddenSlugContainerFactory
     - Wame\DynamicObject\Forms\Containers\IValueContainerFactory
     - Wame\DynamicObject\Forms\Containers\IValueSlugContainerFactory
+    - Wame\DynamicObject\Forms\Containers\INameSlugContainerFactory
 
 
     # Form groups
