@@ -3,22 +3,25 @@
 namespace Wame\DynamicObject\Vendor\Wame\AdminModule\Presenters;
 
 use App\AdminModule\Presenters\BasePresenter;
-
+use Wame\PermissionModule\Models\PermissionObject;
 
 abstract class AdminFormPresenter extends BasePresenter
 {
     /** @var BaseRepository */
     public $repository;
-
+    
     /** @var BaseEntity */
     protected $entity;
 
     /** @var int */
     protected $count;
-
-
-    /** actions ***************************************************************/
-
+    
+    /** @var PermissionObject @inject */
+    public $permissionObject;
+    
+    
+    /** execution *************************************************************/
+    
     /**
      * Action default
      */
@@ -44,7 +47,15 @@ abstract class AdminFormPresenter extends BasePresenter
 	{
         $this->entity = $this->repository->get(['id' => $this->id]);
 	}
-
+    
+    
+    /** interaction ***********************************************************/
+    
+    
+    
+    /** rendering *************************************************************/
+    
+    
 
     /** components ************************************************************/
 
