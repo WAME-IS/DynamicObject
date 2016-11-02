@@ -16,13 +16,5 @@ interface IDescriptionEditorContainerFactory extends IBaseContainer
 
 class DescriptionEditorContainer extends DescriptionContainer
 {
-    /** {@inheritDoc} */
-    public function configure()
-    {
-        $this->getForm()->addBaseGroup(new DescriptionGroup, 'DescriptionGroup');
-        
-        parent::configure();
-    }
-
-
+    
 }
