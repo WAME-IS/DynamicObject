@@ -31,7 +31,7 @@ class ShowTitleContainer extends BaseContainer
     /** {@inheritDoc} */
     public function create($form, $values)
     {
-        $parameters = $form->getEntity()->getParamters();
+        $parameters = $form->getEntity()->getParameters();
 
         $form->getEntity()->setParameters(array_merge($parameters, ['showTitle' => $values['showTitle']]));
     }
@@ -40,7 +40,7 @@ class ShowTitleContainer extends BaseContainer
     /** {@inheritDoc} */
     public function update($form, $values)
     {
-        $parameters = $form->getEntity()->getParamters();
+        $parameters = $form->getEntity()->getParameters();
 
         $form->getEntity()->setParameters(array_merge($parameters, ['showTitle' => $values['showTitle']]));
     }

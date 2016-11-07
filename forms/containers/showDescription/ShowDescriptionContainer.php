@@ -31,7 +31,7 @@ class ShowDescriptionContainer extends BaseContainer
     /** {@inheritDoc} */
     public function create($form, $values)
     {
-        $parameters = $form->getEntity()->getParamters();
+        $parameters = $form->getEntity()->getParameters();
 
         $form->getEntity()->setParameters(array_merge($parameters, ['showDescription' => $values['showDescription']]));
     }
@@ -40,7 +40,7 @@ class ShowDescriptionContainer extends BaseContainer
     /** {@inheritDoc} */
     public function update($form, $values)
     {
-        $parameters = $form->getEntity()->getParamters();
+        $parameters = $form->getEntity()->getParameters();
 
         $form->getEntity()->setParameters(array_merge($parameters, ['showDescription' => $values['showDescription']]));
     }
