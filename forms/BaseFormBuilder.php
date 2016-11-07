@@ -79,6 +79,7 @@ abstract class BaseFormBuilder extends PriorityRegister
                 throw $e;
             }
 
+            \Tracy\Debugger::log($e);
             $form->addError($e->getMessage());
         }
     }
@@ -103,6 +104,7 @@ abstract class BaseFormBuilder extends PriorityRegister
                 throw $e;
             }
 
+            \Tracy\Debugger::log($e);
             $form->addError($e->getMessage());
         }
     }
