@@ -22,6 +22,9 @@ class EntityFormBuilder extends BaseFormBuilder
 
     /** @var BaseRepository */
     protected $repository;
+    
+    /** @var boolean */
+    protected $persist = true;
 
 
     /** {@inheritDoc} */
@@ -77,13 +80,19 @@ class EntityFormBuilder extends BaseFormBuilder
 
         if($entity->id) {
             $entity = $this->update($form, $values);
-            $this->getRepository()->update($entity);
+            
+            if($this->persist) {
+                $this->getRepository()->update($entity);
+            }
             $this->getRepository()->onUpdate($form, $values, $entity);
 
             $form->getPresenter()->flashMessage(_('Successfully updated.'), 'success');
         } else {
             $entity = $this->create($form, $values);
-            $this->getRepository()->create($entity);
+            
+            if($this->persist) {
+                $this->getRepository()->create($entity);
+            }
             $this->getRepository()->onCreate($form, $values, $entity);
 
             $form->getPresenter()->flashMessage(_('Successfully created.'), 'success');
@@ -97,12 +106,27 @@ class EntityFormBuilder extends BaseFormBuilder
     public function postSubmit(BaseForm $form, array $values)
     {
         $entity = $form->getEntity();
+        
+        \Tracy\Debugger::barDump($entity);
 
         if($entity->id) {
             $entity = $this->postUpdate($form, $values);
         } else {
             $entity = $this->postCreate($form, $values);
         }
+    }
+    
+    /**
+     * Enable persist
+     * 
+     * @param type $enable
+     * @return \Wame\DynamicObject\Forms\EntityFormBuilder
+     */
+    public function persist($enable)
+    {
+        $this->persist = $enable;
+        
+        return $this;
     }
 
 
