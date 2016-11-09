@@ -97,7 +97,11 @@ abstract class BaseFormBuilder extends PriorityRegister
             $this->postSubmit($form, $values);
 
             if(!$form->getPresenter()->isAjax()) {
-                $form->getPresenter()->redirect($this->getRedirectTo(), $this->getRedirectParameters());
+                if ($this->getRedirectParameters() == 'url') {
+                    $form->getPresenter()->redirectUrl($this->getRedirectTo());
+                } else {
+                    $form->getPresenter()->redirect($this->getRedirectTo(), $this->getRedirectParameters());
+                }
             }
         } catch (\Exception $e) {
             if ($e instanceof \Nette\Application\AbortException) {
