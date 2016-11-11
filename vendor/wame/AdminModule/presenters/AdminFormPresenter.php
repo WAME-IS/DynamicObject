@@ -36,7 +36,7 @@ abstract class AdminFormPresenter extends BasePresenter
      */
     public function actionShow()
     {
-        $this->entity = $this->repository->get(['id' => $this->id]);
+        $this->entity = $this->getEntityById();
     }
 
 
@@ -45,7 +45,7 @@ abstract class AdminFormPresenter extends BasePresenter
      */
     public function actionEdit()
 	{
-        $this->entity = $this->repository->get(['id' => $this->id]);
+        $this->entity = $this->getEntityById();
 	}
     
     
@@ -90,6 +90,14 @@ abstract class AdminFormPresenter extends BasePresenter
 		$grid->setDataSource($qb);
 
         return $grid;
+    }
+    
+    
+    /** methods ***************************************************************/
+    
+    protected function getEntityById()
+    {
+        return $this->repository->get(['id' => $this->id]);
     }
 
 
