@@ -133,6 +133,7 @@ abstract class BaseFormContainer extends Container
 		$this->template = $this->getTemplate();
 		
         $this->template->_form = $this->getForm();
+        $this->template->getLatte()->addProvider('formsStack', [$this->getForm()]);
         $this->template->render($this->getTemplateFile());
     }
 
