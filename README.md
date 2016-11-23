@@ -290,7 +290,7 @@ Templates are located in same folder as container. Default name is `default.latt
 
 *example:*
 ```HTML
-{var $title = $_form['TitleContainer']['title']}
+{var $title = $container['title']}
 <div class="form-group">
     {label $title/}
     <input class="form-control" n:name="$title">
