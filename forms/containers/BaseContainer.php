@@ -3,6 +3,7 @@
 namespace Wame\DynamicObject\Forms\Containers;
 
 use Nette;
+use Nette\DI;
 use Nette\Application\UI;
 use Nette\Forms\Container;
 use Wame\DynamicObject\Forms\EntityForm;
@@ -10,6 +11,8 @@ use Wame\DynamicObject\Forms\Groups\BaseGroup;
 use Wame\DynamicObject\Forms\Groups\EmptyGroup;
 use Wame\Utils\Latte\FindTemplate;
 use Wame\Utils\Strings;
+use Wame\LanguageModule\Gettext\Dictionary;
+
 
 /**
  * Class BaseContainer
@@ -18,6 +21,12 @@ use Wame\Utils\Strings;
  */
 abstract class BaseContainer extends Container
 {
+    /** @var DI\Container */
+    public $container;
+
+    /** @var Dictionary */
+    public $dictionary;
+
     /** @var UI\ITemplate */
     protected $template;
 
@@ -41,12 +50,25 @@ abstract class BaseContainer extends Container
     /**
      * BaseContainer constructor.
      */
-    public function __construct()
+    public function __construct(DI\Container $container)
     {
         parent::__construct();
 
         $this->monitor('Nette\Forms\Form');
+
+        $this->container = $container;
+        $container->callInjects($this);
     }
+
+
+    /**
+     * @param Dictionary $dictionary
+     */
+    public function injectDictionary(Dictionary $dictionary)
+    {
+        $this->dictionary = $dictionary;
+    }
+
 
 //    /**
 //     *
@@ -73,9 +95,13 @@ abstract class BaseContainer extends Container
      */
     public function render()
     {
+        $form = $this->getForm();
+
         $this->template = $this->getTemplate();
 //        $this->template->_control = $this->linkGenerator;
-        $this->template->_form = $this->getForm();
+//        $this->template->_form = $this->getForm();
+        $this->template->getLatte()->addProvider('formsStack', [$form]);
+        $this->template->container = $form[$this->getName()];
         $this->compose($this->template);
         $this->template->render($this->getTemplateFile());
     }
@@ -99,6 +125,8 @@ abstract class BaseContainer extends Container
      */
     public function getTemplate()
     {
+        $this->dictionary->setDomain($this);
+
         if ($this->template === null) {
             $value = $this->createTemplate();
 
@@ -194,6 +222,8 @@ abstract class BaseContainer extends Container
     protected function attached($object)
     {
         parent::attached($object);
+
+        $this->setDictionary();
 
         if ($object instanceof Nette\Forms\Form) {
             if($this instanceof BaseGroup) {
@@ -333,6 +363,14 @@ abstract class BaseContainer extends Container
     public function getPresenter()
     {
         return $this->lookup(UI\Presenter::class);
+    }
+
+    /**
+     * Set language dictionary
+     */
+    private function setDictionary()
+    {
+        $this->dictionary->setDomain($this);
     }
 
 }

@@ -15,51 +15,51 @@ interface IGridContainerFactory extends IBaseContainer
 
 abstract class GridContainer extends BaseContainer
 {
-    public function __construct()
+    public function __construct(\Nette\DI\Container $container)
     {
-        parent::__construct();
-        
+        parent::__construct($container);
+
         $this->monitor(BasePresenter::class);
     }
-    
-    
+
+
     /** {@inheritDoc} */
-    public function configure() 
+    public function configure()
 	{
-        
+
     }
-    
-    
+
+
     /** {@inheritDoc} */
     protected function attached($object)
     {
         parent::attached($object);
-        
+
         if($object instanceof BasePresenter) {
             $this->addGrid($object);
         }
     }
-    
-    
+
+
     /**
      * Get grid name
-     * 
+     *
      * @return string
      */
     abstract protected function getGridName();
-    
+
     /**
      * Get data source
-     * 
+     *
      * @param BasePresenter $presenter  presenter
      * @return QueryBuilder
      */
     abstract protected function getDataSource(BasePresenter $presenter);
-    
-    
+
+
     /**
      * Add grid
-     * 
+     *
      * @param BasePresenter $presenter  presenter
      */
     private function addGrid(BasePresenter $presenter)
@@ -70,8 +70,8 @@ abstract class GridContainer extends BaseContainer
         $grid = $presenter->context->getService($gridName);
         $grid->setDataSource($this->getDataSource($presenter));
         $grid->setTemplateFile(TEMPLATES_PATH . '/materialDesign/ublaboo/datagrid/src/templates/datagrid_nofilter.latte');
-        
+
         $this->addComponent($grid, 'grid');
     }
-    
+
 }
