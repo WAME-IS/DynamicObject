@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2016-11-07T09:51:24+01:00\n"
-"PO-Revision-Date: 2016-11-07T09:51:24+01:00\n"
+"POT-Creation-Date: 2016-11-21T15:46:45+01:00\n"
+"PO-Revision-Date: 2016-11-21T15:46:45+01:00\n"
 "Language: en\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: gettext;__;ngettext;n__;pgettext;p__;dgettext;d__;dpgettext;dp__;npgettext;np__;dnpgettext;dnp__;noop;noop__;_\n"
@@ -17,16 +17,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Domain: DynamicObject\n"
 
-#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/forms/BaseFormContainer.php:38
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/forms/BaseFormContainer.php:39
 msgid "Yes"
 msgstr ""
 
-#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/forms/BaseFormContainer.php:38
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/forms/BaseFormContainer.php:39
 msgid "No"
 msgstr ""
 
-#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/forms/BaseFormContainer.php:217
-#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/forms/containers/BaseContainer.php:134
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/forms/BaseFormContainer.php:236
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/forms/containers/BaseContainer.php:160
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/forms/containers/BaseContainer.php:162
 msgid "Template %s %s can not be found in %s."
 msgstr ""
 
@@ -40,7 +41,17 @@ msgid "Icon"
 msgstr ""
 
 #: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/forms/containers/main/MainContainer.php:18
-#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/dynamicobject-forms-containers-main-default-latte.php:26
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/dynamicobject-forms-containers-main-default-latte.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/users-macmini2-weby-git-cms-wame-admin-4-0-0-vendor-wame-dynamicobject-forms-containers-main-default-latte.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/58342586819e7.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/583426cca793d.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/5834291e00190.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/583429996c24d.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/583429ff0e624.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/58342f8ba95e4.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/583431fb8604c.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/58343258cbe86.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/5834333969d17.php:22
 msgid "Main"
 msgstr ""
 
@@ -76,12 +87,32 @@ msgid "Save"
 msgstr ""
 
 #: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/forms/containers/showDescription/ShowDescriptionContainer.php:20
-#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/dynamicobject-forms-containers-showdescription-default-latte.php:26
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/dynamicobject-forms-containers-showdescription-default-latte.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/users-macmini2-weby-git-cms-wame-admin-4-0-0-vendor-wame-dynamicobject-forms-containers-showdescription-default-latte.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/5834258695f77.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/583426ccbb2c2.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/5834291e1618f.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/58342999808ab.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/583429ff20f5e.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/58342f8bb8af7.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/583431fbcbb69.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/58343258ddf19.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/583433397ed5d.php:22
 msgid "Show description"
 msgstr ""
 
 #: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/forms/containers/showTitle/ShowTitleContainer.php:20
-#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/dynamicobject-forms-containers-showtitle-default-latte.php:26
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/dynamicobject-forms-containers-showtitle-default-latte.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/users-macmini2-weby-git-cms-wame-admin-4-0-0-vendor-wame-dynamicobject-forms-containers-showtitle-default-latte.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/5834258699ee0.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/583426ccbf9df.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/5834291e1a167.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/5834299984726.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/583429ff24dfe.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/58342f8bbbbd3.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/583431fbd2893.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/58343258e1471.php:22
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/temp/latteCompiler/5834333998a41.php:22
 msgid "Show title"
 msgstr ""
 
@@ -128,11 +159,11 @@ msgstr ""
 msgid "Please enter value"
 msgstr ""
 
-#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/forms/EntityFormBuilder.php:83
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/forms/EntityFormBuilder.php:89
 msgid "Successfully updated."
 msgstr ""
 
-#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/forms/EntityFormBuilder.php:89
+#: /Users/MacMini2/Weby/GIT/cms-wame-admin-4.0.0/vendor/wame/DynamicObject/forms/EntityFormBuilder.php:98
 msgid "Successfully created."
 msgstr ""
 
