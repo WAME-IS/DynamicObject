@@ -10,14 +10,14 @@ class BaseForm extends Form
 {
     /** @var callable[]  function (Form $sender); Occurs when the form is submitted and successfully validated */
     public $onPostSuccess;
-    
+
     /** @var BaseGroup[] */
     private $baseGroups = [];
-    
+
     /** @var BaseTab[] */
     private $baseTabs = [];
-    
-    
+
+
     use \Wame\DynamicObject\Traits\TCurrentTab;
 
 
@@ -41,16 +41,16 @@ class BaseForm extends Form
             }
         }
     }
-    
+
     public function addContainers($containers, $domain = null)
     {
         $this->containers = $containers;
         $this->domain = $domain;
     }
-    
+
     /**
 	 * Add base group to form
-     * 
+     *
 	 * @param BaseGroup $group  group
 	 * @param string $name      name
 	 * @return BaseGroup
@@ -60,27 +60,27 @@ class BaseForm extends Form
         $group->setParent($this);
         $group->configure();
         $this->setCurrentGroup($group);
-        
+
         if(isset($name)) {
             return $this->baseGroups[$name] = $group;
         } else {
             return $this->baseGroups[] = $group;
         }
     }
-    
+
     /**
 	 * Returns all defined base groups
-     * 
+     *
 	 * @return BaseGroup[]
 	 */
 	public function getBaseGroups()
 	{
 		return $this->baseGroups;
 	}
-    
+
     /**
 	 * Returns the specified base group
-     * 
+     *
 	 * @param string $name  name
 	 * @return BaseGroup
 	 */
@@ -88,10 +88,10 @@ class BaseForm extends Form
 	{
 		return isset($this->baseGroups[$name]) ? $this->baseGroups[$name] : null;
 	}
-    
+
     /**
      * Add base tab to form
-     * 
+     *
      * @param BaseTab $tab  tab
      * @param string $name  name
      * @return BaseTab
@@ -100,27 +100,27 @@ class BaseForm extends Form
     {
         $tab->setParent($this);
         $this->setCurrentTab($tab);
-        
+
         if(isset($name)) {
             return $this->baseTabs[$name] = $tab;
         } else {
             return $this->baseTabs[] = $tab;
         }
     }
-    
+
     /**
      * Returns all defined base tabs
-     * 
+     *
      * @return BaseTab[]
      */
     public function getBaseTabs()
     {
         return $this->baseTabs;
     }
-    
+
     /**
      * Return the specified base tab
-     * 
+     *
      * @param string $name  name
      * @return type
      */
@@ -128,5 +128,5 @@ class BaseForm extends Form
     {
         return isset($this->baseTabs[$name]) ? $this->baseTabs[$name] : null;
     }
-    
+
 }
