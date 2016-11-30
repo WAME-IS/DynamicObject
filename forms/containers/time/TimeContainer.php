@@ -17,15 +17,15 @@ class TimeContainer extends BaseContainer
     public function configure()
 	{
 		$this->addText('startTime', _('Start time'));
-        
+
 		$this->addText('endTime', _('End time'));
     }
 
     /** {@inheritDoc} */
 	public function setDefaultValues($entity, $langEntity = null)
 	{
-        $this['startTime']->setDefaultValue(Date::toString($entity->getStartTime()));
-        $this['endTime']->setDefaultValue(Date::toString($entity->getEndTime()));
+        $this['startTime']->setDefaultValue(Date::toString($entity->getStartTime(), 'd.m.Y H:i'));
+        $this['endTime']->setDefaultValue(Date::toString($entity->getEndTime(), 'd.m.Y H:i'));
 	}
 
     /** {@inheritDoc} */
