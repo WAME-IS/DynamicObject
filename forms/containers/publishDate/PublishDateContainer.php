@@ -14,13 +14,11 @@ interface IPublishDateContainerFactory extends IBaseContainer
 class PublishDateContainer extends BaseContainer
 {
     /** {@inheritDoc} */
-    public function configure() 
+    public function configure()
 	{
-        $this->addText('publishStartDate', _('Publish start date'))
-                ->setType('date');
-        
-        $this->addText('publishEndDate', _('Publish end date'))
-                ->setType('date');
+        $this->addText('publishStartDate', _('Publish start date'));
+
+        $this->addText('publishEndDate', _('Publish end date'));
     }
 
     /** {@inheritDoc} */
@@ -34,11 +32,11 @@ class PublishDateContainer extends BaseContainer
     public function create($form, $values)
     {
         $entity = $form->getEntity();
-        
+
         if($values['publishStartDate']) {
             $entity->setPublishStartDate(Date::toDateTime($values['publishStartDate']));
         }
-        
+
         if($values['publishEndDate']) {
             $entity->setPublishEndDate(Date::toDateTime($values['publishEndDate']));
         }
@@ -48,7 +46,7 @@ class PublishDateContainer extends BaseContainer
     public function update($form, $values)
     {
         $entity = $form->getEntity();
-        
+
         $entity->setPublishStartDate(Date::toDateTime($values['publishStartDate']));
         $entity->setPublishEndDate(Date::toDateTime($values['publishEndDate']));
     }

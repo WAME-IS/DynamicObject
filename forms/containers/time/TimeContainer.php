@@ -14,10 +14,11 @@ interface ITimeContainerFactory extends IBaseContainer
 class TimeContainer extends BaseContainer
 {
     /** {@inheritDoc} */
-    public function configure() 
+    public function configure()
 	{
-		$this->addDateTimePicker('startTime', _('Start time'));
-		$this->addDateTimePicker('endTime', _('End time'));
+		$this->addText('startTime', _('Start time'));
+        
+		$this->addText('endTime', _('End time'));
     }
 
     /** {@inheritDoc} */
