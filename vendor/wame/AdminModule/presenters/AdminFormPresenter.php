@@ -9,19 +9,19 @@ abstract class AdminFormPresenter extends BasePresenter
 {
     /** @var BaseRepository */
     public $repository;
-    
+
     /** @var BaseEntity */
     protected $entity;
 
     /** @var int */
     protected $count;
-    
+
     /** @var PermissionObject @inject */
     public $permissionObject;
-    
-    
+
+
     /** execution *************************************************************/
-    
+
     /**
      * Action default
      */
@@ -47,15 +47,24 @@ abstract class AdminFormPresenter extends BasePresenter
 	{
         $this->entity = $this->getEntityById();
 	}
-    
-    
+
+
+    /**
+     * Action delete
+     */
+    public function actionDelete()
+	{
+        $this->entity = $this->getEntityById();
+	}
+
+
     /** interaction ***********************************************************/
-    
-    
-    
+
+
+
     /** rendering *************************************************************/
-    
-    
+
+
 
     /** components ************************************************************/
 
@@ -91,10 +100,10 @@ abstract class AdminFormPresenter extends BasePresenter
 
         return $grid;
     }
-    
-    
+
+
     /** methods ***************************************************************/
-    
+
     protected function getEntityById()
     {
         return $this->repository->get(['id' => $this->id]);
