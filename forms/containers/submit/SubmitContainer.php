@@ -27,5 +27,4 @@ class SubmitContainer extends BaseContainer
                 ->setAttribute('data-submit', 'form');
     }
 
-
 }
