@@ -106,8 +106,6 @@ class EntityFormBuilder extends BaseFormBuilder
     public function postSubmit(BaseForm $form, array $values)
     {
         $entity = $form->getEntity();
-        
-        \Tracy\Debugger::barDump($entity);
 
         if($entity->id) {
             $entity = $this->postUpdate($form, $values);
