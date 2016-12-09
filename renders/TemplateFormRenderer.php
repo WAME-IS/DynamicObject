@@ -11,20 +11,20 @@ use Wame\DynamicObject\Forms\Groups\BaseGroup;
 class TemplateFormRenderer extends DefaultFormRenderer
 {
     protected $translator;
-    
-    
+
+
     use \Wame\DynamicObject\Traits\TLink;
-    
-    
+
+
     /** {@inheritDoc} */
     public function render(Nette\Forms\Form $form, $mode = NULL)
     {
         if ($this->form !== $form) {
 			$this->form = $form;
 		}
-        
+
 //        $this->form->getElementPrototype()->addAttributes(['class' => 'ajax']);
-        
+
         if (!$mode || $mode === 'begin') {
 			echo $this->renderBegin();
 		}
@@ -41,25 +41,25 @@ class TemplateFormRenderer extends DefaultFormRenderer
 			echo $this->renderEnd();
 		}
     }
-    
+
     /** {@inheritDoc} */
     public function renderBody()
     {
         $this->translator = $this->form->getTranslator();
-        
+
         $this->renderTabs();
     }
-    
+
     /**
      * Render tabs
      */
     private function renderTabs()
     {
         $tabs = $this->form->getBaseTabs();
-        
+
         if($tabs) {
             $this->renderNavTabs();
-            
+
             foreach ($tabs as $tab) {
                 echo $tab->setAttribute('id', $tab->getText())->getTag()->startTag();
                     $this->renderGroups($tab);
@@ -69,7 +69,7 @@ class TemplateFormRenderer extends DefaultFormRenderer
             $this->renderGroups();
         }
     }
-    
+
     /**
      * Render nav tabs
      */
@@ -85,7 +85,7 @@ class TemplateFormRenderer extends DefaultFormRenderer
             echo '</ul>';
         echo '</div>';
     }
-    
+
     /**
      * Render groups
      * @param type $tab
@@ -117,7 +117,7 @@ class TemplateFormRenderer extends DefaultFormRenderer
 
         return $components;
     }
-    
+
     private function renderGroup($group, $components)
     {
         $container = Html::el('div')->addAttributes($group->getAttributes());
@@ -164,18 +164,18 @@ class TemplateFormRenderer extends DefaultFormRenderer
         echo $group->getTag()->endTag();
         echo $container->endTag();
     }
-    
+
     private function renderComponents($components)
     {
         foreach($components as $component) {
             $component->render();
         }
     }
-    
-    
+
+
     /**
      * Render button
-     * 
+     *
      * @param array $button     button
      * @param BaseGroup $group  group
      * @return Html
@@ -183,21 +183,21 @@ class TemplateFormRenderer extends DefaultFormRenderer
     private function renderButton($button, $group)
     {
         $el = Html::el("a");
-        
+
         $el->addAttributes([
             'href' => $this->createLink($group, $button['href'], $button['params']),
-            'class' => 'btn btn-link pull-right ajax-modal ajax-modal-fixed'
+            'class' => 'btn btn-link btn-xs pull-right ajax-modal ajax-modal-fixed'
         ]);
-        
+
         if($button['icon']) {
             $el->add(Html::el("i")
                 ->addClass('material-icons')
                 ->addText($button['icon']));
         }
-        
+
         $el->add($button['text']);
-        
+
         return $el;
     }
-    
+
 }
