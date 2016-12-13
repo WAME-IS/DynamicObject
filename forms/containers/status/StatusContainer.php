@@ -3,6 +3,7 @@
 namespace Wame\DynamicObject\Forms\Containers;
 
 use Wame\DynamicObject\Registers\Types\IBaseContainer;
+use Wame\Core\Repositories\BaseRepository;
 
 interface IStatusContainerFactory extends IBaseContainer
 {
@@ -15,7 +16,11 @@ class StatusContainer extends BaseContainer
     /** {@inheritDoc} */
     public function configure() 
 	{
-		$this->addRadioList('status', _('Status'), $this->getParent()->getRepository()->getStatusList());
+        $statsList = $this->getParent()->getRepository()->getStatusList();
+        
+		$this->addRadioList('status', _('Status'), $statsList)
+            ->setRequired()
+            ->setDefaultValue(BaseRepository::STATUS_ENABLED);
     }
 
     /** {@inheritDoc} */
