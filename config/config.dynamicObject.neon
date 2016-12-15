@@ -32,6 +32,8 @@ services:
     - Wame\DynamicObject\Forms\Containers\IValueContainerFactory
     - Wame\DynamicObject\Forms\Containers\IValueSlugContainerFactory
     - Wame\DynamicObject\Forms\Containers\INameSlugContainerFactory
+    - Wame\DynamicObject\Forms\Containers\IParameterWidthContainerFactory
+    - Wame\DynamicObject\Forms\Containers\IParameterHeightContainerFactory
 
 
     # Form groups
