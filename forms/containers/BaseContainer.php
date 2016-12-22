@@ -6,13 +6,14 @@ use Nette;
 use Nette\DI;
 use Nette\Application\UI;
 use Nette\Forms\Container;
+use Nette\Utils\Callback;
+use Nette\Forms\Controls\SubmitButton;
 use Wame\DynamicObject\Forms\EntityForm;
 use Wame\DynamicObject\Forms\Groups\BaseGroup;
 use Wame\DynamicObject\Forms\Groups\EmptyGroup;
 use Wame\Utils\Latte\FindTemplate;
 use Wame\Utils\Strings;
 use Wame\LanguageModule\Gettext\Dictionary;
-
 
 /**
  * Class BaseContainer
@@ -38,6 +39,9 @@ abstract class BaseContainer extends Container
 
     /** @var string */
     private $dir;
+    
+    /** @var array */
+	private $httpPost;
 
 //    /** @var LinkGenerator */
 //    protected $linkGenerator;
@@ -54,6 +58,7 @@ abstract class BaseContainer extends Container
     {
         parent::__construct();
 
+        $this->monitor('Nette\Application\UI\Presenter');
         $this->monitor('Nette\Forms\Form');
 
         $this->container = $container;
@@ -99,7 +104,7 @@ abstract class BaseContainer extends Container
 
         $this->template = $this->getTemplate();
 //        $this->template->_control = $this->linkGenerator;
-//        $this->template->_form = $this->getForm();
+        $this->template->_form = $this->getForm();
         $this->template->getLatte()->addProvider('formsStack', [$form]);
         $this->template->container = $form[$this->getName()];
         $this->compose($this->template);
@@ -255,7 +260,13 @@ abstract class BaseContainer extends Container
                 $object->onPostSuccess[] = function ($form) {
                     $this->formContainerPostSucceeded($form, $this->getValues());
                 };
+                
+                
             }
+        }
+        
+        if($object instanceof UI\Presenter) {
+            $this->loadHttpData();
         }
     }
 
@@ -372,5 +383,98 @@ abstract class BaseContainer extends Container
     {
         $this->dictionary->setDomain($this);
     }
-
+    
+    
+    
+    
+    /** replicator **/
+    
+    public function createOne($name = null)
+    {
+        if($name === null) {
+            $names = array_keys(iterator_to_array($this->getComponents()));
+			$name = $names ? max($names) + 1 : 0;
+        }
+        
+        \Tracy\Debugger::barDump($name, "createOne");
+        
+        return $this[$name];
+    }
+    
+    
+//    /**
+//	 * Magical component factory
+//	 *
+//	 * @param string $name
+//	 * @return \Nette\Forms\Container
+//	 */
+//	protected function createComponent($name)
+//	{
+//		$container = $this->createContainer($name);
+//		$container->currentGroup = $this->currentGroup;
+//		$this->addComponent($container, $name, $this->getFirstControlName());
+//		Callback::invoke($this->factoryCallback, $container);
+//		return $this->created[$container->name] = $container;
+//	}
+    
+    
+    /**
+	 * Loads data received from POST
+     * 
+	 * @internal
+	 */
+    protected function loadHttpData()
+    {
+        if(!$this->getForm()->isSubmitted()) {
+            return;
+        }
+        
+        \Tracy\Debugger::barDump($this->getHttpData(), 'loadHttpData - getHttpData');
+        
+        foreach ((array) $this->getHttpData() as $name => $value) {
+            $this->createOne($name);
+        }
+    }
+    
+    
+    /**
+	 * @return mixed|NULL
+	 */
+	protected function getHttpData()
+	{
+		if ($this->httpPost === NULL) {
+			$path = explode(self::NAME_SEPARATOR, $this->lookupPath('Nette\Forms\Form'));
+			$this->httpPost = Nette\Utils\Arrays::get($this->getForm()->getHttpData(), $path, NULL);
+		}
+		return $this->httpPost;
+	}
+    
+    /**
+     * Add dynamic
+     * 
+     * @param type $name
+     * @param type $callback
+     */
+    public function addDynamic($name, $callback)
+    {
+        $container = isset($this[$name]) ? $this[$name] : $this->addContainer($name);
+        
+        $count = count($container->getComponents());
+        
+        $newContainer = $container->addContainer($count);
+        
+//        $newContainer = $this->createOne($name);
+        
+        $button = $container->addSubmit('add', _('Add'));
+        
+        $button->onClick[] = function(SubmitButton $button) use($callback, $newContainer, $container) {
+            if (is_callable($callback)) {
+                Callback::invoke($callback, $newContainer, $container);
+            }
+            
+            $button->getForm()->onSuccess = [];
+            $button->getForm()->onPostSuccess = [];
+        };
+    }
+    
 }
