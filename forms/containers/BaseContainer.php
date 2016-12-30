@@ -8,9 +8,13 @@ use Nette\Application\UI;
 use Nette\Forms\Container;
 use Nette\Utils\Callback;
 use Nette\Forms\Controls\SubmitButton;
+use Tracy\Debugger;
+use Wame\Core\Traits\TRegister;
 use Wame\DynamicObject\Forms\EntityForm;
 use Wame\DynamicObject\Forms\Groups\BaseGroup;
 use Wame\DynamicObject\Forms\Groups\EmptyGroup;
+use Wame\DynamicObject\Forms\Tabs\BaseTab;
+use Wame\DynamicObject\Traits\TCurrentTab;
 use Wame\Utils\Latte\FindTemplate;
 use Wame\Utils\Strings;
 use Wame\LanguageModule\Gettext\Dictionary;
@@ -46,20 +50,25 @@ abstract class BaseContainer extends Container
 //    /** @var LinkGenerator */
 //    protected $linkGenerator;
 
+    /** @var \Closure */
+    private $callback;
 
-    use \Wame\Core\Traits\TRegister;
-    use \Wame\DynamicObject\Traits\TCurrentTab;
+
+    use TRegister;
+    use TCurrentTab;
 
 
     /**
      * BaseContainer constructor.
+     *
+     * @param DI\Container $container
      */
     public function __construct(DI\Container $container)
     {
         parent::__construct();
 
-        $this->monitor('Nette\Application\UI\Presenter');
-        $this->monitor('Nette\Forms\Form');
+        $this->monitor(UI\Presenter::class);
+        $this->monitor(Nette\Forms\Form::class);
 
         $this->container = $container;
         $container->callInjects($this);
@@ -218,6 +227,67 @@ abstract class BaseContainer extends Container
 
     }
 
+    /**
+     * Form container processing
+     *
+     * @param UI\Form $form
+     * @param array $values
+     */
+    public function formContainerSucceeded($form, $values)
+    {
+        if ($form instanceof EntityForm) {
+            if ($form->getEntity()->getId()) {
+                $this->update($form, $values);
+            } else {
+                $this->create($form, $values);
+            }
+        }
+    }
+
+    /**
+     * Form container processing
+     *
+     * @param UI\Form $form
+     * @param array $values
+     */
+    public function formContainerPostSucceeded($form, $values)
+    {
+        if ($form instanceof EntityForm) {
+            if ($form->getEntity()->getId()) {
+                $this->postUpdate($form, $values);
+            } else {
+                $this->postCreate($form, $values);
+            }
+        }
+    }
+
+    /**
+     * Update
+     *
+     * @param UI\Form $form form
+     * @param array $values values
+     */
+    public function update($form, $values)
+    {
+
+    }
+
+    /**
+     * Create
+     *
+     * @param UI\Form $form form
+     * @param array $values values
+     */
+    public function create($form, $values)
+    {
+
+    }
+
+    public function getPresenter()
+    {
+        return $this->lookup(UI\Presenter::class);
+    }
+
 
     /**
      * Attached
@@ -233,7 +303,7 @@ abstract class BaseContainer extends Container
         if ($object instanceof Nette\Forms\Form) {
             if($this instanceof BaseGroup) {
                 $this->configure();
-            } else if($this instanceof \Wame\DynamicObject\Forms\Tabs\BaseTab) {
+            } else if($this instanceof BaseTab) {
                 // tab
             } else {
                 $this->currentGroup = $this->getForm()->getCurrentGroup();
@@ -316,106 +386,43 @@ abstract class BaseContainer extends Container
     }
 
     /**
-     * Form container processing
-     *
-     * @param UI\Form $form
-     * @param array $values
-     */
-    public function formContainerSucceeded($form, $values)
-    {
-        if ($form instanceof EntityForm) {
-            if ($form->getEntity()->getId()) {
-                $this->update($form, $values);
-            } else {
-                $this->create($form, $values);
-            }
-        }
-    }
-
-    /**
-     * Form container processing
-     *
-     * @param UI\Form $form
-     * @param array $values
-     */
-    public function formContainerPostSucceeded($form, $values)
-    {
-        if ($form instanceof EntityForm) {
-            if ($form->getEntity()->getId()) {
-                $this->postUpdate($form, $values);
-            } else {
-                $this->postCreate($form, $values);
-            }
-        }
-    }
-
-    /**
-     * Update
-     *
-     * @param UI\Form $form form
-     * @param array $values values
-     */
-    public function update($form, $values)
-    {
-
-    }
-
-    /**
-     * Create
-     *
-     * @param UI\Form $form form
-     * @param array $values values
-     */
-    public function create($form, $values)
-    {
-
-    }
-
-    public function getPresenter()
-    {
-        return $this->lookup(UI\Presenter::class);
-    }
-
-    /**
      * Set language dictionary
      */
     private function setDictionary()
     {
         $this->dictionary->setDomain($this);
     }
-    
-    
-    
-    
-    /** replicator **/
-    
-    public function createOne($name = null)
+
+
+    /**
+     * Create one
+     *
+     * @param string $name name
+     * @return Nette\ComponentModel\IComponent
+     * @internal param Container $container container
+     */
+    public function createOne(string $name = null)
     {
         if($name === null) {
             $names = array_keys(iterator_to_array($this->getComponents()));
 			$name = $names ? max($names) + 1 : 0;
         }
-        
-        \Tracy\Debugger::barDump($name, "createOne");
-        
-        return $this[$name];
+
+        Debugger::barDump($this);
+
+        $container = null;
+
+        if(isset($this[$name])) {
+            $container = $this[$name];
+
+        } else {
+            $container = $this->addContainer($name);
+
+
+        }
+
+        return $container;
     }
-    
-    
-//    /**
-//	 * Magical component factory
-//	 *
-//	 * @param string $name
-//	 * @return \Nette\Forms\Container
-//	 */
-//	protected function createComponent($name)
-//	{
-//		$container = $this->createContainer($name);
-//		$container->currentGroup = $this->currentGroup;
-//		$this->addComponent($container, $name, $this->getFirstControlName());
-//		Callback::invoke($this->factoryCallback, $container);
-//		return $this->created[$container->name] = $container;
-//	}
     
     
     /**
@@ -428,14 +435,16 @@ abstract class BaseContainer extends Container
         if(!$this->getForm()->isSubmitted()) {
             return;
         }
-        
-        \Tracy\Debugger::barDump($this->getHttpData(), 'loadHttpData - getHttpData');
-        
+
         foreach ((array) $this->getHttpData() as $name => $value) {
-            $this->createOne($name);
+            if(is_array($value) || $value instanceof \Traversable) {
+                $count = iterator_count($this->getComponents());
+                $container = $this->addContainer($count);
+                Callback::invoke($this->callback, $container, $this);
+                Debugger::barDump($container, "loadHttpData");
+            }
         }
     }
-    
     
     /**
 	 * @return mixed|NULL
@@ -446,35 +455,40 @@ abstract class BaseContainer extends Container
 			$path = explode(self::NAME_SEPARATOR, $this->lookupPath('Nette\Forms\Form'));
 			$this->httpPost = Nette\Utils\Arrays::get($this->getForm()->getHttpData(), $path, NULL);
 		}
+
 		return $this->httpPost;
 	}
-    
+
     /**
      * Add dynamic
-     * 
-     * @param type $name
-     * @param type $callback
+     *
+     * @param string $name
+     * @param \Closure $callback
+     * @return Nette\ComponentModel\IComponent|Container
      */
-    public function addDynamic($name, $callback)
+    public function addDynamic(string $name, \Closure $callback)
     {
+        $this->callback = $callback;
+
         $container = isset($this[$name]) ? $this[$name] : $this->addContainer($name);
-        
-        $count = count($container->getComponents());
-        
-        $newContainer = $container->addContainer($count);
-        
-//        $newContainer = $this->createOne($name);
-        
+
         $button = $container->addSubmit('add', _('Add'));
         
-        $button->onClick[] = function(SubmitButton $button) use($callback, $newContainer, $container) {
+        $button->onClick[] = function(SubmitButton $button) use($callback, $container) {
+            $count = iterator_count($container->getComponents());
+
+            $newContainer = $container->addContainer($count - 1);
+
             if (is_callable($callback)) {
+                Debugger::barDump($newContainer, "addDynamic");
                 Callback::invoke($callback, $newContainer, $container);
             }
             
             $button->getForm()->onSuccess = [];
             $button->getForm()->onPostSuccess = [];
         };
+
+        return $container;
     }
     
 }
