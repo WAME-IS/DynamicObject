@@ -10,6 +10,7 @@ use Nette\Utils\Callback;
 use Nette\Forms\Controls\SubmitButton;
 use Tracy\Debugger;
 use Wame\Core\Traits\TRegister;
+use Wame\DynamicObject\Forms\BaseForm;
 use Wame\DynamicObject\Forms\EntityForm;
 use Wame\DynamicObject\Forms\Groups\BaseGroup;
 use Wame\DynamicObject\Forms\Groups\EmptyGroup;
@@ -264,7 +265,7 @@ abstract class BaseContainer extends Container
     /**
      * Update
      *
-     * @param UI\Form $form form
+     * @param EntityForm $form form
      * @param array $values values
      */
     public function update($form, $values)
@@ -275,7 +276,7 @@ abstract class BaseContainer extends Container
     /**
      * Create
      *
-     * @param UI\Form $form form
+     * @param EntityForm $form form
      * @param array $values values
      */
     public function create($form, $values)
