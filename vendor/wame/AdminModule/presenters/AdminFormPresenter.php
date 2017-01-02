@@ -3,10 +3,17 @@
 namespace Wame\DynamicObject\Vendor\Wame\AdminModule\Presenters;
 
 use App\AdminModule\Presenters\BasePresenter;
+use Wame\Core\Entities\BaseEntity;
+use Wame\Core\Repositories\BaseRepository;
+use Wame\DataGridControl\DataGridControl;
+use Wame\DynamicObject\Forms\BaseForm;
 use Wame\PermissionModule\Models\PermissionObject;
 
 abstract class AdminFormPresenter extends BasePresenter
 {
+    /** @var PermissionObject @inject */
+    public $permissionObject;
+
     /** @var BaseRepository */
     public $repository;
 
@@ -15,9 +22,6 @@ abstract class AdminFormPresenter extends BasePresenter
 
     /** @var int */
     protected $count;
-
-    /** @var PermissionObject @inject */
-    public $permissionObject;
 
 
     /** execution *************************************************************/
@@ -83,9 +87,10 @@ abstract class AdminFormPresenter extends BasePresenter
 
 
     /**
-     * Create component grid
+     * Grid component
      *
      * @return DataGridControl
+     * @throws \Exception
      */
     protected function createComponentGrid()
     {
@@ -93,6 +98,7 @@ abstract class AdminFormPresenter extends BasePresenter
             throw new \Exception("Repository or grid service alias not initialized in presenter");
         }
 
+        /** @var DataGridControl $grid */
         $grid = $this->context->getService($this->getGridServiceAlias());
 
         $qb = $this->repository->createQueryBuilder();
@@ -107,6 +113,16 @@ abstract class AdminFormPresenter extends BasePresenter
     protected function getEntityById()
     {
         return $this->repository->get(['id' => $this->id]);
+    }
+
+    /**
+     * Get grid service alias
+     *
+     * @return null|string
+     */
+    protected function getGridServiceAlias()
+    {
+        return null;
     }
 
 

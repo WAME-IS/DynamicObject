@@ -2,8 +2,6 @@ decorator:
     BaseFormContainer:
         inject: yes
 
-#    BaseContainer:
-#        inject: yes
 
 
 services:
@@ -50,6 +48,11 @@ services:
     - Wame\DynamicObject\Forms\Tabs\IGeneralTabFactory
     - Wame\DynamicObject\Forms\Tabs\IAdvancedTabFactory
     - Wame\DynamicObject\Forms\Tabs\INoTabFactory
+
+
+    # Components
+    - Wame\DynamicObject\Components\IDynamicFormControlFactory
+
 
 
 webloader:
