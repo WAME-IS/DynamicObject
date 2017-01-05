@@ -2,7 +2,6 @@
 
 namespace Wame\DynamicObject\Forms;
 
-use Nette\Application\UI\Form;
 use Wame\Core\Entities\BaseEntity;
 use Wame\Core\Repositories\BaseRepository;
 
@@ -108,16 +107,16 @@ class EntityFormBuilder extends BaseFormBuilder
         $entity = $form->getEntity();
 
         if($entity->id) {
-            $entity = $this->postUpdate($form, $values);
+            $this->postUpdate($form, $values);
         } else {
-            $entity = $this->postCreate($form, $values);
+            $this->postCreate($form, $values);
         }
     }
     
     /**
      * Enable persist
      * 
-     * @param type $enable
+     * @param bool $enable
      * @return \Wame\DynamicObject\Forms\EntityFormBuilder
      */
     public function persist($enable)
@@ -141,9 +140,9 @@ class EntityFormBuilder extends BaseFormBuilder
     /**
      * Create
      * 
-     * @param Form $form		form
-     * @param array $values		values
-     * @return BaseEntity       entity
+     * @param EntityForm $form form
+     * @param array $values values
+     * @return BaseEntity
      */
     protected function create($form, $values)
     {
@@ -153,9 +152,9 @@ class EntityFormBuilder extends BaseFormBuilder
     /**
      * Update
      * 
-     * @param Form $form		form
-     * @param array $values     values
-     * @return BaseEntity       entity
+     * @param EntityForm $form form
+     * @param array $values values
+     * @return BaseEntity
      */
     protected function update($form, $values)
     {
@@ -165,11 +164,11 @@ class EntityFormBuilder extends BaseFormBuilder
     /**
      * Post create
      *
-     * @param BaseForm $form    form
-     * @param array $values     values
+     * @param EntityForm $form form
+     * @param array $values values
      * @return BaseEntity
      */
-    protected function postCreate(BaseForm $form, array $values)
+    protected function postCreate(EntityForm $form, array $values)
     {
         return $form->getEntity();
     }
@@ -177,11 +176,11 @@ class EntityFormBuilder extends BaseFormBuilder
     /**
      * Post update
      *
-     * @param BaseForm $form    form
-     * @param array $values     values
+     * @param EntityForm $form form
+     * @param array $values values
      * @return BaseEntity
      */
-    protected function postUpdate(BaseForm $form, array $values)
+    protected function postUpdate(EntityForm $form, array $values)
     {
         return $form->getEntity();
     }
@@ -196,7 +195,12 @@ class EntityFormBuilder extends BaseFormBuilder
         return $this->repository;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Set default value
+     *
+     * @param EntityForm $form
+     * @param Containers\BaseContainer $container
+     */
     protected function setDefaultValue($form, $container)
     {
         $entity = $form->getEntity();

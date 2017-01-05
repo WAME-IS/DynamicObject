@@ -5,6 +5,7 @@ namespace Wame\DynamicObject\Forms;
 use Nette\Application\UI\Form;
 use Nette\Forms\IFormRenderer;
 use Wame\Core\Registers\PriorityRegister;
+use Wame\DynamicObject\Forms\Containers\BaseContainer;
 use Wame\DynamicObject\Registers\Types\IFormItem;
 use Wame\DynamicObject\Renderers\TemplateFormRenderer;
 
@@ -258,8 +259,8 @@ abstract class BaseFormBuilder extends PriorityRegister
     /**
      * Set default value
      *
-     * @param Form $form            form
-     * @param Container $container  container
+     * @param BaseForm $form form
+     * @param BaseContainer $container container
      */
     protected function setDefaultValue($form, $container)
     {

@@ -44,17 +44,18 @@ class EntityForm extends BaseForm
     /**
      * Get repository
      * 
-     * @return type
+     * @return BaseRepository
      */
     public function getRepository()
     {
         return $this->repository;
     }
-    
+
     /**
      * Set repository
-     * 
+     *
      * @param BaseRepository $repository
+     * @return $this
      */
     public function setRepository(BaseRepository $repository)
     {
