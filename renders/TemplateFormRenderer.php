@@ -110,7 +110,7 @@ class TemplateFormRenderer extends DefaultFormRenderer
         $components = [];
 
         foreach ($this->form->components as $component) {
-            if ($component instanceof BaseContainer && $component->currentGroup == $group && (!$tab || $component->currentTab == $tab)) {
+            if ($component instanceof BaseContainer && $component->getCurrentGroup() == $group && (!$tab || $component->getCurrentTab() == $tab)) {
                 $components[] = $component;
             }
         }

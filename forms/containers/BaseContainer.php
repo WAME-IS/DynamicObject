@@ -153,7 +153,10 @@ abstract class BaseContainer extends Container
             }
 
             $this->template = $value;
-            $this->template->_presenter = $this->getPresenter();
+
+            $this->template->getLatte()->addProvider('uiControl', $this);
+            $this->template->getLatte()->addProvider('uiForm', $this->getForm());
+            $this->template->getLatte()->addProvider('uiPresenter', $this->getPresenter());
         }
 
         return $this->template;
@@ -167,7 +170,7 @@ abstract class BaseContainer extends Container
      */
     public function getTemplateFile()
     {
-        $filePath = dirname($this->getReflection()->getFileName());
+        $filePath = Strings::getClassPath($this);
         $dir = explode(DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'wame' . DIRECTORY_SEPARATOR, $filePath, 2)[1];
 
         $findTemplate = new FindTemplate($dir, $this->templateFile);

@@ -168,7 +168,7 @@ class EntityFormBuilder extends BaseFormBuilder
      * @param array $values values
      * @return BaseEntity
      */
-    protected function postCreate(EntityForm $form, array $values)
+    protected function postCreate(BaseForm $form, array $values)
     {
         return $form->getEntity();
     }
@@ -180,7 +180,7 @@ class EntityFormBuilder extends BaseFormBuilder
      * @param array $values values
      * @return BaseEntity
      */
-    protected function postUpdate(EntityForm $form, array $values)
+    protected function postUpdate(BaseForm $form, array $values)
     {
         return $form->getEntity();
     }
