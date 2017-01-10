@@ -2,8 +2,10 @@
 
 namespace Wame\DynamicObject\Forms;
 
+use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
 use Nette\Forms\IFormRenderer;
+use Tracy\Debugger;
 use Wame\Core\Registers\PriorityRegister;
 use Wame\DynamicObject\Forms\Containers\BaseContainer;
 use Wame\DynamicObject\Registers\Types\IFormItem;
@@ -76,11 +78,11 @@ abstract class BaseFormBuilder extends PriorityRegister
 
 //			$form->getPresenter()->redirect('this');
         } catch (\Exception $e) {
-            if ($e instanceof \Nette\Application\AbortException) {
+            if ($e instanceof AbortException) {
                 throw $e;
             }
 
-            \Tracy\Debugger::log($e);
+            Debugger::log($e);
             $form->addError($e->getMessage());
         }
     }
@@ -90,7 +92,7 @@ abstract class BaseFormBuilder extends PriorityRegister
      *
      * @param BaseForm $form    form
      * @param array $values     values
-     * @throws \Nette\Application\AbortException
+     * @throws AbortException
      */
     public function formPostSucceeded(BaseForm $form, array $values)
     {
@@ -105,11 +107,11 @@ abstract class BaseFormBuilder extends PriorityRegister
                 }
             }
         } catch (\Exception $e) {
-            if ($e instanceof \Nette\Application\AbortException) {
+            if ($e instanceof AbortException) {
                 throw $e;
             }
 
-            \Tracy\Debugger::log($e);
+            Debugger::log($e);
             $form->addError($e->getMessage());
         }
     }
@@ -149,7 +151,8 @@ abstract class BaseFormBuilder extends PriorityRegister
     /**
      * Set ajax
      *
-     * @param bool $enabled     enabled
+     * @param bool $enabled enabled
+     * @return $this
      */
     public function setAjax($enabled)
     {

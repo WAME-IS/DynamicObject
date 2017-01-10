@@ -22,7 +22,7 @@ class EntityFormBuilder extends BaseFormBuilder
     /** @var BaseRepository */
     protected $repository;
     
-    /** @var boolean */
+    /** @var bool */
     protected $persist = true;
 
 
@@ -65,11 +65,14 @@ class EntityFormBuilder extends BaseFormBuilder
     /**
      * Set repository
      *
-     * @param BaseRepository $repository    repository
+     * @param BaseRepository $repository repository
+     * @return $this
      */
     public function setRepository(BaseRepository $repository)
     {
         $this->repository = $repository;
+
+        return $this;
     }
 
     /** {@inheritDoc} */
@@ -117,7 +120,7 @@ class EntityFormBuilder extends BaseFormBuilder
      * Enable persist
      * 
      * @param bool $enable
-     * @return \Wame\DynamicObject\Forms\EntityFormBuilder
+     * @return $this
      */
     public function persist($enable)
     {
@@ -164,7 +167,7 @@ class EntityFormBuilder extends BaseFormBuilder
     /**
      * Post create
      *
-     * @param EntityForm $form form
+     * @param BaseForm $form form
      * @param array $values values
      * @return BaseEntity
      */
@@ -176,7 +179,7 @@ class EntityFormBuilder extends BaseFormBuilder
     /**
      * Post update
      *
-     * @param EntityForm $form form
+     * @param BaseForm $form form
      * @param array $values values
      * @return BaseEntity
      */

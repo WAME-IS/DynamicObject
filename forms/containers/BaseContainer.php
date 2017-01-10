@@ -14,6 +14,7 @@ use Wame\DynamicObject\Forms\BaseForm;
 use Wame\DynamicObject\Forms\EntityForm;
 use Wame\DynamicObject\Forms\Groups\BaseGroup;
 use Wame\DynamicObject\Forms\Groups\EmptyGroup;
+use Wame\DynamicObject\Forms\RowForm;
 use Wame\DynamicObject\Forms\Tabs\BaseTab;
 use Wame\DynamicObject\Traits\TCurrentTab;
 use Wame\Utils\Latte\FindTemplate;
@@ -77,6 +78,8 @@ abstract class BaseContainer extends Container
 
 
     /**
+     * Inject dictionary
+     *
      * @param Dictionary $dictionary
      */
     public function injectDictionary(Dictionary $dictionary)
@@ -186,7 +189,7 @@ abstract class BaseContainer extends Container
     /**
      * Set form container template file
      *
-     * @param string $template
+     * @param string $template template
      * @return $this
      */
     public function setTemplateFile($template)
@@ -199,7 +202,7 @@ abstract class BaseContainer extends Container
     /**
      * Set directory
      *
-     * @param $dir
+     * @param string $dir directory
      * @return $this
      */
     public function setDir($dir)
@@ -212,7 +215,7 @@ abstract class BaseContainer extends Container
     /**
      * Post update
      *
-     * @param Form $form form
+     * @param BaseForm $form form
      * @param array $values values
      */
     public function postUpdate($form, $values)
@@ -223,7 +226,7 @@ abstract class BaseContainer extends Container
     /**
      * Post create
      *
-     * @param Form $form form
+     * @param BaseForm $form form
      * @param array $values values
      */
     public function postCreate($form, $values)
@@ -239,11 +242,23 @@ abstract class BaseContainer extends Container
      */
     public function formContainerSucceeded($form, $values)
     {
+        // TODO: zjednotit pod nejaky DBForm/DoctrineForm s tym, ze aj update/create vyvolavat tu, to cele je ekoli mnohym entitam
+
         if ($form instanceof EntityForm) {
             if ($form->getEntity()->getId()) {
                 $this->update($form, $values);
             } else {
                 $this->create($form, $values);
+            }
+        } else if ($form instanceof RowForm) {
+            $entity = $this->update($form, $values);
+
+            if($entity) {
+                if($entity->getId()) { // update
+                    $form->getRepository()->update($entity);
+                } else { // create
+                    $form->getRepository()->create($entity);
+                }
             }
         }
     }
@@ -318,6 +333,11 @@ abstract class BaseContainer extends Container
 
 //                $this->currentGroup = $this->getForm()->getCurrentGroup() ?: $object->addBaseGroup(new BasicGroup);
                 $this->currentTab = $this->getForm()->getCurrentTab();// ?: $object->addBaseTab(new GeneralTab);
+
+//                if(method_exists($this, 'setDefaultValues')) {
+//                    $this->setDefaultValues();
+//                }
+
 
                 $this->configure();
 
@@ -411,8 +431,6 @@ abstract class BaseContainer extends Container
             $names = array_keys(iterator_to_array($this->getComponents()));
 			$name = $names ? max($names) + 1 : 0;
         }
-
-        Debugger::barDump($this);
 
         $container = null;
 

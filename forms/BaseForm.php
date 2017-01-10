@@ -5,6 +5,8 @@ namespace Wame\DynamicObject\Forms;
 use Nette;
 use Nette\Application\UI\Form;
 use Wame\DynamicObject\Forms\Groups\BaseGroup;
+use Wame\DynamicObject\Forms\Tabs\BaseTab;
+use Wame\DynamicObject\Traits\TCurrentTab;
 
 class BaseForm extends Form
 {
@@ -18,7 +20,7 @@ class BaseForm extends Form
     private $baseTabs = [];
 
 
-    use \Wame\DynamicObject\Traits\TCurrentTab;
+    use TCurrentTab;
 
 
     /** {@inheritdoc} */
@@ -122,7 +124,7 @@ class BaseForm extends Form
      * Return the specified base tab
      *
      * @param string $name  name
-     * @return type
+     * @return BaseTab
      */
     public function getBaseTab($name)
     {
