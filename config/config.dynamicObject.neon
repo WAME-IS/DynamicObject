@@ -42,6 +42,7 @@ services:
     - Wame\DynamicObject\Forms\Groups\IPublishGroupFactory
     - Wame\DynamicObject\Forms\Groups\ITextGroupFactory
     - Wame\DynamicObject\Forms\Groups\IDescriptionGroupFactory
+    - Wame\DynamicObject\Forms\Groups\IFormGroupFactory
 
 
     # Form tabs
