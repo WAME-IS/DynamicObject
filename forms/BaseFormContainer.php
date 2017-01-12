@@ -8,11 +8,11 @@ use Nette\Application\UI;
 use Wame\Utils\Latte\FindTemplate;
 use Wame\Utils\Strings;
 
-
 abstract class BaseFormContainer extends Container
 {
 	const SWITCH_NO = 0;
 	const SWITCH_YES = 1;
+
 
     /** @var UI\ITemplateFactory */
     private $templateFactory;
@@ -195,7 +195,7 @@ abstract class BaseFormContainer extends Container
      * Set directory
      *
      * @param string $dir
-     * @return \Wame\DynamicObject\Forms\Containers\BaseContainer   this
+     * @return $this
      */
     public function setDir($dir)
     {
@@ -208,7 +208,7 @@ abstract class BaseFormContainer extends Container
 	 * Set form container template file
 	 *
 	 * @param string $template
-	 * @return \Wame\DynamicObject\Forms\BaseFormContainer
+	 * @return $this
 	 */
 	public function setTemplateFile($template)
 	{
@@ -218,11 +218,12 @@ abstract class BaseFormContainer extends Container
 	}
 
 
-	/**
-	 * Get template file path
-	 *
-	 * @return string
-	 */
+    /**
+     * Get template file path
+     * 
+     * @return string
+     * @throws \Exception
+     */
 	public function getTemplateFile()
 	{
 		$filePath = dirname($this->getReflection()->getFileName());
