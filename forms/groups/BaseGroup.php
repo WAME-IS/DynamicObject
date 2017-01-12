@@ -4,7 +4,9 @@ namespace Wame\DynamicObject\Forms\Groups;
 
 use Nette\Forms\ControlGroup;
 use Nette\Utils\Html;
-use Wame\DynamicObject\Forms\Groups\BaseGroup;
+use Wame\Core\Traits\TRegister;
+use Wame\DynamicObject\Forms\BaseForm;
+use Wame\DynamicObject\Traits\TCurrentTab;
 
 abstract class BaseGroup extends ControlGroup
 {
@@ -24,22 +26,15 @@ abstract class BaseGroup extends ControlGroup
     private $attributes = ['class' => []];
     
     
-    use \Wame\Core\Traits\TRegister;
-    
-    use \Wame\DynamicObject\Traits\TCurrentTab;
-    
-    
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    use TRegister;
+    use TCurrentTab;
     
     
     /**
      * Set tag
      * 
      * @param string $tag   tag
-     * @return BaseGroup
+     * @return $this
      */
     public function setTag($tag)
     {
@@ -52,9 +47,9 @@ abstract class BaseGroup extends ControlGroup
      * Set attributes
      * 
      * @param array $attributes attributes
-     * @return BaseGroup
+     * @return $this
      */
-    public function setAttributes($attributes)
+    public function setAttributes(array $attributes)
     {
         $this->attributes = $attributes;
         
@@ -65,10 +60,10 @@ abstract class BaseGroup extends ControlGroup
      * Set attribute
      * 
      * @param string $name  attribute name
-     * @param mixin $value  attribute value
-     * @return BaseGroup
+     * @param bool $value  attribute value
+     * @return $this
      */
-    public function setAttribute($name, $value = true)
+    public function setAttribute(string $name, bool $value = true)
     {
         $this->attributes[$name] = $value;
         
@@ -91,7 +86,7 @@ abstract class BaseGroup extends ControlGroup
      * @param string $name  attribute name
      * @return array
      */
-    public function getAttribute($name)
+    public function getAttribute(string $name)
     {
         return $this->attributes[$name];
     }
@@ -100,9 +95,9 @@ abstract class BaseGroup extends ControlGroup
      * Add class
      * 
      * @param string $class
-     * @return BaseGroup
+     * @return $this
      */
-    public function addClass($class)
+    public function addClass(string $class)
     {
         $this->attributes['class'][] = $class;
         
@@ -113,9 +108,9 @@ abstract class BaseGroup extends ControlGroup
      * Set group width (col-xs-12, col-sm-6, col-lg-4...)
      * 
      * @param string $width
-     * @return BaseGroup
+     * @return $this
      */
-    public function setWidth($width)
+    public function setWidth(string $width)
     {
         $this->width = $width;
         
@@ -141,14 +136,15 @@ abstract class BaseGroup extends ControlGroup
     {
         return Html::el($this->tag);
     }
-    
+
     /**
      * Add button
-     * 
-     * @param string $text  text
-     * @param string $href  href
+     *
+     * @param string $text text
+     * @param string $href href
      * @param array $params params
-     * @param string $icon  icon
+     * @param string $icon icon
+     * @return $this
      */
     public function addButton($text, $href, $params = [], $icon = null)
     {
@@ -183,7 +179,7 @@ abstract class BaseGroup extends ControlGroup
      * Set parent
      * 
      * @param BaseForm $parent  parent
-     * @return BaseGroup
+     * @return $this
      */
     public function setParent($parent)
     {

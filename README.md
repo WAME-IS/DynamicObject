@@ -184,6 +184,28 @@ class MyFormBuilder extends LangEntityFormBuilder
 }
 ```
 
+#### RowFormBuilder.php
+
+Builder which saves all containers as individual rows. 
+
+In order to handle default values , you need call `setEntities` or `setCriteria`.
+
+*MyFormBuilder.php:*
+```PHP
+<?php
+
+namespace Wame\MyModule\Forms;
+
+use Wame\MyModule\Repositories\MyRepository;
+use Wame\DynamicObject\Forms\RowFormBuilder;
+
+class MyFormBuilder extends RowFormBuilder
+{
+    // code ...
+}
+```
+
+
 ### Form event callbacks flow
 
 ![From event callbacks flow](docs/event_callbacks_flow.svg)
