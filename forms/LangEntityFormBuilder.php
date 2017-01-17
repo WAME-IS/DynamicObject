@@ -1,6 +1,7 @@
 <?php
 
 namespace Wame\DynamicObject\Forms;
+use Wame\Core\Entities\BaseEntity;
 
 /**
  * Class LangEntityFormBuilder
@@ -24,7 +25,7 @@ class LangEntityFormBuilder extends EntityFormBuilder
      * Set lang entity
      * 
      * @param BaseEntity $langEntity    entity
-     * @return \Wame\DynamicObject\Forms\EntityFormBuilder
+     * @return EntityFormBuilder
      */
     public function setLangEntity($langEntity)
     {
