@@ -17,7 +17,7 @@
     "config": { "secure-http": false },
     "require": {
         "kdyby/forms-replicator": "1.2.x-dev",
-        "nextras/forms": "dev-dev-master",
+        "nextras/forms": "dev-master",
         "tomaj/nette-bootstrap-form": "1.2.0",
         "wame/Core": "0.0.*"
     },
