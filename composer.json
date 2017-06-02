@@ -5,16 +5,24 @@
     "homepage": "http://wame.sk/cms-wame-admin",
     "authors": [
         {
-            "name": "Wame",
+            "name": "WAME s.r.o.",
             "homepage": "http://wame.sk"
         }
     ],
+    "repositories": [
+        { "type": "composer", "url": "http://packages.wame.sk" },
+        { "type": "vcs", "url": "https://github.com/wamesro/forms" }
+    ],
+    "config": { "secure-http": false },
     "require": {
-        "wame/Core": "*"
+        "kdyby/forms-replicator": "1.2.x-dev",
+        "nextras/forms": "dev-dev-master",
+        "tomaj/nette-bootstrap-form": "1.2.0",
+        "wame/Core": "0.0.1"
     },
     "softRequire": {
-        "wame/AdminModule": "*",
-        "wame/ComponentModule": "*"
+        "wame/AdminModule": "0.0.1",
+        "wame/ComponentModule": "0.0.1"
     },
     "autoload": {
         "classmap": [
