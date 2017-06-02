@@ -17,10 +17,10 @@
     "require": {
         "kdyby/forms-replicator": "1.2.x-dev",
         "nextras/forms": "dev-dev-master",
-        "tomaj/nette-bootstrap-form": "1.2.0",
-        "wame/Core": "0.0.1"
+        "tomaj/nette-bootstrap-form": "1.2.0"
     },
     "softRequire": {
+        "wame/Core": "0.0.1",
         "wame/AdminModule": "0.0.1",
         "wame/ComponentModule": "0.0.1"
     },
