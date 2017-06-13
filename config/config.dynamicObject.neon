@@ -63,6 +63,8 @@ webloader:
 #                - %appDir%/../vendor/wame/DynamicObject/assets/groups.js
         admin:
             files:
+                - %appDir%/../private/javascripts/nette.ajax.js
+                - %appDir%/../private/javascripts/live-form-validation.js
                 - %appDir%/../vendor/nextras/forms/js/nextras.netteForms.js
 #                - %appDir%/../vendor/nextras/forms/js/nextras.typehead.init.js
                 - %appDir%/../vendor/nextras/forms/js/nextras.datetimepicker.init.js

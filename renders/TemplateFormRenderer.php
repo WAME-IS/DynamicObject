@@ -190,12 +190,12 @@ class TemplateFormRenderer extends DefaultFormRenderer
         ]);
 
         if($button['icon']) {
-            $el->add(Html::el("i")
+            $el->addHtml(Html::el("i")
                 ->addClass('material-icons')
                 ->addText($button['icon']));
         }
 
-        $el->add($button['text']);
+        $el->addText($button['text']);
 
         return $el;
     }
