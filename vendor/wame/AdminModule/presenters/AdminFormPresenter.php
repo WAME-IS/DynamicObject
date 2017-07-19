@@ -9,6 +9,7 @@ use Wame\DataGridControl\DataGridControl;
 use Wame\DynamicObject\Forms\BaseForm;
 use Wame\PermissionModule\Models\PermissionObject;
 
+
 abstract class AdminFormPresenter extends BasePresenter
 {
     /** @var PermissionObject @inject */
@@ -22,6 +23,9 @@ abstract class AdminFormPresenter extends BasePresenter
 
     /** @var int */
     protected $count;
+
+    /** @var array */
+    protected $formContainers = [];
 
 
     /** execution *************************************************************/
@@ -79,10 +83,17 @@ abstract class AdminFormPresenter extends BasePresenter
 	 */
 	protected function createComponentForm()
 	{
-		return $this->context
+		$form = $this->context
                     ->getService($this->getFormBuilderServiceAlias())
-                    ->setEntity($this->entity)
-                    ->build($this->id);
+                    ->setEntity($this->entity);
+
+		if (count($this->formContainers) > 0) {
+		    foreach ($this->formContainers as $container) {
+		        $form->add($container['service'], $container['name'], $container['priority']);
+            }
+        }
+
+        return $form->build($this->id);
 	}
 
 
@@ -110,10 +121,16 @@ abstract class AdminFormPresenter extends BasePresenter
 
     /** methods ***************************************************************/
 
+    /**
+     * Get entity by ID
+     *
+     * @return \Wame\Core\Entities\BaseEntity
+     */
     protected function getEntityById()
     {
         return $this->repository->get(['id' => $this->id]);
     }
+
 
     /**
      * Get grid service alias
@@ -123,6 +140,27 @@ abstract class AdminFormPresenter extends BasePresenter
     protected function getGridServiceAlias()
     {
         return null;
+    }
+
+
+    /**
+     * Attach form container
+     *
+     * @param object $service
+     * @param string $name
+     * @param int $priority
+     *
+     * @return $this
+     */
+    protected function attachFormContainer($service, $name, $priority = 0)
+    {
+        $this->formContainers[] = [
+            'service' => $service,
+            'name' => $name,
+            'priority' => $priority
+        ];
+
+        return $this;
     }
 
 
