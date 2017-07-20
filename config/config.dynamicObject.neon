@@ -55,6 +55,9 @@ services:
     - Wame\DynamicObject\Components\IDynamicFormControlFactory
 
 
+    # OLD
+    - Wame\DynamicObject\Forms\IFormGroupContainerFactory
+
 
 webloader:
     js:
