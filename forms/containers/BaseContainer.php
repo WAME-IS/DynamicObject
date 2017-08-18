@@ -21,6 +21,7 @@ use Wame\Utils\Latte\FindTemplate;
 use Wame\Utils\Strings;
 use Wame\LanguageModule\Gettext\Dictionary;
 
+
 /**
  * Class BaseContainer
  *
@@ -48,9 +49,6 @@ abstract class BaseContainer extends Container
     
     /** @var array */
 	private $httpPost;
-
-//    /** @var LinkGenerator */
-//    protected $linkGenerator;
 
     /** @var \Closure */
     private $callback;
@@ -88,26 +86,6 @@ abstract class BaseContainer extends Container
     }
 
 
-//    /**
-//     *
-//     * @param \Nette\Application\LinkGenerator $linkGenerator
-//     */
-//    public function injectLinkGenerator(\Nette\Application\LinkGenerator $linkGenerator)
-//    {
-//        $this->linkGenerator = $linkGenerator;
-//    }
-
-
-//    /**
-//     * Inject TemplateFactory
-//     *
-//     * @param UI\ITemplateFactory $templateFactory
-//     */
-//    public function injectTemplateFactory(UI\ITemplateFactory $templateFactory)
-//    {
-//        $this->templateFactory = $templateFactory;
-//    }
-
     /**
      * Render
      */
@@ -124,6 +102,7 @@ abstract class BaseContainer extends Container
         $this->template->render($this->getTemplateFile());
     }
 
+
     /**
      * Bind data to the template
      *
@@ -133,6 +112,7 @@ abstract class BaseContainer extends Container
     {
 
     }
+
 
     /**
      * Get template
@@ -165,6 +145,7 @@ abstract class BaseContainer extends Container
         return $this->template;
     }
 
+
     /**
      * Get template file path
      *
@@ -186,6 +167,7 @@ abstract class BaseContainer extends Container
         return $file;
     }
 
+
     /**
      * Set form container template file
      *
@@ -198,6 +180,7 @@ abstract class BaseContainer extends Container
 
         return $this;
     }
+
 
     /**
      * Set directory
@@ -212,6 +195,7 @@ abstract class BaseContainer extends Container
         return $this;
     }
 
+
     /**
      * Post update
      *
@@ -223,6 +207,7 @@ abstract class BaseContainer extends Container
 
     }
 
+
     /**
      * Post create
      *
@@ -233,6 +218,7 @@ abstract class BaseContainer extends Container
     {
 
     }
+
 
     /**
      * Form container processing
@@ -263,6 +249,7 @@ abstract class BaseContainer extends Container
         }
     }
 
+
     /**
      * Form container processing
      *
@@ -280,6 +267,7 @@ abstract class BaseContainer extends Container
         }
     }
 
+
     /**
      * Update
      *
@@ -291,6 +279,7 @@ abstract class BaseContainer extends Container
 
     }
 
+
     /**
      * Create
      *
@@ -301,6 +290,7 @@ abstract class BaseContainer extends Container
     {
 
     }
+
 
     public function getPresenter()
     {
@@ -338,7 +328,6 @@ abstract class BaseContainer extends Container
 //                    $this->setDefaultValues();
 //                }
 
-
                 $this->configure();
 
                 $this->appendFormContainerToCurrentGroup();
@@ -354,8 +343,6 @@ abstract class BaseContainer extends Container
                 $object->onPostSuccess[] = function ($form) {
                     $this->formContainerPostSucceeded($form, $this->getValues());
                 };
-                
-                
             }
         }
         
@@ -363,6 +350,7 @@ abstract class BaseContainer extends Container
             $this->loadHttpData();
         }
     }
+
 
     /**
      * Create template
@@ -377,10 +365,13 @@ abstract class BaseContainer extends Container
         return $templateFactory->createTemplate(null);
     }
 
+
     /**
      * Configure
      */
-    protected function configure() {}
+    protected function configure() {
+
+    }
 
 
     /**
@@ -408,6 +399,7 @@ abstract class BaseContainer extends Container
 
         return $this;
     }
+
 
     /**
      * Set language dictionary
@@ -467,6 +459,7 @@ abstract class BaseContainer extends Container
             }
         }
     }
+
     
     /**
 	 * @return mixed|NULL
@@ -480,6 +473,7 @@ abstract class BaseContainer extends Container
 
 		return $this->httpPost;
 	}
+
 
     /**
      * Add dynamic
