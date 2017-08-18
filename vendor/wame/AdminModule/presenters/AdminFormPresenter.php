@@ -27,6 +27,9 @@ abstract class AdminFormPresenter extends BasePresenter
     /** @var array */
     protected $formContainers = [];
 
+    /** @var array */
+    protected $detachformContainers = [];
+
 
     /** execution *************************************************************/
 
@@ -90,6 +93,12 @@ abstract class AdminFormPresenter extends BasePresenter
 		if (count($this->formContainers) > 0) {
 		    foreach ($this->formContainers as $container) {
 		        $form->add($container['service'], $container['name'], $container['priority']);
+            }
+        }
+
+        if (count($this->detachformContainers) > 0) {
+            foreach ($this->detachformContainers as $container) {
+                $form->remove($container);
             }
         }
 
@@ -159,6 +168,21 @@ abstract class AdminFormPresenter extends BasePresenter
             'name' => $name,
             'priority' => $priority
         ];
+
+        return $this;
+    }
+
+
+    /**
+     * Detached form container
+     *
+     * @param object|string $service
+     *
+     * @return $this
+     */
+    protected function detachFormContainer($service)
+    {
+        $this->detachformContainers[] = $service;
 
         return $this;
     }

@@ -5,6 +5,7 @@ namespace Wame\DynamicObject\Forms;
 use Wame\Core\Entities\BaseEntity;
 use Wame\Core\Repositories\BaseRepository;
 
+
 class EntityForm extends BaseForm
 {
     /** @var BaseEntity */
@@ -12,8 +13,13 @@ class EntityForm extends BaseForm
     
     /** @var BaseRepository */
     private $repository;
-    
-    
+
+    /** @var BaseEntity|int|string */
+    private $item;
+
+
+    /** get ***********************************************************************************************************/
+
     /**
      * Get entity
      * 
@@ -21,12 +27,37 @@ class EntityForm extends BaseForm
      */
     public function getEntity()
     {
-        if(!isset($this->entity)) {
+        if (!isset($this->entity)) {
             $this->entity = $this->repository->getNewEntity();
         }
         
         return $this->entity;
     }
+
+
+    /**
+     * Get repository
+     *
+     * @return BaseRepository
+     */
+    public function getRepository()
+    {
+        return $this->repository;
+    }
+
+
+    /**
+     * Get item
+     *
+     * @return BaseEntity|int|string
+     */
+    public function getItem()
+    {
+        return $this->item;
+    }
+
+
+    /** set ***********************************************************************************************************/
 
     /**
      * Set entity
@@ -40,16 +71,7 @@ class EntityForm extends BaseForm
         
         return $this;
     }
-    
-    /**
-     * Get repository
-     * 
-     * @return BaseRepository
-     */
-    public function getRepository()
-    {
-        return $this->repository;
-    }
+
 
     /**
      * Set repository
@@ -61,6 +83,20 @@ class EntityForm extends BaseForm
     {
         $this->repository = $repository;
         
+        return $this;
+    }
+
+
+    /**
+     * Set item
+     *
+     * @param BaseEntity|int|string $item
+     * @return $this
+     */
+    public function setItem($item)
+    {
+        $this->item = $item;
+
         return $this;
     }
     

@@ -5,6 +5,7 @@ namespace Wame\DynamicObject\Forms;
 use Wame\Core\Entities\BaseEntity;
 use Wame\Core\Repositories\BaseRepository;
 
+
 /**
  * Class EntityFormBuilder
  *
@@ -21,6 +22,9 @@ class EntityFormBuilder extends BaseFormBuilder
 
     /** @var BaseRepository */
     protected $repository;
+
+    /** @var BaseEntity|int|string */
+    protected $item = null;
     
     /** @var bool */
     protected $persist = true;
@@ -31,15 +35,19 @@ class EntityFormBuilder extends BaseFormBuilder
     {
         $form = $this->createForm();
 
-        if($this->entity) {
+        if ($this->entity) {
             $form->setEntity($this->entity);
             unset($this->entity);
+        }
+
+        if ($this->item) {
+            $form->setItem($this->item);
         }
 
         $form->setRenderer($this->getFormRenderer());
         $this->attachFormContainers($form, $domain);
 
-        if($this->ajax) {
+        if ($this->ajax) {
             $form->getElementPrototype()->addAttributes(['class' => 'ajax']);
         }
 
@@ -48,6 +56,7 @@ class EntityFormBuilder extends BaseFormBuilder
 
         return $form;
     }
+
 
     /**
      * Set entity
@@ -62,6 +71,7 @@ class EntityFormBuilder extends BaseFormBuilder
         return $this;
     }
 
+
     /**
      * Set repository
      *
@@ -74,6 +84,7 @@ class EntityFormBuilder extends BaseFormBuilder
 
         return $this;
     }
+
 
     /** {@inheritDoc} */
     public function submit(BaseForm $form, array $values)
@@ -104,6 +115,7 @@ class EntityFormBuilder extends BaseFormBuilder
         $form->getRepository()->entityManager->flush();
     }
 
+
     /** {@inheritDoc} */
     public function postSubmit(BaseForm $form, array $values)
     {
@@ -115,6 +127,7 @@ class EntityFormBuilder extends BaseFormBuilder
             $this->postCreate($form, $values);
         }
     }
+
     
     /**
      * Enable persist
@@ -152,6 +165,7 @@ class EntityFormBuilder extends BaseFormBuilder
         return $form->getEntity();
     }
 
+
     /**
      * Update
      * 
@@ -176,6 +190,7 @@ class EntityFormBuilder extends BaseFormBuilder
         return $form->getEntity();
     }
 
+
     /**
      * Post update
      *
@@ -188,6 +203,7 @@ class EntityFormBuilder extends BaseFormBuilder
         return $form->getEntity();
     }
 
+
     /**
      * Get repository
      * 
@@ -197,6 +213,7 @@ class EntityFormBuilder extends BaseFormBuilder
     {
         return $this->repository;
     }
+
 
     /**
      * Set default value
@@ -210,6 +227,32 @@ class EntityFormBuilder extends BaseFormBuilder
         if ($entity->id && method_exists($container, 'setDefaultValues')) {
             $container->setDefaultValues($entity);
         }
+    }
+
+
+    /**
+     * Set helper item value, entity...
+     *
+     * @param BaseEntity|int|string $item
+     *
+     * @return $this
+     */
+    public function setItem($item)
+    {
+        $this->item = $item;
+
+        return $this;
+    }
+
+
+    /**
+     * Get helper item entity
+     *
+     * @return BaseEntity|int|string
+     */
+    public function getItem()
+    {
+        return $this->item;
     }
 
 }

@@ -6,6 +6,7 @@ use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
 use Nette\Forms\IFormRenderer;
 use Tracy\Debugger;
+use Wame\Core\Entities\BaseEntity;
 use Wame\Core\Registers\PriorityRegister;
 use Wame\DynamicObject\Forms\Containers\BaseContainer;
 use Wame\DynamicObject\Registers\Types\IFormItem;
@@ -32,7 +33,7 @@ abstract class BaseFormBuilder extends PriorityRegister
 
 
     /**
-     * BaseFormBuilder constructor.
+     * BaseFormBuilder constructor
      */
     public function __construct()
     {
@@ -51,7 +52,6 @@ abstract class BaseFormBuilder extends PriorityRegister
         $form = $this->createForm();
 
         $form->setRenderer($this->getFormRenderer());
-//        $form->addContainers($this->array, $domain);
         $this->attachFormContainers($form, $domain);
 
         if($this->ajax) {
@@ -63,6 +63,7 @@ abstract class BaseFormBuilder extends PriorityRegister
 
         return $form;
     }
+
 
     /**
      * Form succeeded
@@ -87,6 +88,7 @@ abstract class BaseFormBuilder extends PriorityRegister
         }
     }
 
+
     /**
      * Form post succeeded
      *
@@ -100,10 +102,10 @@ abstract class BaseFormBuilder extends PriorityRegister
             $this->postSubmit($form, $values);
 
             if(!$form->getPresenter()->isAjax()) {
-                if ($this->getRedirectParameters() == 'url') {
+                if ($this->getRedirectParameters($form) == 'url') {
                     $form->getPresenter()->redirectUrl($this->getRedirectTo());
                 } else {
-                    $form->getPresenter()->redirect($this->getRedirectTo(), $this->getRedirectParameters());
+                    $form->getPresenter()->redirect($this->getRedirectTo(), $this->getRedirectParameters($form));
                 }
             }
         } catch (\Exception $e) {
@@ -115,6 +117,7 @@ abstract class BaseFormBuilder extends PriorityRegister
             $form->addError($e->getMessage());
         }
     }
+
 
     /**
      * Redirect to
@@ -128,6 +131,7 @@ abstract class BaseFormBuilder extends PriorityRegister
         $this->redirectParameters = $parameters;
     }
 
+
     /**
      * Return redirect to
      *
@@ -138,15 +142,36 @@ abstract class BaseFormBuilder extends PriorityRegister
         return $this->redirect;
     }
 
+
     /**
      * Return redirect parameters
      *
      * @return array
      */
-    public function getRedirectParameters()
+    public function getRedirectParameters($form)
     {
-        return $this->redirectParameters;
+        $return = [];
+
+        foreach ($this->redirectParameters as $key => $value) {
+            if ($value[0] == '%') {
+                $column = substr($value, 1);
+
+                $value = $form->getEntity();
+
+                if (strpos($column, '.')) {
+                    foreach (explode('.', $column) as $col) {
+                        $value = $value->$col;
+                    }
+                } else {
+                    $value = $value->$column;
+                }
+            }
+
+            $return[$key] = $value;
+        }
+        return $return;
     }
+
 
     /**
      * Set ajax
@@ -165,6 +190,7 @@ abstract class BaseFormBuilder extends PriorityRegister
         return $this;
     }
 
+
     /**
      * Submit
      *
@@ -173,6 +199,7 @@ abstract class BaseFormBuilder extends PriorityRegister
      */
     public function submit(BaseForm $form, array $values) {}
 
+
     /**
      * Post submit
      *
@@ -180,6 +207,7 @@ abstract class BaseFormBuilder extends PriorityRegister
      * @param array $values     values
      */
     public function postSubmit(BaseForm $form, array $values) {}
+
 
     /**
      * Set renderer
@@ -209,6 +237,7 @@ abstract class BaseFormBuilder extends PriorityRegister
         }
     }
 
+
     /**
      * Create Form
      *
@@ -220,6 +249,7 @@ abstract class BaseFormBuilder extends PriorityRegister
 
         return $form;
     }
+
 
     /**
      * Attach form containers
@@ -258,6 +288,7 @@ abstract class BaseFormBuilder extends PriorityRegister
             }
         }
     }
+
 
     /**
      * Set default value
