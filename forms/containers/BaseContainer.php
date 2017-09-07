@@ -451,11 +451,13 @@ abstract class BaseContainer extends Container
         }
 
         foreach ((array) $this->getHttpData() as $name => $value) {
-            if(is_array($value) || $value instanceof \Traversable) {
+            if (is_array($value) || $value instanceof \Traversable) {
                 $count = iterator_count($this->getComponents());
                 $container = $this->addContainer($count);
-                Callback::invoke($this->callback, $container, $this);
-                Debugger::barDump($container, "loadHttpData");
+                
+                if ($this->callback) {
+                    Callback::invoke($this->callback, $container, $this);
+                }
             }
         }
     }
