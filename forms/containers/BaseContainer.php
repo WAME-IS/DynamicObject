@@ -446,16 +446,16 @@ abstract class BaseContainer extends Container
 	 */
     protected function loadHttpData()
     {
-        if(!$this->getForm()->isSubmitted()) {
+        if (!$this->getForm()->isSubmitted()) {
             return;
         }
 
         foreach ((array) $this->getHttpData() as $name => $value) {
             if (is_array($value) || $value instanceof \Traversable) {
                 $count = iterator_count($this->getComponents());
-                $container = $this->addContainer($count);
-                
+
                 if ($this->callback) {
+                    $container = $this->addContainer($count);
                     Callback::invoke($this->callback, $container, $this);
                 }
             }
