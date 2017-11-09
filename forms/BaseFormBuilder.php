@@ -102,7 +102,7 @@ abstract class BaseFormBuilder extends PriorityRegister
             $this->postSubmit($form, $values);
 
             if(!$form->getPresenter()->isAjax()) {
-                if ($this->getRedirectParameters($form) == 'url') {
+                if ($this->redirectParameters == 'url') {
                     $form->getPresenter()->redirectUrl($this->getRedirectTo());
                 } else {
                     $form->getPresenter()->redirect($this->getRedirectTo(), $this->getRedirectParameters($form));
@@ -169,6 +169,7 @@ abstract class BaseFormBuilder extends PriorityRegister
 
             $return[$key] = $value;
         }
+
         return $return;
     }
 
