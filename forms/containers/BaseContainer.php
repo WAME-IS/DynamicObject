@@ -16,6 +16,7 @@ use Wame\DynamicObject\Forms\Groups\BaseGroup;
 use Wame\DynamicObject\Forms\Groups\EmptyGroup;
 use Wame\DynamicObject\Forms\RowForm;
 use Wame\DynamicObject\Forms\Tabs\BaseTab;
+use Wame\DynamicObject\Forms\Tabs\GeneralTab;
 use Wame\DynamicObject\Traits\TCurrentTab;
 use Wame\Utils\Latte\FindTemplate;
 use Wame\Utils\Strings;
@@ -322,7 +323,7 @@ abstract class BaseContainer extends Container
                 }
 
 //                $this->currentGroup = $this->getForm()->getCurrentGroup() ?: $object->addBaseGroup(new BasicGroup);
-                $this->currentTab = $this->getForm()->getCurrentTab();// ?: $object->addBaseTab(new GeneralTab);
+                $this->currentTab = $this->getCurrentTab();// ?: $object->addBaseTab(new GeneralTab());
 
 //                if(method_exists($this, 'setDefaultValues')) {
 //                    $this->setDefaultValues();
