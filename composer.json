@@ -1,5 +1,5 @@
 {
-    "name": "wame/DynamicObject",
+    "name": "wameis/DynamicObject",
     "version": "0.0.2",
     "description": "CMS WAME admin",
     "homepage": "http://wame.sk/cms-wame-admin",
@@ -21,9 +21,9 @@
         "tomaj/nette-bootstrap-form": "1.2.0"
     },
     "softRequire": {
-        "wame/AdminModule": ">=0.0.1",
-        "wame/ComponentModule": ">=0.0.1",
-        "wame/Core": ">=0.0.1"
+        "wameis/AdminModule": ">=0.0.1",
+        "wameis/ComponentModule": ">=0.0.1",
+        "wameis/Core": ">=0.0.1"
     },
     "autoload": {
         "classmap": [
