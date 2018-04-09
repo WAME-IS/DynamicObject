@@ -260,31 +260,38 @@ abstract class BaseFormBuilder extends PriorityRegister
      */
     protected function attachFormContainers($form, $domain = null)
     {
-        foreach($this->array as $item) {
-            if($item['parameters']['domain'] == null || $item['parameters']['domain'] == $domain) {
+        foreach ($this->array as $item) {
+            if ($item['parameters']['domain'] == null || $item['parameters']['domain'] == $domain) {
                 $containerFactory = $item['service'];
                 $containerName = $item['name'];
                 $container = $containerFactory->create();
 
-                if($container instanceof Containers\BaseContainer) {
+                if ($container instanceof Containers\BaseContainer) {
                     $form->addComponent($container, $containerName);
                     $this->setDefaultValue($form, $container);
-                } else if($container instanceof Groups\BaseGroup) {
-                    if(isset($item['parameters']['tag'])) {
+                } else if ($container instanceof Groups\BaseGroup) {
+                    if (isset($item['parameters']['tag'])) {
                         $container->setTag($item['parameters']['tag']);
                     }
-                    if(isset($item['parameters']['attributes'])) {
+                    if (isset($item['parameters']['attributes'])) {
                         $container->setAttributes($item['parameters']['attributes']);
                     }
                     $form->addBaseGroup($container);
-                } else if($container instanceof Tabs\BaseTab) {
-                    if(isset($item['parameters']['tag'])) {
+                } else if ($container instanceof Tabs\BaseTab) {
+                    if (isset($item['parameters']['tag'])) {
                         $container->setTag($item['parameters']['tag']);
                     }
-                    if(isset($item['parameters']['attributes'])) {
+                    if (isset($item['parameters']['attributes'])) {
                         $container->setAttributes($item['parameters']['attributes']);
                     }
                     $form->addBaseTab($container);
+                }
+
+                // Set required
+                if (isset($item['parameters']['required'])) {
+                    foreach ($container->getComponents() as $component) {
+                        $component->setRequired($item['parameters']['required']);
+                    }
                 }
             }
         }
