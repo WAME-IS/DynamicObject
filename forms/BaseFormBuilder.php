@@ -266,10 +266,20 @@ abstract class BaseFormBuilder extends PriorityRegister
                 $containerName = $item['name'];
                 $container = $containerFactory->create();
 
+                $container->setContainerParameters($item['parameters']);
+
+                // Set template file
+                if (isset($item['parameters']['template'])) {
+                    $container->setTemplateFile($item['parameters']['template']);
+                }
+
+                // Container
                 if ($container instanceof Containers\BaseContainer) {
                     $form->addComponent($container, $containerName);
                     $this->setDefaultValue($form, $container);
-                } else if ($container instanceof Groups\BaseGroup) {
+                }
+                // Group
+                elseif ($container instanceof Groups\BaseGroup) {
                     if (isset($item['parameters']['tag'])) {
                         $container->setTag($item['parameters']['tag']);
                     }
@@ -277,7 +287,9 @@ abstract class BaseFormBuilder extends PriorityRegister
                         $container->setAttributes($item['parameters']['attributes']);
                     }
                     $form->addBaseGroup($container);
-                } else if ($container instanceof Tabs\BaseTab) {
+                }
+                // Tab
+                elseif ($container instanceof Tabs\BaseTab) {
                     if (isset($item['parameters']['tag'])) {
                         $container->setTag($item['parameters']['tag']);
                     }

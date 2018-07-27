@@ -16,6 +16,7 @@ class TextContainer extends BaseContainer
     /** {@inheritDoc} */
     public function configure() 
 	{
+	    dump($this);
         $this->getForm()->addBaseGroup(new TextGroup, 'TextGroup');
         
 		$this->addTextArea('text', _('Text'));

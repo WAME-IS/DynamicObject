@@ -54,6 +54,8 @@ abstract class BaseContainer extends Container
     /** @var \Closure */
     private $callback;
 
+    /** @var array */
+    public $containerParameters = [];
 
     use TRegister;
     use TCurrentTab;
@@ -84,6 +86,21 @@ abstract class BaseContainer extends Container
     public function injectDictionary(Dictionary $dictionary)
     {
         $this->dictionary = $dictionary;
+    }
+
+
+    /**
+     * Set container parameters from config
+     *
+     * @param array $containerParameters
+     *
+     * @return $this
+     */
+    public function setContainerParameters($containerParameters)
+    {
+        $this->containerParameters = $containerParameters;
+
+        return $this;
     }
 
 
