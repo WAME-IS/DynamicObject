@@ -266,7 +266,9 @@ abstract class BaseFormBuilder extends PriorityRegister
                 $containerName = $item['name'];
                 $container = $containerFactory->create();
 
-                $container->setContainerParameters($item['parameters']);
+                if (method_exists($container, 'setContainerParameters')) {
+                    $container->setContainerParameters($item['parameters']);
+                }
 
                 // Set template file
                 if (isset($item['parameters']['template'])) {
